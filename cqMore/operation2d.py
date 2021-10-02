@@ -25,7 +25,6 @@ def bool2D(workplane, toBool, boolMethod):
     return booled.faces(planeZdir).wires().toPending()
 
 def makePolygon(workplane, listOfXYTuple, forConstruction = False):
-    print(listOfXYTuple)
     def _makePolygon(points, forConstruction):
         return Wire.makePolygon((
                  Vector(*p) for p in points + [points[0]]
