@@ -1,5 +1,6 @@
 from cqMore import *
 from math import cos, sin, radians       
+from cadquery import show_object
 
 fn = 12
 r = 5

@@ -1,4 +1,5 @@
 from cqMore import *
+from cadquery import show_object
 
 def paraboloid(x, y):
     return [x, y, ((y ** 2) - (x ** 2)) / 4]
