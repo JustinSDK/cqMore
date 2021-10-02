@@ -4,11 +4,24 @@ from cadquery import (
     Wire, 
     Solid, 
     Shell, 
-    Face, 
-    DirectionSelector
+    Face,
+    Workplane
 )
 
-def _polyhedron(points, faces):
+from typing import (
+    TypeVar,
+    Iterable,
+    Tuple,
+    Union
+)
+
+T = TypeVar('T', bound = 'Workplane')
+VectorLike = Union[Tuple[float, float], Tuple[float, float, float], Vector]
+FaceIndices = Tuple[int]
+
+T = TypeVar('T', bound = 'Workplane')
+
+def _polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
         leng_vertices = len(face_indices)   
         return (
@@ -32,7 +45,7 @@ def _polyhedron(points, faces):
         )
     )
     
-def polyhedron(workplane, points, faces, combine = True, clean = True):
+def polyhedron(workplane: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
     poly = _polyhedron(points, faces)
     poly_all = workplane.eachpoint(lambda loc: poly.moved(loc), True)
     
@@ -41,7 +54,7 @@ def polyhedron(workplane, points, faces, combine = True, clean = True):
     else:
         return workplane.union(poly_all, clean=clean)
     
-def surface(workplane, points, thickness, combine = True, clean = True):
+def surface(workplane: T, points: Iterable[VectorLike], thickness: float, combine: bool = True, clean: bool = True) -> T:
     def _surface(points, thickness):
         leng_row = len(points)
         leng_col = len(points[0])
