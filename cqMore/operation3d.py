@@ -9,22 +9,15 @@ from cadquery import (
 )
 
 from typing import (
-    TypeVar,
-    Iterable,
-    List,
-    Tuple,
-    Union
+    Iterable
 )
 
-T = TypeVar('T', bound = 'Workplane')
-Point2D = Tuple[float, float]
-Point3D = Tuple[float, float, float]
-VectorLike = Union[Point2D, Point3D, Vector]
-FaceIndices = Tuple[int, ...]
-
-v: List[List[VectorLike]] = [[(1, 2, 3)]]
-
-T = TypeVar('T', bound = 'Workplane')
+from .cq_typing import (
+    T,
+    Point3D,
+    VectorLike,
+    FaceIndices
+)
 
 def _polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
@@ -59,7 +52,7 @@ def polyhedron(workplane: T, points: Iterable[VectorLike], faces: Iterable[FaceI
     else:
         return workplane.union(poly_all, clean=clean)
     
-def surface(workplane: T, points: List[List[Point3D]], thickness: float, combine: bool = True, clean: bool = True) -> T:
+def surface(workplane: T, points: list[list[Point3D]], thickness: float, combine: bool = True, clean: bool = True) -> T:
     def _surface(points, thickness):
         leng_row = len(points)
         leng_col = len(points[0])

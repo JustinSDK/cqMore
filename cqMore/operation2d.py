@@ -6,15 +6,14 @@ from cadquery import (
 )
 
 from typing import (
-    TypeVar,
-    Iterable,
-    Tuple,
-    Union
+    Iterable
 )
 
-T = TypeVar('T', bound = 'Workplane')
-VectorLike = Union[Tuple[float, float], Tuple[float, float, float], Vector]
-    
+from .cq_typing import (
+    T,
+    VectorLike
+)
+
 def intersect2D(workplane: T, toIntersect: T) -> T:
     return bool2D(workplane, toIntersect, 'intersect')
     
