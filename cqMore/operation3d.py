@@ -63,7 +63,7 @@ def surface(workplane: T, points: Iterable[VectorLike], thickness: float, combin
         def _all_pts():
             half_thickness = thickness / 2
 
-            vectors = [[Vector(*p) for p in row] for row in points]
+            vectors = ((Vector(*p) for p in row) for row in points)
             face = Face.makeSplineApprox([[
                          Vector(*points[ri][ci]) 
                     for ri in range(leng_row)
