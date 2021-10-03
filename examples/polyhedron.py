@@ -1,5 +1,4 @@
 from cqMore import *
-from cadquery import show_object
 
 points = (
     (5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5)
