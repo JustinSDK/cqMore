@@ -1,4 +1,4 @@
-from cqMore import *
+from cqMore import Workplane
 
 points = (
     (5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5)
