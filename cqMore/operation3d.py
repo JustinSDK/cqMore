@@ -96,20 +96,19 @@ def surface(workplane: T, points: Iterable[VectorLike], thickness: float, combin
                 side_faces1.append([ci + leng_pts, ci + leng_pts + 1, ci + 1])
 
             side_faces2 = []
+            side_faces4 = []
             rx = leng_col - 1
             for ri in range(leng_row - 1):
                 side_faces2.append([rx + (ri + 1) * leng_col + leng_pts, rx + (ri + 1) * leng_col, rx + ri * leng_col])
                 side_faces2.append([rx + ri * leng_row + leng_pts, rx + (ri + 1) * leng_col + leng_pts, rx + ri * leng_col])
 
+                side_faces4.append([ri * leng_col, (ri + 1) * leng_col, (ri + 1) * leng_col + leng_pts])
+                side_faces4.append([ri * leng_col, (ri + 1) * leng_col + leng_pts, ri * leng_row + leng_pts])
+
             side_faces3 = []
             for ci in range(leng_pts - leng_col, leng_pts - 1):
                 side_faces3.append([ci + 1, ci + leng_pts, ci])
                 side_faces3.append([ci + 1, ci + leng_pts + 1, ci + leng_pts])
-
-            side_faces4 = []
-            for ri in range(leng_row - 1):
-                side_faces4.append([ri * leng_col, (ri + 1) * leng_col, (ri + 1) * leng_col + leng_pts])
-                side_faces4.append([ri * leng_col, (ri + 1) * leng_col + leng_pts, ri * leng_row + leng_pts])
 
             return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
 
