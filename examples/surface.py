@@ -1,7 +1,7 @@
 from cqMore import *
 
 def paraboloid(x, y):
-    return [x, y, ((y ** 2) - (x ** 2)) / 4]
+    return (x, y, ((y ** 2) - (x ** 2)) / 4)
 
 min_value = -30
 max_value = 30
