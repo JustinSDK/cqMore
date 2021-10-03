@@ -14,14 +14,13 @@ class Operation2DTestCase(unittest.TestCase):
         a_step = radians(360 / fn)
 
         points = [
-            (r * cos(a_step * i), r * sin(a_step * i)) 
+            (r * cos(a_step * i), r * sin(a_step * i), 0) 
                 for i in range(fn)
         ]
 
         polygon = makePolygon(Workplane(), points)
-        
-        vectors = (vertex.Center() for vertex in polygon.vertices().vals())
-        actual = [(vector.x, vector.y) for vector in vectors]
+
+        actual = [vertex.Center().toTuple() for vertex in polygon.vertices().vals()]
         self.assertListEqual(points, actual)
         
 if __name__ == '__main__':
