@@ -20,7 +20,7 @@ class Operation2DTestCase(unittest.TestCase):
 
         polygon = makePolygon(Workplane(), points)
 
-        actual = [vertex.Center().toTuple() for vertex in polygon.vertices().vals()]
+        actual = [vertex.toTuple() for vertex in polygon.vertices().vals()]
         self.assertListEqual(points, actual)
         
 if __name__ == '__main__':
