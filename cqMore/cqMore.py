@@ -1,11 +1,11 @@
-from .operation2d import (
+from .wire import (
     makePolygon,
     intersect2D,
     union2D,
     cut2D
 )
 
-from .operation3d import (
+from .solid import (
     polyhedron,
     surface
 )

@@ -5,9 +5,9 @@ sys.path.append('..')
 from math import cos, sin, radians
 
 from cadquery import Workplane, Wire, Vector
-from cqMore.operation2d import makePolygon
+from cqMore.wire import makePolygon
 
-class Operation2DTestCase(unittest.TestCase):
+class WireTestCase(unittest.TestCase):
     def test_makePolygon(self):
         points = [
             (0, 0, 0), (10, 0, 0), (0, 10, 0), (-10, 0, 0)
