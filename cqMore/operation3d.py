@@ -4,8 +4,7 @@ from cadquery import (
     Wire, 
     Solid, 
     Shell, 
-    Face,
-    Workplane
+    Face
 )
 
 from typing import (
