@@ -14,7 +14,8 @@ from typing import (
 
 from .cq_typing import (
     T,
-    VectorLike
+    VectorLike,
+    FaceIndices
 )
 
 import cadquery
@@ -33,5 +34,13 @@ class Workplane(cadquery.Workplane):
     def cut2D(self: T, toCut: T) -> T:
         return bool2D(self, toCut, 'cut')
 
-Workplane.polyhedron = polyhedron
+    def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
+        poly = polyhedron(points, faces)
+        poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
+        
+        if not combine:
+            return poly_all
+        else:
+            return self.union(poly_all, clean=clean)
+
 Workplane.surface = surface

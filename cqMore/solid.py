@@ -18,7 +18,7 @@ from .cq_typing import (
     FaceIndices
 )
 
-def _polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
+def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
         leng_vertices = len(face_indices)   
         return (
@@ -41,15 +41,6 @@ def _polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> S
             for face_indices in faces
         )
     )
-    
-def polyhedron(workplane: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
-    poly = _polyhedron(points, faces)
-    poly_all = workplane.eachpoint(lambda loc: poly.moved(loc), True)
-    
-    if not combine:
-        return poly_all
-    else:
-        return workplane.union(poly_all, clean=clean)
     
 def surface(workplane: T, points: list[list[Point3D]], thickness: float, combine: bool = True, clean: bool = True) -> T:
     def _surface(points, thickness):
