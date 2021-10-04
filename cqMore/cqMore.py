@@ -43,4 +43,11 @@ class Workplane(cadquery.Workplane):
         else:
             return self.union(poly_all, clean=clean)
 
-Workplane.surface = surface
+    def surface(self: T, points: list[list[VectorLike]], thickness: float, combine: bool = True, clean: bool = True) -> T:
+        sf = surface(points, thickness)
+        sf_all = self.eachpoint(lambda loc: sf.moved(loc), True)
+        
+        if not combine:
+            return sf_all
+        else:
+            return self.union(sf_all, clean=clean)
