@@ -9,4 +9,4 @@ faces = (
 )
 
 tetrahedron = Workplane().polyhedron(points, faces)
-show_object(tetrahedron)
+# show_object(tetrahedron)

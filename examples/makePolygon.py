@@ -16,4 +16,4 @@ polygon = (Workplane()
               .makePolygon(points)
           )
        
-show_object(polygon)
+# show_object(polygon)

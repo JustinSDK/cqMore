@@ -16,4 +16,4 @@ points = [[
 
 
 sf = Workplane().surface(points, thickness)
-show_object(sf)
+# show_object(sf)
