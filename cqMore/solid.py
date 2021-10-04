@@ -12,8 +12,10 @@ from typing import (
 )
 
 from .cq_typing import (
+    Point3D,
     VectorLike,
-    FaceIndices
+    FaceIndices,
+    MeshGrid
 )
 
 def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
@@ -40,7 +42,7 @@ def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> So
         )
     )
 
-def surface(points: list[list[VectorLike]], thickness: float) -> Solid:
+def surface(points: MeshGrid, thickness: float) -> Solid:
     leng_row = len(points)
     leng_col = len(points[0])
     leng_pts = leng_col * leng_row

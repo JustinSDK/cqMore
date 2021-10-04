@@ -15,7 +15,8 @@ from typing import (
 from .cq_typing import (
     T,
     VectorLike,
-    FaceIndices
+    FaceIndices,
+    MeshGrid
 )
 
 import cadquery
@@ -43,7 +44,7 @@ class Workplane(cadquery.Workplane):
         else:
             return self.union(poly_all, clean=clean)
 
-    def surface(self: T, points: list[list[VectorLike]], thickness: float, combine: bool = True, clean: bool = True) -> T:
+    def surface(self: T, points: MeshGrid, thickness: float, combine: bool = True, clean: bool = True) -> T:
         sf = surface(points, thickness)
         sf_all = self.eachpoint(lambda loc: sf.moved(loc), True)
         
