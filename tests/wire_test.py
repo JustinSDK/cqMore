@@ -23,14 +23,26 @@ class WireTestCase(unittest.TestCase):
         expected = cast(list[Wire], Workplane().rect(5, 5).eachpoint(lambda loc: wire.moved(loc)).vals())
         actual = cast(list[Wire], Workplane().rect(5, 5).makePolygon(points).vals())
         for i in range(len(expected)):
-            self.assertEqual(expected[i].geomType(), actual[i].geomType())
-            self.assertEqual(expected[i].Center(), actual[i].Center())
-            self.assertEqual(expected[i].Area(), actual[i].Area())
-            self.assertEqual(expected[i].CenterOfBoundBox(), actual[i].CenterOfBoundBox())
-            self.assertListEqual(
-                [v.toTuple() for v in expected[i].Vertices()], 
-                [v.toTuple() for v in actual[i].Vertices()]
-            )
+            self.assertWireEqual(expected[i], actual[i])
+
+    def test_intersect2D(self):
+        r1 = Workplane().rect(10, 10)
+        r2 = Workplane().center(5, 5).rect(10, 10)
         
+        expected = cast(Wire, Workplane().center(2.5, 2.5).rect(5, 5).val())
+        actual = cast(Wire, r1.intersect2D(r2).val())
+
+        self.assertWireEqual(expected, actual)
+
+    def assertWireEqual(self, expected, actual):
+        self.assertEqual(expected.geomType(), actual.geomType())
+        self.assertEqual(expected.Center(), actual.Center())
+        self.assertEqual(expected.Area(), actual.Area())
+        self.assertEqual(expected.CenterOfBoundBox(), actual.CenterOfBoundBox())
+        self.assertListEqual(
+            sorted([v.toTuple() for v in expected.Vertices()]), 
+            sorted([v.toTuple() for v in actual.Vertices()])
+        )
+
 if __name__ == '__main__':
     unittest.main()
