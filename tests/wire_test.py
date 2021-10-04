@@ -5,9 +5,8 @@ sys.path.append('..')
 
 from math import cos, sin, radians
 
-from cadquery import Workplane, Wire, Vector
-from cqMore.wire import makePolygon
-
+from cadquery import Wire, Vector
+from cqMore import Workplane
 
 class WireTestCase(unittest.TestCase):
     def test_makePolygon(self):
@@ -22,7 +21,7 @@ class WireTestCase(unittest.TestCase):
         )
 
         expected = cast(list[Wire], Workplane().rect(5, 5).eachpoint(lambda loc: wire.moved(loc)).vals())
-        actual = cast(list[Wire], makePolygon(Workplane().rect(5, 5), points).vals())
+        actual = cast(list[Wire], Workplane().rect(5, 5).makePolygon(points).vals())
         for i in range(len(expected)):
             self.assertEqual(expected[i].geomType(), actual[i].geomType())
             self.assertEqual(expected[i].Center(), actual[i].Center())

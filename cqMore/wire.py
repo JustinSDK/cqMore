@@ -14,15 +14,6 @@ from .cq_typing import (
     VectorLike
 )
 
-def intersect2D(workplane: T, toIntersect: T) -> T:
-    return bool2D(workplane, toIntersect, 'intersect')
-    
-def union2D(workplane: T, toUnion: T) -> T:
-    return bool2D(workplane, toUnion, 'union')
-
-def cut2D(workplane: T, toCut: T) -> T:
-    return bool2D(workplane, toCut, 'cut')
-
 def bool2D(workplane: T, toBool: T, boolMethod: str) -> T:
     toExtruded = (
         Workplane(toBool.plane)
@@ -33,12 +24,7 @@ def bool2D(workplane: T, toBool: T, boolMethod: str) -> T:
     planeZdir = DirectionSelector(-workplane.plane.zDir)
     return booled.faces(planeZdir).wires().toPending()
 
-def makePolygon(workplane: T, listOfXYTuple: Iterable[VectorLike], forConstruction: bool = False) -> T:
-    def _makePolygon(points, forConstruction):
-        return Wire.makePolygon((
-                 Vector(*p) for p in points + [points[0]]
-            ), 
-            forConstruction
-        )
-    p = _makePolygon(listOfXYTuple, forConstruction)
-    return workplane.eachpoint(lambda loc: p.moved(loc), True)
+def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> Wire:
+    vts = [Vector(*p) for p in points]
+    vts.append(vts[0])
+    return Wire.makePolygon(vts, forConstruction)
