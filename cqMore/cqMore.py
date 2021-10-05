@@ -22,7 +22,40 @@ from .cq_typing import (
 import cadquery
 
 class Workplane(cadquery.Workplane):
+    """
+    Define plugins. You may simply use cqMore.Workplane to replace cadquery.Workplane. For example:
+
+        from cqMore import Workplane
+
+        result = (Workplane()
+                    .rect(10, 10)
+                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2))).extrude(1)
+                 )
+
+    You may also attach methods of cqMore.Workplane to cadquery.Workplane, such as:
+
+        from cadquery import Workplane
+        import cqMore
+
+        Workplane.makePolygon = cqMore.Workplane.makePolygon
+
+        result = (Workplane()
+                    .rect(10, 10)
+                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2))).extrude(1)
+                 )
+
+    """
+
     def makePolygon(self: T, points: Iterable[VectorLike], forConstruction: bool = False) -> T:
+        """
+        Make a multiple sided wire from a list of points. forConstruction=True tells CadQuery 
+        that we are just using this polygon to help define some other geometry.
+        
+            from cqMore import Workplane
+            triangle = Workplane().makePolygon(((-2, -2), (2, -2), (0, 2))) 
+
+        """
+
         p = makePolygon(points, forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
@@ -52,3 +85,7 @@ class Workplane(cadquery.Workplane):
             return sf_all
         else:
             return self.union(sf_all, clean=clean)
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod() 
