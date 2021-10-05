@@ -52,6 +52,7 @@ class Workplane(cadquery.Workplane):
         that we are just using this polygon to help define some other geometry.
         
             from cqMore import Workplane
+
             triangle = Workplane().makePolygon(((-2, -2), (2, -2), (0, 2))) 
 
         """
@@ -60,12 +61,45 @@ class Workplane(cadquery.Workplane):
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
     def intersect2D(self: T, toIntersect: T) -> T:
+        """
+        Intersect the provided wire from the current wire. 
+
+            from cqMore import Workplane
+
+            r1 = Workplane('YZ').rect(10, 10)
+            r2 = Workplane('YZ').center(5, 5).rect(10, 10)
+            intersected = r1.intersect2D(r2)
+
+        """
+
         return bool2D(self, toIntersect, 'intersect')
         
     def union2D(self: T, toUnion: T) -> T:
+        """
+        Union the provided wire from the current wire. 
+
+            from cqMore import Workplane
+
+            r1 = Workplane('YZ').rect(10, 10)
+            r2 = Workplane('YZ').center(5, 5).rect(10, 10)
+            unioned = r1.union2D(r2)
+
+        """
+
         return bool2D(self, toUnion, 'union')
 
     def cut2D(self: T, toCut: T) -> T:
+        """
+        Cut the provided wire from the current wire. 
+
+            from cqMore import Workplane
+
+            r1 = Workplane('YZ').rect(10, 10)
+            r2 = Workplane('YZ').center(5, 5).rect(10, 10)
+            cutted = r1.cut2D(r2)
+
+        """
+
         return bool2D(self, toCut, 'cut')
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
