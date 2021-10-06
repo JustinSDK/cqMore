@@ -9,7 +9,8 @@ from .solid import (
 )
 
 from typing import (
-    Iterable
+    Iterable,
+    Union
 )
 
 from .cq_typing import (
@@ -17,6 +18,10 @@ from .cq_typing import (
     VectorLike,
     FaceIndices,
     MeshGrid
+)
+
+from cadquery import (
+    Wire
 )
 
 import cadquery
@@ -66,7 +71,7 @@ class Workplane(cadquery.Workplane):
         p = makePolygon(points, forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
-    def intersect2D(self: T, toIntersect: T) -> T:
+    def intersect2D(self: T, toIntersect: Union[T, Wire]) -> T:
         """
         Intersect the provided wire from the current wire. 
 
@@ -80,7 +85,7 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toIntersect, 'intersect')
         
-    def union2D(self: T, toUnion: T) -> T:
+    def union2D(self: T, toUnion: Union[T, Wire]) -> T:
         """
         Union the provided wire from the current wire. 
 
@@ -94,7 +99,7 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toUnion, 'union')
 
-    def cut2D(self: T, toCut: T) -> T:
+    def cut2D(self: T, toCut: Union[T, Wire]) -> T:
         """
         Cut the provided wire from the current wire. 
 

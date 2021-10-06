@@ -31,7 +31,10 @@ class WireTestCase(unittest.TestCase):
         
         expected = cast(Wire, Workplane().center(2.5, 2.5).rect(5, 5).val())
         actual = cast(Wire, r1.intersect2D(r2).val())
+        self.assertWireEqual(expected, actual)
 
+        wire = cast(Wire, r2.val())
+        actual = cast(Wire, r1.intersect2D(wire).val())
         self.assertWireEqual(expected, actual)
 
     def test_union2D(self):
@@ -42,8 +45,11 @@ class WireTestCase(unittest.TestCase):
             [(-5, -5), (5, -5), (5, 0), (10, 0), (10, 10), (0, 10), (0, 5), (-5, 5)]).close().val()
         )
         actual = cast(Wire, r1.union2D(r2).val())
+        self.assertWireEqual(expected, actual)       
 
-        self.assertWireEqual(expected, actual)        
+        wire = cast(Wire, r2.val())
+        actual = cast(Wire, r1.union2D(wire).val())
+        self.assertWireEqual(expected, actual)         
 
     def test_cut2D(self):
         r1 = Workplane().rect(10, 10)
@@ -53,8 +59,11 @@ class WireTestCase(unittest.TestCase):
             [(-5, -5), (5, -5), (5, 0), (0, 0), (0, 5), (-5, 5)]).close().val()
         )
         actual = cast(Wire, r1.cut2D(r2).val())
-
         self.assertWireEqual(expected, actual)     
+
+        wire = cast(Wire, r2.val())
+        actual = cast(Wire, r1.cut2D(wire).val())
+        self.assertWireEqual(expected, actual)       
 
     def assertWireEqual(self, expected, actual):
         self.assertEqual(expected.geomType(), actual.geomType())
