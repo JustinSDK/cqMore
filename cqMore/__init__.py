@@ -1,1 +1,1 @@
-from .cqMore import Workplane
+from .plugin import Workplane
