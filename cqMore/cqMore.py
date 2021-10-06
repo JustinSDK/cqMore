@@ -149,6 +149,3 @@ class Workplane(cadquery.Workplane):
         else:
             return self.union(sf_all, clean=clean)
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod() 
