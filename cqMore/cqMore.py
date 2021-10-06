@@ -23,7 +23,7 @@ import cadquery
 
 class Workplane(cadquery.Workplane):
     """
-    Define plugins. You may simply use cqMore.Workplane to replace cadquery.Workplane. For example:
+    Define plugins. You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For example:
 
         from cqMore import Workplane
 
@@ -32,7 +32,7 @@ class Workplane(cadquery.Workplane):
                     .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2))).extrude(1)
                  )
 
-    You may also attach methods of cqMore.Workplane to cadquery.Workplane, such as:
+    You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such as:
 
         from cadquery import Workplane
         import cqMore
@@ -48,8 +48,14 @@ class Workplane(cadquery.Workplane):
 
     def makePolygon(self: T, points: Iterable[VectorLike], forConstruction: bool = False) -> T:
         """
-        Make a multiple sided wire from a list of points. forConstruction=True tells CadQuery 
-        that we are just using this polygon to help define some other geometry.
+        Make a multiple sided wire from `points`. 
+        
+        ## Parameters
+
+        - `points`: the list of x,y points of the polygon.
+        - `forConstruction`: should the new wires be reference geometry only?
+        
+        ## Examples
         
             from cqMore import Workplane
 
