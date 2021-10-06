@@ -75,6 +75,12 @@ class Workplane(cadquery.Workplane):
         """
         Intersect the provided wire from the current wire. 
 
+        ## Parameters
+
+        - `toIntersect`: a wire object, or a CQ object having a wire – object to intersect.
+
+        ## Examples
+
             from cqMore import Workplane
 
             r1 = Workplane('YZ').rect(10, 10)
@@ -89,6 +95,12 @@ class Workplane(cadquery.Workplane):
         """
         Union the provided wire from the current wire. 
 
+        ## Parameters
+
+        - `toUnion`: a wire object, or a CQ object having a wire – object to union.       
+
+        ## Examples 
+
             from cqMore import Workplane
 
             r1 = Workplane('YZ').rect(10, 10)
@@ -102,6 +114,12 @@ class Workplane(cadquery.Workplane):
     def cut2D(self: T, toCut: Union[T, Wire]) -> T:
         """
         Cut the provided wire from the current wire. 
+
+        ## Parameters
+
+        - `toCut`: a wire object, or a CQ object having a wire – object to cut.       
+
+        ## Examples 
 
             from cqMore import Workplane
 
