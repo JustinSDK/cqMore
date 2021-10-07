@@ -160,14 +160,14 @@ class Workplane(cadquery.Workplane):
         else:
             return self.union(poly_all, clean=clean)
 
-    def surface(self: T, points: MeshGrid, thickness: float, combine: bool = True, clean: bool = True) -> T:
+    def surface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
         """
         create a surface with a coordinate meshgrid.
 
         ## Parameters
 
         - `points`: a coordinate meshgrid.
-        - `thickness`: the amount of being thick.
+        - `thickness`: the amount of being thick (return 2D surface if 0).
         - `combine`: should the results be combined with other solids on the stack (and each other)?
         - `clean`: call `clean()` afterwards to have a clean shape.
 

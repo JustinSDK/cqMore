@@ -48,8 +48,6 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
     leng_pts = leng_col * leng_row
 
     def _all_pts():
-        half_thickness = thickness / 2
-
         vectors = ((Vector(*p) for p in row) for row in points)
         face = Face.makeSplineApprox([[
                         Vector(*points[ri][ci]) 
@@ -57,6 +55,14 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
             ] for ci in range(leng_col)]
         )
 
+        if thickness == 0:
+            front_thicken_pts = [] 
+            for row in vectors:
+                for vt in row:
+                    front_thicken_pts.append([vt.x, vt.y, vt.z])
+            return front_thicken_pts
+
+        half_thickness = thickness / 2
         front_thicken_pts = [] 
         back_thicken_pts = [] 
         for row in vectors:
@@ -74,6 +80,9 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
             for ci in range(leng_col - 1):
                 front_faces.append([ci + leng_col * ri, (ci + 1) + leng_col * ri, (ci + 1) + leng_col * (ri + 1)])
                 front_faces.append([ci + leng_col * ri, (ci + 1) + leng_col * (ri + 1), ci + leng_col * (ri + 1)])
+
+        if thickness == 0:
+            return front_faces
 
         back_faces = [[f[2] + leng_pts, f[1] + leng_pts, f[0] + leng_pts] for f in front_faces]
 
