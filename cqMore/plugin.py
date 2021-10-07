@@ -132,6 +132,26 @@ class Workplane(cadquery.Workplane):
         return bool2D(self, toCut, 'cut')
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
+        """
+        create any polyhedron with 3D points(vertices) and faces that enclose the solid. 
+        Each face contains the indices (0 based) of 3 or more points from the `points`.
+
+        ## Parameters
+
+        - `points`: a list of 3D points(vertices).
+        - `faces`: face indices to fully enclose the solid. When looking at any face from 
+                   the outside, the face must list all points in a counter-clockwise order.
+
+        ## Examples 
+
+            from cqMore import Workplane
+
+            points = ((5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5))
+            faces = ((0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3))
+            tetrahedron = Workplane().polyhedron(points, faces)
+        
+        """
+
         poly = polyhedron(points, faces)
         poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
         
@@ -141,6 +161,37 @@ class Workplane(cadquery.Workplane):
             return self.union(poly_all, clean=clean)
 
     def surface(self: T, points: MeshGrid, thickness: float, combine: bool = True, clean: bool = True) -> T:
+        """
+        create a surface with a coordinate meshgrid.
+
+        ## Parameters
+
+        - `points`: a coordinate meshgrid.
+        - `thickness`: The amount of being thick.
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
+
+        ## Examples 
+
+            from cqMore import *
+
+            def paraboloid(x, y):
+                return (x, y, ((y ** 2) - (x ** 2)) / 4)
+
+            min_value = -30
+            max_value = 30
+            step = 5
+            thickness = 0.5
+
+            points = [[
+                    paraboloid(x / 10, y / 10) 
+                for x in range(min_value, max_value, step)
+            ] for y in range(min_value, max_value, step)]
+
+            sf = Workplane().surface(points, thickness)
+
+        """
+
         sf = surface(points, thickness)
         sf_all = self.eachpoint(lambda loc: sf.moved(loc), True)
         
