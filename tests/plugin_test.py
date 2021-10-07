@@ -3,12 +3,12 @@ from typing import cast
 import sys
 sys.path.append('..')
 
-from math import cos, sin, radians
-
-from cadquery import Wire, Vector
+from cadquery import Vector, Vertex, Wire
 from cqMore import Workplane
 
-class WireTestCase(unittest.TestCase):
+class PluginTestCase(unittest.TestCase):
+    # Wire
+    
     def test_makePolygon(self):
         points = [
             (0, 0, 0), (10, 0, 0), (0, 10, 0), (-10, 0, 0)
@@ -20,8 +20,18 @@ class WireTestCase(unittest.TestCase):
             False
         )
 
-        expected = cast(list[Wire], Workplane().rect(5, 5).eachpoint(lambda loc: wire.moved(loc)).vals())
-        actual = cast(list[Wire], Workplane().rect(5, 5).makePolygon(points).vals())
+        expected = cast(list[Wire], 
+                        Workplane().rect(5, 5, forConstruction = True)
+                                   .vertices()
+                                   .eachpoint(lambda loc: wire.moved(loc))
+                                   .vals()
+                   )
+        actual = cast(list[Wire], 
+                      Workplane().rect(5, 5, forConstruction = True)
+                                 .vertices()
+                                 .makePolygon(points)
+                                 .vals()
+                 )
         for i in range(len(expected)):
             self.assertWireEqual(expected[i], actual[i])
 
@@ -75,5 +85,42 @@ class WireTestCase(unittest.TestCase):
             sorted([v.toTuple() for v in actual.Vertices()])
         )
 
+    # Solid
+
+    def test_polyhedron(self):
+        points = (
+            (5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5)
+        )
+
+        faces = (
+            (0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3)
+        )
+
+        tetrahedron = Workplane().polyhedron(points, faces)
+        self.assertEqual(4, tetrahedron.faces().size())
+
+        vertices = tetrahedron.vertices()
+        self.assertEqual(4, vertices.size())
+
+        actual = cast(list[Vertex], vertices.vals())
+        self.assertListEqual(
+            sorted(points), 
+            sorted([v.toTuple() for v in actual])
+        )
+
+    def test_surface(self):
+        points = [
+            [(0, 1, 0), (10, 0, 0), (20, 0, 0)],
+            [(0, 10, 0), (10, 10, 1), (21, 10, 0)],
+            [(0, 20, 0), (10, 21, 0), (20, 20, 0)]
+        ]
+
+        sf = Workplane().surface(points, 1)
+
+        self.assertEqual(32, sf.faces().size())
+
+        vertices = sf.vertices()
+        self.assertEqual(18, vertices.size())
+        
 if __name__ == '__main__':
     unittest.main()
