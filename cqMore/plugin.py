@@ -34,7 +34,8 @@ class Workplane(cadquery.Workplane):
 
         result = (Workplane()
                     .rect(10, 10)
-                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2))).extrude(1)
+                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
+                    .extrude(1)
                  )
 
     You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such as:
@@ -46,7 +47,8 @@ class Workplane(cadquery.Workplane):
 
         result = (Workplane()
                     .rect(10, 10)
-                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2))).extrude(1)
+                    .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
+                    .extrude(1)
                  )
 
     """
