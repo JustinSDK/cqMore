@@ -167,7 +167,7 @@ class Workplane(cadquery.Workplane):
         ## Parameters
 
         - `points`: a coordinate meshgrid.
-        - `thickness`: The amount of being thick.
+        - `thickness`: the amount of being thick.
         - `combine`: should the results be combined with other solids on the stack (and each other)?
         - `clean`: call `clean()` afterwards to have a clean shape.
 
