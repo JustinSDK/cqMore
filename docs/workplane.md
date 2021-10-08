@@ -23,6 +23,24 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
                 .extrude(1)
              )
 
+## 2D Operations
+
+ Signature | Description
+--|--
+[`Workplane.makePolygon(points[,forConstruction])`](workplane.md#makepolygon) | Make a multiple sided wire from `points`.
+[`Workplane.intersect2D(toIntersect)`](workplane.md#intersect2d) | Intersect the provided wire from the current wire. 
+[`Workplane.union2D(toUnion)`](workplane.md#union2d) | Union the provided wire from the current wire. 
+[`Workplane.cut2D(toCut)`](workplane.md#cut2d) | Cut the provided wire from the current wire. 
+
+## 3D Operations
+
+ Signature | Description
+--|--
+[`Workplane.polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
+[`Workplane.surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
+
+----
+
 # `makePolygon`
 
 Make a multiple sided wire from `points`. 
