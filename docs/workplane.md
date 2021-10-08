@@ -38,6 +38,8 @@ Make a multiple sided wire from `points`.
 
     triangle = Workplane().makePolygon(((-2, -2), (2, -2), (0, 2))) 
 
+![makePolygon](images/workplane_makePolygon.JPG)
+
 # `intersect2D(toIntersect)`
 
 Intersect the provided wire from the current wire. 
@@ -52,7 +54,9 @@ Intersect the provided wire from the current wire.
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-    intersected = r1.intersect2D(r2)
+    intersected = r1.intersect2D(r2).extrude(1)
+
+![intersect2D](images/workplane_intersect2D.JPG)
 
 # `union2D(toUnion)`
 
@@ -68,7 +72,9 @@ Union the provided wire from the current wire.
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-    unioned = r1.union2D(r2)
+    unioned = r1.union2D(r2).extrude(1)
+
+![union2D](images/workplane_union2D.JPG)
 
 # `cut2D(toCut)`
 
@@ -84,7 +90,9 @@ Cut the provided wire from the current wire.
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-    cutted = r1.cut2D(r2)
+    cutted = r1.cut2D(r2).extrude(1)
+
+![cut2D](images/workplane_cut2D.JPG)
 
 # `polyhedron(points, faces, combine = True, clean = True)`
 
@@ -102,6 +110,8 @@ Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
     points = ((5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5))
     faces = ((0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3))
     tetrahedron = Workplane().polyhedron(points, faces)
+
+![polyhedron](images/workplane_polyhedron.JPG)
 
 # `surface(points, thickness = 0, combine = True, clean = True)`
 
@@ -133,3 +143,4 @@ Create a surface with a coordinate meshgrid.
 
     sf = Workplane().surface(points, thickness)
 
+![surface](images/workplane_surface.JPG)
