@@ -16,7 +16,7 @@ To install cqMore directly from GitHub, run the following `pip` command:
 
 	pip install git+git://github.com/JustinSDK/cqMore.git
 
-# Introduction
+## Introduction
 
 You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For example:
 
@@ -40,4 +40,22 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
                 .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
                 .extrude(1)
              )
+
+## Documentation
+
+### 2D Operations
+
+ Signature | Description
+--|--
+`Workplane.makePolygon(points[,forConstruction)` | Make a multiple sided wire from `points`.
+`Workplane.intersect2D(toIntersect)` | Intersect the provided wire from the current wire. 
+`Workplane.union2D(toUnion)` | Union the provided wire from the current wire. 
+`Workplane.cut2D(toCut)` | Cut the provided wire from the current wire. 
+
+### 3D Operations
+
+ Signature | Description
+--|--
+`Workplane.polyhedron(points,faces[,combine,clean])` | Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
+`Workplane.surface(points,thickness[,combine,clean])` | Create a surface with a coordinate meshgrid.
 

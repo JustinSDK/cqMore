@@ -135,7 +135,7 @@ class Workplane(cadquery.Workplane):
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
-        create any polyhedron with 3D points(vertices) and faces that enclose the solid. 
+        Create any polyhedron with 3D points(vertices) and faces that enclose the solid. 
         Each face contains the indices (0 based) of 3 or more points from the `points`.
 
         ## Parameters
@@ -164,7 +164,7 @@ class Workplane(cadquery.Workplane):
 
     def surface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
         """
-        create a surface with a coordinate meshgrid.
+        Create a surface with a coordinate meshgrid.
 
         ## Parameters
 
