@@ -6,7 +6,7 @@ cqMore is a [CadQuery](https://github.com/CadQuery/cadquery) plugin (under const
 
 ## Installation
 
-Please use `conda` to install CadQuery and its dependencies. Then, use `conda` to install `git` and `pip` if you don't have them:
+Please use `conda` to install CadQuery and its dependencies (see [Getting started](https://github.com/CadQuery/cadquery#getting-started) of CadQuery). Then, use `conda` to install `git` and `pip` if you don't have them:
 
 	conda install git
 	
