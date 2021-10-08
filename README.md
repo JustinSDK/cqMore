@@ -45,15 +45,15 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
-`Workplane.makePolygon(points[,forConstruction])` | Make a multiple sided wire from `points`.
-`Workplane.intersect2D(toIntersect)` | Intersect the provided wire from the current wire. 
-`Workplane.union2D(toUnion)` | Union the provided wire from the current wire. 
-`Workplane.cut2D(toCut)` | Cut the provided wire from the current wire. 
+[`Workplane.makePolygon(points[,forConstruction])`](docs/workplane.md#makepolygonpoints-forconstruction--false) | Make a multiple sided wire from `points`.
+[`Workplane.intersect2D(toIntersect)`](docs/workplane.md#intersect2dtointersect) | Intersect the provided wire from the current wire. 
+[`Workplane.union2D(toUnion)`](docs/workplane.md#union2dtounion) | Union the provided wire from the current wire. 
+[`Workplane.cut2D(toCut)`](docs/workplane.md#cut2dtocut) | Cut the provided wire from the current wire. 
 
 ### 3D Operations
 
  Signature | Description
 --|--
-`Workplane.polyhedron(points,faces[,combine,clean])` | Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
-`Workplane.surface(points,[thickness,combine,clean])` | Create a surface with a coordinate meshgrid.
+[`Workplane.polyhedron(points,faces[,combine,clean])`](docs/workplane.md#polyhedronpoints-faces-combine--true-clean--true) | Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
+[`Workplane.surface(points,[thickness,combine,clean])`](docs/workplane.md#surfacepoints-thickness--0-combine--true-clean--true) | Create a surface with a coordinate meshgrid.
 
