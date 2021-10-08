@@ -1,6 +1,6 @@
-# cqMore
+# cqMore (under construction)
 
-cqMore is a [CadQuery](https://github.com/CadQuery/cadquery) plugin (under construction).
+cqMore is a [CadQuery](https://github.com/CadQuery/cadquery) plugin based on CadQuery 2.1.
 
 ![cqMore](images/ripple.JPG)
 
