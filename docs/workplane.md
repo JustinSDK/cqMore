@@ -23,14 +23,14 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
                 .extrude(1)
              )
 
-# `makePolygon(points, forConstruction = False)`
+# `makePolygon`
 
 Make a multiple sided wire from `points`. 
 
 ## Parameters
 
 - `points`: the list of x,y points of the polygon.
-- `forConstruction`: should the new wires be reference geometry only?
+- `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples
 
@@ -40,7 +40,7 @@ Make a multiple sided wire from `points`.
 
 ![makePolygon](images/workplane_makePolygon.JPG)
 
-# `intersect2D(toIntersect)`
+# `intersect2D`
 
 Intersect the provided wire from the current wire. 
 
@@ -58,7 +58,7 @@ Intersect the provided wire from the current wire.
 
 ![intersect2D](images/workplane_intersect2D.JPG)
 
-# `union2D(toUnion)`
+# `union2D`
 
 Union the provided wire from the current wire. 
 
@@ -76,7 +76,7 @@ Union the provided wire from the current wire.
 
 ![union2D](images/workplane_union2D.JPG)
 
-# `cut2D(toCut)`
+# `cut2D`
 
 Cut the provided wire from the current wire. 
 
@@ -94,7 +94,7 @@ Cut the provided wire from the current wire.
 
 ![cut2D](images/workplane_cut2D.JPG)
 
-# `polyhedron(points, faces, combine = True, clean = True)`
+# `polyhedron`
 
 Create any polyhedron with 3D points(vertices) and faces that enclose the solid. Each face contains the indices (0 based) of 3 or more points from the `points`.
 
@@ -102,6 +102,8 @@ Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
 
 - `points`: a list of 3D points(vertices).
 - `faces`: face indices to fully enclose the solid. When looking at any face from the outside, the face must list all points in a counter-clockwise order.
+- `combine = True`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
 
 ## Examples 
 
@@ -113,16 +115,16 @@ Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
 
 ![polyhedron](images/workplane_polyhedron.JPG)
 
-# `surface(points, thickness = 0, combine = True, clean = True)`
+# `surface`
 
 Create a surface with a coordinate meshgrid.
 
 ## Parameters
 
 - `points`: a coordinate meshgrid.
-- `thickness`: the amount of being thick (return 2D surface if 0).
-- `combine`: should the results be combined with other solids on the stack (and each other)?
-- `clean`: call `clean()` afterwards to have a clean shape.
+- `thickness = 0`: the amount of being thick (return 2D surface if 0).
+- `combine = True`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
 
 ## Examples 
 
