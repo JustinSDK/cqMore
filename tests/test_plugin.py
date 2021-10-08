@@ -6,7 +6,7 @@ sys.path.append('..')
 from cadquery import Vector, Vertex, Wire
 from cqMore import Workplane
 
-class PluginTestCase(unittest.TestCase):
+class TestWorkplane(unittest.TestCase):
     # Wire
     
     def test_makePolygon(self):
