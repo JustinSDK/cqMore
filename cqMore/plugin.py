@@ -87,7 +87,7 @@ class Workplane(cadquery.Workplane):
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-            intersected = r1.intersect2D(r2)
+            intersected = r1.intersect2D(r2).extrude(1)
 
         """
 
@@ -107,7 +107,7 @@ class Workplane(cadquery.Workplane):
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-            unioned = r1.union2D(r2)
+            unioned = r1.union2D(r2).extrude(1)
 
         """
 
@@ -127,7 +127,7 @@ class Workplane(cadquery.Workplane):
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
-            cutted = r1.cut2D(r2)
+            cutted = r1.cut2D(r2).extrude(1)
 
         """
 
