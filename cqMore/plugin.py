@@ -161,6 +161,24 @@ class Workplane(cadquery.Workplane):
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
     def polyline_join(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
+        """
+        Place a join on each point. Hull each pair of joins and union all convex hulls.
+
+        ## Parameters
+
+        - `points`: the list of x, y points. 
+        - `join`: the wire as a join
+        - `forConstruction`: should the new wires be reference geometry only?
+
+        ## Examples 
+
+            from cqMore import Workplane
+
+            points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
+            polyline = Workplane().polyline_join(points, Workplane().polygon(6, 1))
+
+        """       
+
         polyline = polyline_join_wire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
