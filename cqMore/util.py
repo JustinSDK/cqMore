@@ -17,3 +17,11 @@ def toVectors(points: Iterable[VectorLike]) -> list[Vector]:
         return cast(list[Vector], list(points))
     
     return [Vector(*p) for p in points]
+
+def toTuples(points: Iterable[VectorLike]) -> list[tuple]:
+    it = iter(points)
+    if isinstance(next(it), tuple):
+        return cast(list[tuple], list(points))
+    
+    vts = cast(list[Vector], points)
+    return [v.toTuple() for v in vts]
