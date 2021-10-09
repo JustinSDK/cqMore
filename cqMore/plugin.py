@@ -1,6 +1,7 @@
 from .wire import (
     makePolygon,
-    bool2D
+    bool2D,
+    hull2D
 )
 
 from .solid import (
@@ -10,7 +11,8 @@ from .solid import (
 
 from typing import (
     Iterable,
-    Union
+    Union,
+    cast
 )
 
 from .cq_typing import (
@@ -59,7 +61,7 @@ class Workplane(cadquery.Workplane):
         
         ## Parameters
 
-        - `points`: the list of x,y points of the polygon.
+        - `points`: the list of x, y points of the polygon.
         - `forConstruction`: should the new wires be reference geometry only?
         
         ## Examples
@@ -132,6 +134,30 @@ class Workplane(cadquery.Workplane):
         """
 
         return bool2D(self, toCut, 'cut')
+
+    def hull2D(self: T, points: Iterable[VectorLike], forConstruction: bool = False) -> T:
+        """
+        Create a convex hull through the provided points.
+
+        ## Parameters
+
+        - `points`: the list of x, y points. 
+        - `forConstruction`: should the new wires be reference geometry only?
+
+        ## Examples 
+
+            from random import random
+            from cqMore import Workplane
+
+            points = [(random(), random()) for i in range(20)]
+
+            pts = Workplane().polyline(points).vertices()
+            convex = Workplane().hull2D(points)
+
+        """
+
+        p = makePolygon(hull2D(points), forConstruction)
+        return self.eachpoint(lambda loc: p.moved(loc), True)
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
