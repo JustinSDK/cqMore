@@ -6,7 +6,7 @@ sys.path.append('..')
 from cadquery import Vector, Vertex, Wire
 from cqMore import Workplane
 
-class TestWorkplane(unittest.TestCase):
+class TestWorkplane2D(unittest.TestCase):
     # Wire
     
     def test_makePolygon(self):
@@ -85,6 +85,7 @@ class TestWorkplane(unittest.TestCase):
             sorted([v.toTuple() for v in actual.Vertices()])
         )
 
+class TestWorkplane3D(unittest.TestCase):
     # Solid
 
     def test_polyhedron(self):
