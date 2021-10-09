@@ -23,5 +23,4 @@ def toTuples(points: Iterable[VectorLike]) -> list[tuple]:
     if isinstance(next(it), tuple):
         return cast(list[tuple], list(points))
     
-    vts = cast(list[Vector], points)
-    return [v.toTuple() for v in vts]
+    return [v.toTuple() for v in cast(list[Vector], points)]
