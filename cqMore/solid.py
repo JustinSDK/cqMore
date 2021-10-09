@@ -12,11 +12,12 @@ from typing import (
 )
 
 from .cq_typing import (
-    Point3D,
     VectorLike,
     FaceIndices,
     MeshGrid
 )
+
+from .util import toVectors
 
 def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
@@ -29,7 +30,7 @@ def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> So
             for i in range(leng_vertices)
         )
 
-    vectors = [Vector(*p) for p in points]
+    vectors = toVectors(points)
 
     return Solid.makeSolid(
         Shell.makeShell(
@@ -48,7 +49,6 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
     leng_pts = leng_col * leng_row
 
     def _all_pts():
-        vectors = ((Vector(*p) for p in row) for row in points)
         face = Face.makeSplineApprox([[
                         Vector(*points[ri][ci]) 
                 for ri in range(leng_row)
@@ -57,16 +57,16 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
 
         if thickness == 0:
             front_thicken_pts = [] 
-            for row in vectors:
-                for vt in row:
+            for row in points:
+                for vt in toVectors(row):
                     front_thicken_pts.append([vt.x, vt.y, vt.z])
             return front_thicken_pts
 
         half_thickness = thickness / 2
         front_thicken_pts = [] 
         back_thicken_pts = [] 
-        for row in vectors:
-            for vt in row:
+        for row in points:
+            for vt in toVectors(row):
                 n = face.normalAt(vt).normalized()
                 v = vt + n.multiply(half_thickness)
                 front_thicken_pts.append([v.x, v.y, v.z])

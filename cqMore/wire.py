@@ -15,6 +15,8 @@ from .cq_typing import (
     VectorLike
 )
 
+from .util import toVectors
+
 def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     if isinstance(toBool, Workplane):
         toExtruded = (
@@ -36,6 +38,6 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     return booled.faces(planeZdir).wires().toPending()
 
 def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> Wire:
-    vts = [Vector(*p) for p in points]
+    vts = toVectors(points)
     vts.append(vts[0])
     return Wire.makePolygon(vts, forConstruction)
