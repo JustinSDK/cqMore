@@ -69,3 +69,24 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point3D]:
     
     return cast(list[Point3D], convex_hull)
 
+def polyline_join_wire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
+    if isinstance(join, Workplane):
+        join_wire = cast(Wire, join.val())
+    elif isinstance(join, Wire):
+        join_wire = join
+    else:
+        raise ValueError("Join type '{}' is not allowed".format(type(join)))
+    
+    pts = toTuples(points)
+    join_vts = [v.toTuple() for v in join_wire.Vertices()]
+    joins = [[(p[0] + vt[0], p[1] + vt[1]) for vt in join_vts] for p in pts]
+    wires = [
+        makePolygon(hull2D(joins[i] + joins[i + 1]), forConstruction)
+        for i in range(len(pts) - 1)
+    ]
+
+    wp = Workplane(wires[0]).toPending()
+    for i in range(1, len(wires)):
+        wp = bool2D(wp, wires[i], 'union')
+
+    return cast(Wire, wp.val())

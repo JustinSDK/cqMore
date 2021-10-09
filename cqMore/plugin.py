@@ -1,7 +1,8 @@
 from .wire import (
     makePolygon,
     bool2D,
-    hull2D
+    hull2D,
+    polyline_join_wire
 )
 
 from .solid import (
@@ -158,6 +159,10 @@ class Workplane(cadquery.Workplane):
 
         p = makePolygon(hull2D(points), forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
+
+    def polyline_join(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
+        polyline = polyline_join_wire(points, join, forConstruction)
+        return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
