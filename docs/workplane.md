@@ -32,7 +32,7 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 [`union2D(toUnion)`](workplane.md#union2d) | Union the provided wire from the current wire. 
 [`cut2D(toCut)`](workplane.md#cut2d) | Cut the provided wire from the current wire. 
 [`hull2D(points[,forConstruction])`](workplane.md#hull2d) | Create a convex hull through the provided points. 
-[`polyline_join(points,join[,forConstruction])`](workplane.md#hull2d) | Place a join on each point. Hull each pair of joins and union all convex hulls.
+[`polyline_join(points,join[,forConstruction])`](workplane.md#polyline_join) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## 3D Operations
 
