@@ -27,23 +27,24 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
-[`makePolygon(points[,forConstruction])`](workplane.md#makepolygon) | Make a multiple sided wire from `points`.
+[`makePolygon(points[,forConstruction])`](workplane.md#makepolygon) | Make a multiple sided wire through the provided points.
 [`intersect2D(toIntersect)`](workplane.md#intersect2d) | Intersect the provided wire from the current wire. 
 [`union2D(toUnion)`](workplane.md#union2d) | Union the provided wire from the current wire. 
 [`cut2D(toCut)`](workplane.md#cut2d) | Cut the provided wire from the current wire. 
+[`hull2D(points[,forConstruction])`](workplane.md#hull2d) | Create a convex hull through the provided points. 
 
 ## 3D Operations
 
  Signature | Description
 --|--
-[`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
+[`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
 
 ----
 
 # `makePolygon`
 
-Make a multiple sided wire from `points`. 
+Make a multiple sided wire through the provided points. 
 
 ## Parameters
 
@@ -111,6 +112,27 @@ Cut the provided wire from the current wire.
     cutted = r1.cut2D(r2).extrude(1)
 
 ![cut2D](images/workplane_cut2D.JPG)
+
+# `hull2D`
+
+Create a convex hull through the provided points. 
+
+## Parameters
+
+- `points`: the list of x, y points. 
+- `forConstruction = False`: should the new wires be reference geometry only?
+
+## Examples
+
+    from random import random
+    from cqMore import Workplane
+
+    points = [(random(), random()) for i in range(20)]
+
+    pts = Workplane().polyline(points).vertices()
+    convex = Workplane().hull2D(points)
+
+![hull2D](images/workplane_hull2D.JPG)
 
 # `polyhedron`
 

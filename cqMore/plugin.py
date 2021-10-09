@@ -57,7 +57,7 @@ class Workplane(cadquery.Workplane):
 
     def makePolygon(self: T, points: Iterable[VectorLike], forConstruction: bool = False) -> T:
         """
-        Make a multiple sided wire from `points`. 
+        Make a multiple sided wire through the provided points. 
         
         ## Parameters
 
