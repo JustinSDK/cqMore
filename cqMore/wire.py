@@ -89,4 +89,6 @@ def polyline_join_wire(points: Iterable[VectorLike], join: Union[T, Wire], forCo
     for i in range(1, len(wires)):
         wp = bool2D(wp, wires[i], 'union')
 
-    return cast(Wire, wp.val())
+    wire = cast(Wire, wp.val())
+    wire.forConstruction = forConstruction
+    return wire
