@@ -32,6 +32,7 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 [`union2D(toUnion)`](workplane.md#union2d) | Union the provided wire from the current wire. 
 [`cut2D(toCut)`](workplane.md#cut2d) | Cut the provided wire from the current wire. 
 [`hull2D(points[,forConstruction])`](workplane.md#hull2d) | Create a convex hull through the provided points. 
+[`polyline_join(points,join[,forConstruction])`](workplane.md#hull2d) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## 3D Operations
 
@@ -133,6 +134,25 @@ Create a convex hull through the provided points.
     convex = Workplane().hull2D(points)
 
 ![hull2D](images/workplane_hull2D.JPG)
+
+# `polyline_join`
+
+Create a convex hull through the provided points. 
+
+## Parameters
+
+- `points`: the list of x, y points. 
+- `join`: the wire as a join
+- `forConstruction`: should the new wires be reference geometry only?
+
+## Examples 
+
+    from cqMore import Workplane
+
+    points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
+    polyline = Workplane().polyline_join(points, Workplane().polygon(6, 1))
+
+![polyline_join](images/workplane_polyline_join.JPG)
 
 # `polyhedron`
 
