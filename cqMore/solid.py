@@ -113,11 +113,11 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
 
     return polyhedron(_all_pts(), _all_faces())
 
-def uvsphere(radius, n: int = 2) -> Solid:
-    angleStep = 180.0 / n
+def uvsphere(radius: float, rings: int = 2) -> Solid:
+    angleStep = 180.0 / rings
     vectors = []
-    for p in range(n - 1, 0, -1):
-        for t in range(2 * n):
+    for p in range(rings - 1, 0, -1):
+        for t in range(2 * rings):
             phi = radians(p * angleStep)
             theta = radians(t * angleStep)
             sinPhi = sin(phi)
@@ -129,28 +129,28 @@ def uvsphere(radius, n: int = 2) -> Solid:
     vectors.append(Vector(0, 0, radius))
 
     # ring
-    leng_t = 2 * n
+    leng_t = 2 * rings
     faces = []
-    for p in range(n - 2):
-        for t in range(2 * n - 1):
+    for p in range(rings - 2):
+        for t in range(2 * rings - 1):
             faces.append((t + leng_t * p, (t + 1) + leng_t * p, (t + 1) + leng_t * (p + 1)))
             faces.append((t + leng_t * p, (t + 1) + leng_t * (p + 1), t + leng_t * (p + 1)))
-        t = 2 * n - 1
+        t = 2 * rings - 1
         faces.append((t + leng_t * p, leng_t * p, leng_t * (p + 1)))
         faces.append((t + leng_t * p, leng_t * (p + 1), t + leng_t * (p + 1)))
     
     # bottom
     leng_vectors = len(vectors)
     bi = leng_vectors - 2
-    for t in range(2 * n - 1):
+    for t in range(2 * rings - 1):
         faces.append((bi, t + 1, t))
-    faces.append((bi, 0, 2 * n - 1))
+    faces.append((bi, 0, 2 * rings - 1))
 
     # top
     ti = leng_vectors - 1
-    li = (n - 2) * leng_t
-    for t in range(2 * n - 1):
+    li = (rings - 2) * leng_t
+    for t in range(2 * rings - 1):
         faces.append((ti, li + t, li + t + 1))
-    faces.append((ti, li + (2 * n - 1), li))    
+    faces.append((ti, li + (2 * rings - 1), li))    
 
     return polyhedron(vectors, faces)
