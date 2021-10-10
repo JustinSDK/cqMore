@@ -6,6 +6,7 @@ from .wire import (
 )
 
 from .solid import (
+    uvsphere,
     polyhedron,
     surface
 )
@@ -180,6 +181,36 @@ class Workplane(cadquery.Workplane):
 
         polyline = polylineJoinWire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
+
+    def uvsphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
+        """
+        Create a uvsphere.
+
+        ## Parameters
+
+        - `radius`: the sphere radius.
+        - `n`: face indices to fully enclose the solid. When looking at any face from 
+                   the outside, the face must list all points in a counter-clockwise order.
+
+        ## Examples 
+
+            from cqMore import Workplane
+
+            spheres = (Workplane()
+                        .rect(5, 5, forConstruction=True)
+                        .vertices()
+                        .uvsphere(2, rings = 5)
+                    )
+        
+        """
+
+        sphere = uvsphere(radius, rings)
+        spheres = self.eachpoint(lambda loc: sphere.moved(loc), True)
+        
+        if not combine:
+            return spheres
+        else:
+            return self.union(spheres, clean=clean)
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
