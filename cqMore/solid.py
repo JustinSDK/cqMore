@@ -4,7 +4,8 @@ from cadquery import (
     Wire, 
     Solid, 
     Shell, 
-    Face
+    Face,
+    Workplane
 )
 
 from typing import (
@@ -18,6 +19,8 @@ from .cq_typing import (
 )
 
 from .util import toVectors
+
+from math import radians, cos, sin
 
 def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
@@ -109,3 +112,45 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
         return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
 
     return polyhedron(_all_pts(), _all_faces())
+
+def uvsphere(radius, n: int = 2) -> Solid:
+    angleStep = 180.0 / n
+    vectors = []
+    for p in range(n - 1, 0, -1):
+        for t in range(2 * n):
+            phi = radians(p * angleStep)
+            theta = radians(t * angleStep)
+            sinPhi = sin(phi)
+            x = radius * sinPhi * cos(theta)
+            y = radius * sinPhi * sin(theta)
+            z = radius * cos(phi)
+            vectors.append(Vector(x, y, z))
+    vectors.append(Vector(0, 0, -radius))
+    vectors.append(Vector(0, 0, radius))
+
+    # ring
+    leng_t = 2 * n
+    faces = []
+    for p in range(n - 2):
+        for t in range(2 * n - 1):
+            faces.append((t + leng_t * p, (t + 1) + leng_t * p, (t + 1) + leng_t * (p + 1)))
+            faces.append((t + leng_t * p, (t + 1) + leng_t * (p + 1), t + leng_t * (p + 1)))
+        t = 2 * n - 1
+        faces.append((t + leng_t * p, leng_t * p, leng_t * (p + 1)))
+        faces.append((t + leng_t * p, leng_t * (p + 1), t + leng_t * (p + 1)))
+    
+    # bottom
+    leng_vectors = len(vectors)
+    bi = leng_vectors - 2
+    for t in range(2 * n - 1):
+        faces.append((bi, t + 1, t))
+    faces.append((bi, 0, 2 * n - 1))
+
+    # top
+    ti = leng_vectors - 1
+    li = (n - 2) * leng_t
+    for t in range(2 * n - 1):
+        faces.append((ti, li + t, li + t + 1))
+    faces.append((ti, li + (2 * n - 1), li))    
+
+    return polyhedron(vectors, faces)
