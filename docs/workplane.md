@@ -37,6 +37,7 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
+[`uvSphere(radius,[rings])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
 
@@ -152,6 +153,27 @@ Create a convex hull through the provided points.
     polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
 
 ![polylineJoin2D](images/workplane_polylineJoin2D.JPG)
+
+# `uvSphere`
+
+Create a UV sphere.
+
+## Parameters
+
+- `radius`: sphere radius.
+- `rings`: number of horizontal segments.
+
+## Examples 
+
+    from cqMore import Workplane
+
+    spheres = (Workplane()
+                .rect(5, 5, forConstruction=True)
+                .vertices()
+                .uvSphere(2, rings = 5)
+            )
+
+![uvSphere](images/workplane_uvSphere.JPG)
 
 # `polyhedron`
 

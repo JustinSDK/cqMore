@@ -187,7 +187,7 @@ class Workplane(cadquery.Workplane):
 
         ## Parameters
 
-        - `radius`: the sphere radius.
+        - `radius`: sphere radius.
         - `rings`: number of horizontal segments.
 
         ## Examples 
