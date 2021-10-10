@@ -12,7 +12,7 @@ from typing import (
 
 from .cq_typing import (
     T,
-    Point3D,
+    Point2D,
     VectorLike
 )
 
@@ -46,7 +46,7 @@ def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> 
     vts.append(vts[0])
     return Wire.makePolygon(vts, forConstruction)
 
-def hull2D(points: Iterable[VectorLike]) -> list[Point3D]:
+def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
     def _cross(o, a, b):
         return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
@@ -67,7 +67,7 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point3D]:
             convex_hull.pop()
         convex_hull.append(pts[i])
     
-    return cast(list[Point3D], convex_hull)
+    return cast(list[Point2D], convex_hull)
 
 def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
     if isinstance(join, Workplane):
