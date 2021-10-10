@@ -91,6 +91,11 @@ class TestWorkplane2D(unittest.TestCase):
         pts = Workplane().hull2D(points, forConstruction = True).vertices().vals()
         self.assertEqual(6, len(pts))
 
+    def test_polylineJoin2D(self):
+        points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
+        polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
+        self.assertEqual(18, len(polyline.vertices().vals()))
+
     def assertWireEqual(self, expected, actual):
         self.assertEqual(expected.geomType(), actual.geomType())
         self.assertEqual(expected.Center(), actual.Center())
