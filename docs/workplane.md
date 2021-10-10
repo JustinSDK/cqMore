@@ -168,10 +168,10 @@ Create a UV sphere.
     from cqMore import Workplane
 
     spheres = (Workplane()
-                .rect(5, 5, forConstruction=True)
-                .vertices()
-                .uvSphere(2, rings = 5)
-            )
+                  .rect(5, 5, forConstruction=True)
+                  .vertices()
+                  .uvSphere(2, rings = 5)
+              )
 
 ![uvSphere](images/workplane_uvSphere.JPG)
 
