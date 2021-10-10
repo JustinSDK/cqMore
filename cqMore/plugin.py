@@ -189,6 +189,8 @@ class Workplane(cadquery.Workplane):
 
         - `radius`: sphere radius.
         - `rings`: number of horizontal segments.
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
 
         ## Examples 
 
@@ -220,6 +222,8 @@ class Workplane(cadquery.Workplane):
         - `points`: a list of 3D points(vertices).
         - `faces`: face indices to fully enclose the solid. When looking at any face from 
                    the outside, the face must list all points in a counter-clockwise order.
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
 
         ## Examples 
 
