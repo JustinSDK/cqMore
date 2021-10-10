@@ -45,14 +45,13 @@ class Workplane(cadquery.Workplane):
 
         from cadquery import Workplane
         import cqMore
-
-        Workplane.makePolygon = cqMore.Workplane.makePolygon
+        cqMore.extend(Workplane)
 
         result = (Workplane()
                     .rect(10, 10)
                     .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
                     .extrude(1)
-                 )
+                )
 
     """
 

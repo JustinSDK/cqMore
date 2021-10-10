@@ -14,14 +14,13 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
     from cadquery import Workplane
     import cqMore
-
-    Workplane.makePolygon = cqMore.Workplane.makePolygon
+    cqMore.extend(Workplane)
 
     result = (Workplane()
                 .rect(10, 10)
                 .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
                 .extrude(1)
-             )
+            )
 
 ## 2D Operations
 
