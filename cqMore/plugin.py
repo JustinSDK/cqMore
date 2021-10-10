@@ -13,8 +13,7 @@ from .solid import (
 
 from typing import (
     Iterable,
-    Union,
-    cast
+    Union
 )
 
 from .cq_typing import (
@@ -189,8 +188,7 @@ class Workplane(cadquery.Workplane):
         ## Parameters
 
         - `radius`: the sphere radius.
-        - `n`: face indices to fully enclose the solid. When looking at any face from 
-                   the outside, the face must list all points in a counter-clockwise order.
+        - `rings`: number of horizontal segments.
 
         ## Examples 
 
