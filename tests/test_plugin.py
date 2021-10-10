@@ -109,6 +109,15 @@ class TestWorkplane2D(unittest.TestCase):
 class TestWorkplane3D(unittest.TestCase):
     # Solid
 
+    def test_uvSphere(self):
+        spheres = (Workplane()
+                      .rect(5, 5, forConstruction=True)
+                      .vertices()
+                      .uvSphere(2, rings = 5)
+                  )
+
+        self.assertEqual(200, len(spheres.faces().vals()))
+
     def test_polyhedron(self):
         points = (
             (5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5)
