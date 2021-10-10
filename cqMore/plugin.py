@@ -6,7 +6,7 @@ from .wire import (
 )
 
 from .solid import (
-    uvsphere,
+    uvSphere,
     polyhedron,
     surface
 )
@@ -181,9 +181,9 @@ class Workplane(cadquery.Workplane):
         polyline = polylineJoinWire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
-    def uvsphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
+    def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
         """
-        Create a uvsphere.
+        Create a UV sphere.
 
         ## Parameters
 
@@ -197,12 +197,12 @@ class Workplane(cadquery.Workplane):
             spheres = (Workplane()
                         .rect(5, 5, forConstruction=True)
                         .vertices()
-                        .uvsphere(2, rings = 5)
+                        .uvSphere(2, rings = 5)
                     )
         
         """
 
-        sphere = uvsphere(radius, rings)
+        sphere = uvSphere(radius, rings)
         spheres = self.eachpoint(lambda loc: sphere.moved(loc), True)
         
         if not combine:

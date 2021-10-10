@@ -113,7 +113,7 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
 
     return polyhedron(_all_pts(), _all_faces())
 
-def uvsphere(radius: float, rings: int = 2) -> Solid:
+def uvSphere(radius: float, rings: int = 2) -> Solid:
     angleStep = 180.0 / rings
     vectors = []
     for p in range(rings - 1, 0, -1):
