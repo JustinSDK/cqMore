@@ -50,7 +50,8 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
     def _cross(o, a, b):
         return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
-    pts = sorted(toTuples(points))
+    # only need x, y 
+    pts = [(p[0], p[1]) for p in sorted(toTuples(points))]
     leng = len(pts)
     convex_hull = [pts[0], pts[1]]
 
