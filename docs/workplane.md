@@ -143,7 +143,7 @@ Create a convex hull through the provided points.
 
 - `points`: the list of x, y points. 
 - `join`: the wire as a join
-- `forConstruction`: should the new wires be reference geometry only?
+- `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples 
 
@@ -170,7 +170,7 @@ Create a UV sphere.
     from cqMore import Workplane
 
     spheres = (Workplane()
-                  .rect(5, 5, forConstruction=True)
+                  .rect(5, 5, forConstruction = True)
                   .vertices()
                   .uvSphere(2, rings = 5)
               )
