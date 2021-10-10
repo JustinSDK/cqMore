@@ -251,3 +251,8 @@ class Workplane(cadquery.Workplane):
         else:
             return self.union(sf_all, clean=clean)
 
+def extend(workplaneClz):
+    for attr in dir(Workplane):
+        if not attr.startswith('__'):
+            setattr(workplaneClz, attr, getattr(Workplane, attr))
+    return workplaneClz
