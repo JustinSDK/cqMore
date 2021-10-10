@@ -2,7 +2,7 @@ from .wire import (
     makePolygon,
     bool2D,
     hull2D,
-    polyline_join_wire
+    polylineJoinWire
 )
 
 from .solid import (
@@ -160,7 +160,7 @@ class Workplane(cadquery.Workplane):
         p = makePolygon(hull2D(points), forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
-    def polyline_join2D(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
+    def polylineJoin2D(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
         """
         Place a join on each point. Hull each pair of joins and union all convex hulls.
 
@@ -175,11 +175,11 @@ class Workplane(cadquery.Workplane):
             from cqMore import Workplane
 
             points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
-            polyline = Workplane().polyline_join2D(points, Workplane().polygon(6, 1))
+            polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
 
         """       
 
-        polyline = polyline_join_wire(points, join, forConstruction)
+        polyline = polylineJoinWire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:

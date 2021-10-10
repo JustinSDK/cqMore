@@ -69,7 +69,7 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point3D]:
     
     return cast(list[Point3D], convex_hull)
 
-def polyline_join_wire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
+def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
     if isinstance(join, Workplane):
         join_wire = cast(Wire, join.val())
     elif isinstance(join, Wire):
