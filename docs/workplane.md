@@ -37,7 +37,7 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
-[`uvSphere(radius,[rings])`](workplane.md#uvsphere) | Create a UV sphere.
+[`uvSphere(radius,[rings,combine,clean])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
 
@@ -161,7 +161,9 @@ Create a UV sphere.
 ## Parameters
 
 - `radius`: sphere radius.
-- `rings`: number of horizontal segments.
+- `rings = 2`: number of horizontal segments.
+- `combine = True`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
 
 ## Examples 
 
