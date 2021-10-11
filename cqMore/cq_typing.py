@@ -1,12 +1,6 @@
-from cadquery import (
-    Vector, 
-    Workplane
-)
+from typing import TypeVar, Union
 
-from typing import (
-    TypeVar,
-    Union
-)
+from cadquery import Vector, Workplane
 
 T = TypeVar('T', bound = 'Workplane')
 Point2D = tuple[float, float]

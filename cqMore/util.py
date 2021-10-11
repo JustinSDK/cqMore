@@ -1,15 +1,9 @@
-from cadquery import (
-    Vector
-)
+from typing import Iterable, cast
 
-from typing import (
-    cast,
-    Iterable
-)
+from cadquery import Vector
 
-from .cq_typing import (
-    VectorLike
-)
+from .cq_typing import VectorLike
+
 
 def toVectors(points: Iterable[VectorLike]) -> list[Vector]:
     it = iter(points)

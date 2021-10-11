@@ -1,33 +1,13 @@
-from .wire import (
-    makePolygon,
-    bool2D,
-    hull2D,
-    polylineJoinWire
-)
-
-from .solid import (
-    uvSphere,
-    polyhedron,
-    surface
-)
-
-from typing import (
-    Iterable,
-    Union
-)
-
-from .cq_typing import (
-    T,
-    VectorLike,
-    FaceIndices,
-    MeshGrid
-)
-
-from cadquery import (
-    Wire
-)
+from typing import Iterable, Union
 
 import cadquery
+from cadquery import Wire
+
+from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
+from .solid import polyhedron, surface, uvSphere
+from .spatial import hull2D
+from .wire import bool2D, makePolygon, polylineJoinWire
+
 
 class Workplane(cadquery.Workplane):
     """

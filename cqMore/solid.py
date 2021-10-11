@@ -1,26 +1,11 @@
-from cadquery import (
-    Vector, 
-    Edge, 
-    Wire, 
-    Solid, 
-    Shell, 
-    Face
-)
+from math import cos, radians, sin
+from typing import Iterable, NamedTuple
 
-from typing import (
-    Iterable,
-    NamedTuple
-)
+from cadquery import Edge, Face, Shell, Solid, Vector, Wire
 
-from .cq_typing import (
-    VectorLike,
-    FaceIndices,
-    MeshGrid
-)
+from .cq_typing import FaceIndices, MeshGrid, VectorLike
+from .util import toTuples, toVectors
 
-from .util import toVectors, toTuples
-
-from math import radians, cos, sin
 
 def polyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
