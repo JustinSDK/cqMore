@@ -6,7 +6,7 @@ from cadquery import Wire
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
 from .plugin_solid import makePolyhedron, surface
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
-from .spatial import hull2D
+from .spatial import hull2D, hull
 from .polyhedron import uvSphere
 
 
@@ -133,7 +133,7 @@ class Workplane(cadquery.Workplane):
             points = [(random(), random()) for i in range(20)]
 
             pts = Workplane().polyline(points).vertices()
-            convex = Workplane().hull2D(points)
+            convex_hull = Workplane().hull2D(points)
 
         """
 
@@ -263,6 +263,43 @@ class Workplane(cadquery.Workplane):
             return sf_all
         else:
             return self.union(sf_all, clean=clean)
+
+    def hull(self: T, points: Iterable[VectorLike], combine: bool = True, clean: bool = True) -> T:
+        """
+        Create a convex hull through the provided points.
+
+        ## Parameters
+
+        - `points`: the list of x, y points. 
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
+
+        ## Examples 
+
+            from cqmore import Workplane
+
+            points = (
+                (50, 50, 50),
+                (50, 50, 0),
+                (-50, 50, 0),
+                (-50, -50, 0),
+                (50, -50, 0),
+                (0, 0, 50),
+                (0, 0, -50)
+            )
+
+            convex_hull = Workplane().hull(points)
+
+        """
+
+        poly = makePolyhedron(*hull(points))
+
+        poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
+        
+        if not combine:
+            return poly_all
+        else:
+            return self.union(poly_all, clean=clean)
 
 def extend(workplaneClz):
     """
