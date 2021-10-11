@@ -4,12 +4,12 @@ from cadquery import (
     Wire, 
     Solid, 
     Shell, 
-    Face,
-    Workplane
+    Face
 )
 
 from typing import (
-    Iterable
+    Iterable,
+    NamedTuple
 )
 
 from .cq_typing import (
@@ -18,7 +18,7 @@ from .cq_typing import (
     MeshGrid
 )
 
-from .util import toVectors
+from .util import toVectors, toTuples
 
 from math import radians, cos, sin
 
@@ -154,3 +154,66 @@ def uvSphere(radius: float, rings: int = 2) -> Solid:
     faces.append((ti, li + (2 * rings - 1), li))    
 
     return polyhedron(vectors, faces)
+
+class Polyhedron(NamedTuple):
+    points: Iterable[VectorLike]
+    faces: Iterable[FaceIndices]
+
+def hull(points: Iterable[VectorLike]) -> Polyhedron:
+    def _tv1(vectors, vtIndices):
+        v0 = vtIndices[0]
+        for v1 in range(1, len(vectors)):
+            if (vectors[v1] - vectors[v0]).Length != 0:
+                return v1
+        raise ValueError('points are the same')
+    
+    def _tv2(vectors, vtIndices):
+        v0, v1 = vtIndices
+        for v2 in range(v1 + 1, len(vectors)):
+            nL = (vectors[v1] - vectors[v0]).cross(vectors[v2] - vectors[v0]).Length
+            if nL != 0:
+                return v2
+        raise ValueError('collinear points')
+            
+    def _tv3(vectors, vtIndices):
+        v0, v1, v2 = vtIndices
+        n = (vectors[v1] - vectors[v0]).cross(vectors[v2] - vectors[v0])
+        for v3 in range(v2 + 1, len(vectors)):
+            e = vectors[v3] - vectors[v0]
+            if n.dot(e) != 0:
+                return v3
+
+        raise ValueError('coplanar points')
+
+    def _fstTetrahedron(vectors):
+        vtIndices = [0]
+        vtIndices.append(_tv1(vectors, vtIndices))
+        vtIndices.append(_tv2(vectors, vtIndices))
+        vtIndices.append(_tv3(vectors, vtIndices))
+
+        v0, v1, v2, v3 = vtIndices
+        n = (vectors[v1] - vectors[v0]).cross(vectors[v2] - vectors[v0])
+        e = vectors[v3] - vectors[v0]
+
+        return {
+            'vtIndices': vtIndices, 
+            'faces': [
+                        [v1, v0, v2],
+                        [v0, v1, v3],
+                        [v1, v2, v3],
+                        [v2, v0, v3]
+                     ] 
+                     if n.dot(e) > 0 else 
+                     [
+                        [v0, v1, v2],
+                        [v1, v0, v3],
+                        [v2, v1, v3],
+                        [v0, v2, v3]
+                     ]
+        }
+
+    vectors = [Vector(*p) for p in sorted(toTuples(points))]
+    edges = [[]] * len(vectors)
+
+
+    return Polyhedron([], [])
