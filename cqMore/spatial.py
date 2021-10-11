@@ -128,11 +128,13 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
                 edges[faces[j][2]][faces[j][0]] = types[j]
             faces = _nextFaces(i, faces, types, edges)
 
+    pts = [v.toTuple() for v in vectors]
     convex_vtIndices = {i for face in faces for i in face}
-    convex_vertices = [vectors[i].toTuple() for i in convex_vtIndices]
+    convex_vertices = [pts[i] for i in convex_vtIndices]
+
     v_i_lookup = {v: i for i, v in enumerate(convex_vertices)}
     convex_faces = [
-        tuple(v_i_lookup[convex_vertices[i]] for i in face)
+        tuple(v_i_lookup[pts[i]] for i in face)
         for face in faces
     ]
 
