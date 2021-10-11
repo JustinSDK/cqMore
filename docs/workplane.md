@@ -40,6 +40,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 [`uvSphere(radius,[rings,combine,clean])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
+[`hull(points[,combine,clean])`](workplane.md#hull) | Create a convex hull through the provided points. 
 
 ----
 
@@ -229,3 +230,31 @@ Create a surface with a coordinate meshgrid.
     sf = Workplane().surface(points, thickness)
 
 ![surface](images/workplane_surface.JPG)
+
+# `hull`
+
+Create a convex hull through the provided points. 
+
+## Parameters
+
+- `points`: the list of x, y points. 
+- `combine = True`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
+
+## Examples
+
+    from cqmore import Workplane
+
+    points = (
+        (50, 50, 50),
+        (50, 50, 0),
+        (-50, 50, 0),
+        (-50, -50, 0),
+        (50, -50, 0),
+        (0, 0, 50),
+        (0, 0, -50)
+    )
+
+    convex_hull = Workplane().hull(points)
+
+![hull2D](images/workplane_hull.JPG)
