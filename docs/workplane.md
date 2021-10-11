@@ -31,7 +31,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 [`union2D(toUnion)`](workplane.md#union2d) | Union the provided wire from the current wire. 
 [`cut2D(toCut)`](workplane.md#cut2d) | Cut the provided wire from the current wire. 
 [`hull2D(points[,forConstruction])`](workplane.md#hull2d) | Create a convex hull through the provided points. 
-[`polylineJoin2D(points,join[,forConstruction])`](workplane.md#polyline_join) | Place a join on each point. Hull each pair of joins and union all convex hulls.
+[`polylineJoin2D(points,join[,forConstruction])`](workplane.md#polyline_join2D) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## 3D Operations
 
@@ -41,6 +41,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`surface(points,[thickness,combine,clean])`](workplane.md#surface) | Create a surface with a coordinate meshgrid.
 [`hull(points[,combine,clean])`](workplane.md#hull) | Create a convex hull through the provided points. 
+[`polylineJoin(points,join[,combine,clean])`](workplane.md#polyline_join) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ----
 
@@ -143,7 +144,7 @@ Place a join on each point. Hull each pair of joins and union all convex hulls.
 ## Parameters
 
 - `points`: the list of x, y points. 
-- `join`: the wire as a join
+- `join`: the wire as a join.
 - `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples 
@@ -257,4 +258,28 @@ Create a convex hull through the provided points.
 
     convex_hull = Workplane().hull(points)
 
-![hull2D](images/workplane_hull.JPG)
+![hull](images/workplane_hull.JPG)
+
+# `polylineJoin`
+
+Place a join on each point. Hull each pair of joins and union all convex hulls.
+
+## Parameters
+
+- `points`: the list of x, y points. 
+- `join`: the sold as a join.
+- `combine = True`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
+
+## Examples 
+
+    from cqmore import Workplane
+
+    polyline = (Workplane()
+                    .polylineJoin(
+                        [(0, 0, 0), (10, 0, 0), (10, 0, 10), (10, 10, 10)], 
+                        Workplane().box(1, 1, 1)
+                    )
+                )
+
+![polylineJoin](images/workplane_polylineJoin.JPG)
