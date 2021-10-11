@@ -16,9 +16,9 @@ To install cqMore directly from GitHub, run the following `pip` command:
 
 ## Introduction
 
-You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For example:
+You may simply use `cqmore.Workplane` to replace `cadquery.Workplane`. For example:
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     result = (Workplane()
                 .rect(10, 10)
@@ -26,11 +26,11 @@ You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For examp
                 .extrude(1)
              )
 
-You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such as:
+You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such as:
 
     from cadquery import Workplane
-    import cqMore
-    cqMore.extend(Workplane)
+    import cqmore
+    cqmore.extend(Workplane)
 
     result = (Workplane()
                 .rect(10, 10)
@@ -40,4 +40,4 @@ You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such 
 
 ## API Reference
 
-- [`cqMore.Workplane`](docs/workplane.md)
+- [`cqmore.Workplane`](docs/workplane.md)
