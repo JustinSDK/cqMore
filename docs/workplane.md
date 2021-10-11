@@ -237,7 +237,7 @@ Create a convex hull through the provided points.
 
 ## Parameters
 
-- `points`: the list of x, y points. 
+- `points`: a list of 3D points. 
 - `combine = True`: should the results be combined with other solids on the stack (and each other)?
 - `clean = True`: call `clean()` afterwards to have a clean shape.
 

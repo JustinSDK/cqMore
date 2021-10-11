@@ -253,7 +253,7 @@ class Workplane(cadquery.Workplane):
 
         ## Parameters
 
-        - `points`: the list of x, y points. 
+        - `points`: a list of 3D points. 
         - `combine`: should the results be combined with other solids on the stack (and each other)?
         - `clean`: call `clean()` afterwards to have a clean shape.
 
