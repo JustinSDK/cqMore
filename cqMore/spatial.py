@@ -113,10 +113,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
         
         return faces
 
-
-
     vectors = [Vector(*p) for p in sorted(toTuples(points))]
-
     leng_vectors = len(vectors)
     edges = [[0] * leng_vectors for _ in range(leng_vectors)]
     
