@@ -131,13 +131,13 @@ Create a convex hull through the provided points.
     points = [(random(), random()) for i in range(20)]
 
     pts = Workplane().polyline(points).vertices()
-    convex = Workplane().hull2D(points)
+    convex_hull = Workplane().hull2D(points)
 
 ![hull2D](images/workplane_hull2D.JPG)
 
 # `polylineJoin2D`
 
-Create a convex hull through the provided points. 
+Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## Parameters
 
