@@ -184,14 +184,9 @@ class Workplane(cadquery.Workplane):
                     )
         
         """
-
-        sphere = makePolyhedron(*uvSphere(radius, rings))
-        spheres = self.eachpoint(lambda loc: sphere.moved(loc), True)
         
-        if not combine:
-            return spheres
-        else:
-            return self.union(spheres, clean=clean)
+        return _each_combine_clean(self, makePolyhedron(*uvSphere(radius, rings)), combine, clean)
+
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
@@ -216,13 +211,7 @@ class Workplane(cadquery.Workplane):
         
         """
 
-        poly = makePolyhedron(points, faces)
-        poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
-        
-        if not combine:
-            return poly_all
-        else:
-            return self.union(poly_all, clean=clean)
+        return _each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
 
     def surface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
         """
@@ -255,14 +244,8 @@ class Workplane(cadquery.Workplane):
             sf = Workplane().surface(points, thickness)
 
         """
-
-        sf = surface(points, thickness)
-        sf_all = self.eachpoint(lambda loc: sf.moved(loc), True)
         
-        if not combine:
-            return sf_all
-        else:
-            return self.union(sf_all, clean=clean)
+        return _each_combine_clean(self, surface(points, thickness), combine, clean)
 
     def hull(self: T, points: Iterable[VectorLike], combine: bool = True, clean: bool = True) -> T:
         """
@@ -292,14 +275,14 @@ class Workplane(cadquery.Workplane):
 
         """
 
-        poly = makePolyhedron(*hull(points))
+        return _each_combine_clean(self, makePolyhedron(*hull(points)), combine, clean)
 
-        poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
-        
-        if not combine:
-            return poly_all
-        else:
-            return self.union(poly_all, clean=clean)
+def _each_combine_clean(workplane, solid, combine, clean):
+    all = workplane.eachpoint(lambda loc: solid.moved(loc), True)
+    if not combine:
+        return all
+    else:
+        return workplane.union(all, clean=clean)
 
 def extend(workplaneClz):
     """
