@@ -1,4 +1,4 @@
-from cqMore import *
+from cqmore import *
 
 def paraboloid(x, y):
     return (x, y, ((y ** 2) - (x ** 2)) / 4)

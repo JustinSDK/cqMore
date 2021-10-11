@@ -4,7 +4,7 @@ import sys
 sys.path.append('..')
 
 from cadquery import Vector, Vertex, Wire
-from cqMore import Workplane
+from cqmore import Workplane
 
 class TestWorkplane2D(unittest.TestCase):
     # Wire

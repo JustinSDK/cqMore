@@ -1,4 +1,4 @@
-from cqMore import Workplane
+from cqmore import Workplane
 from math import cos, sin, radians     
 
 fn = 12

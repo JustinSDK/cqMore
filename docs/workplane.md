@@ -1,8 +1,8 @@
-# `cqMore.Workplane`
+# `cqmore.Workplane`
 
-Define plugins. You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For example:
+Define plugins. You may simply use `cqmore.Workplane` to replace `cadquery.Workplane`. For example:
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     result = (Workplane()
                 .rect(10, 10)
@@ -10,11 +10,11 @@ Define plugins. You may simply use `cqMore.Workplane` to replace `cadquery.Workp
                 .extrude(1)
              )
 
-You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such as:
+You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such as:
 
     from cadquery import Workplane
-    import cqMore
-    cqMore.extend(Workplane)
+    import cqmore
+    cqmore.extend(Workplane)
 
     result = (Workplane()
                 .rect(10, 10)
@@ -54,7 +54,7 @@ Make a multiple sided wire through the provided points.
 
 ## Examples
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     triangle = Workplane().makePolygon(((-2, -2), (2, -2), (0, 2))) 
 
@@ -70,7 +70,7 @@ Intersect the provided wire from the current wire.
 
 ## Examples
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -88,7 +88,7 @@ Union the provided wire from the current wire.
 
 ## Examples 
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -106,7 +106,7 @@ Cut the provided wire from the current wire.
 
 ## Examples 
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     r1 = Workplane('YZ').rect(10, 10)
     r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -126,7 +126,7 @@ Create a convex hull through the provided points.
 ## Examples
 
     from random import random
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     points = [(random(), random()) for i in range(20)]
 
@@ -147,7 +147,7 @@ Create a convex hull through the provided points.
 
 ## Examples 
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
     polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
@@ -167,7 +167,7 @@ Create a UV sphere.
 
 ## Examples 
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     spheres = (Workplane()
                   .rect(5, 5, forConstruction = True)
@@ -190,7 +190,7 @@ Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
 
 ## Examples 
 
-    from cqMore import Workplane
+    from cqmore import Workplane
 
     points = ((5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5))
     faces = ((0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3))
@@ -211,7 +211,7 @@ Create a surface with a coordinate meshgrid.
 
 ## Examples 
 
-    from cqMore import *
+    from cqmore import *
 
     def paraboloid(x, y):
         return (x, y, ((y ** 2) - (x ** 2)) / 4)

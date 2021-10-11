@@ -1,4 +1,4 @@
-from cqMore import Workplane
+from cqmore import Workplane
 
 r1 = Workplane('YZ').rect(10, 10)
 r2 = Workplane('YZ').center(5, 5).rect(10, 10)
