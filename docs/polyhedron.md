@@ -7,7 +7,7 @@ This module provides the `Polyhedron` class and functions for creating `Polyhedr
 
     sphere = (Workplane()
                 .polyhedron(*uvSphere(radius = 10, rings = 5))
-            )
+             )
 
 ## Classes
 
@@ -70,6 +70,6 @@ Create a UV sphere.
 
     sphere = (Workplane()
                 .polyhedron(*uvSphere(radius = 10, rings = 5))
-            )
+             )
 
 ![uvSphere](images/polyhedron_uvSphere.JPG)
