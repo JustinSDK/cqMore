@@ -41,3 +41,4 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 ## API Reference
 
 - [`cqmore.Workplane`](docs/workplane.md)
+- `cqmore.polyhedron`
