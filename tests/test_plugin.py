@@ -168,6 +168,15 @@ class TestWorkplane3D(unittest.TestCase):
 
         self.assertEqual(10, len(convex_hull.faces().vals()))
         self.assertEqual(7, len(convex_hull.vertices().vals()))
-        
+
+    def test_polylineJoin(self):
+        polyline = (Workplane()
+                        .polylineJoin(
+                            [(0, 0, 0), (10, 0, 0), (10, 0, 10), (10, 10, 10)], 
+                            Workplane().box(1, 1, 1)
+                        )
+                    )
+        self.assertEqual(16, len(polyline.vertices().vals()))
+
 if __name__ == '__main__':
     unittest.main()
