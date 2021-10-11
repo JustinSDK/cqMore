@@ -152,6 +152,22 @@ class TestWorkplane3D(unittest.TestCase):
 
         vertices = sf.vertices()
         self.assertEqual(18, vertices.size())
+
+    def test_hull(self):
+        points = (
+            (50, 50, 50),
+            (50, 50, 0),
+            (-50, 50, 0),
+            (-50, -50, 0),
+            (50, -50, 0),
+            (0, 0, 50),
+            (0, 0, -50)
+        )
+
+        convex_hull = Workplane().hull(points)
+
+        self.assertEqual(10, len(convex_hull.faces().vals()))
+        self.assertEqual(7, len(convex_hull.vertices().vals()))
         
 if __name__ == '__main__':
     unittest.main()
