@@ -2,7 +2,7 @@ from typing import Iterable, cast
 
 from cadquery import Vector
 
-from .cq_typing import Point2D, Point3D, VectorLike
+from .cq_typing import Point2D, VectorLike
 from .polyhedron import Polyhedron
 from .util import toTuples
 
@@ -128,4 +128,12 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
                 edges[faces[j][2]][faces[j][0]] = types[j]
             faces = _nextFaces(i, faces, types, edges)
 
-    return Polyhedron(cast(list[Point3D], toTuples(vectors)), faces)
+    convex_vtIndices = {i for face in faces for i in face}
+    convex_vertices = [vectors[i].toTuple() for i in convex_vtIndices]
+    v_i_lookup = {v: i for i, v in enumerate(convex_vertices)}
+    convex_faces = [
+        tuple(v_i_lookup[convex_vertices[i]] for i in face)
+        for face in faces
+    ]
+
+    return Polyhedron(convex_vertices, convex_faces)
