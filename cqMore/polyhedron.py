@@ -1,12 +1,12 @@
 from math import cos, radians, sin
 
 from typing import Iterable, NamedTuple
-from .cq_typing import VectorLike, FaceIndices
+from .cq_typing import Point3D, FaceIndices
 
 from cadquery import Vector
 
 class Polyhedron(NamedTuple):
-    points: Iterable[VectorLike]
+    points: Iterable[Point3D]
     faces: Iterable[FaceIndices]
 
 def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
