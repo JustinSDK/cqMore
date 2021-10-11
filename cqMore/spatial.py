@@ -67,25 +67,67 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
         n = (vectors[v1] - vectors[v0]).cross(vectors[v2] - vectors[v0])
         e = vectors[v3] - vectors[v0]
 
-        return {
-            'vtIndices': vtIndices, 
-            'faces': [
-                        [v1, v0, v2],
-                        [v0, v1, v3],
-                        [v1, v2, v3],
-                        [v2, v0, v3]
-                     ] 
-                     if n.dot(e) > 0 else 
-                     [
-                        [v0, v1, v2],
-                        [v1, v0, v3],
-                        [v2, v1, v3],
-                        [v0, v2, v3]
-                     ]
-        }
+        return (
+            vtIndices,
+            # faces 
+            [
+                (v1, v0, v2),
+                (v0, v1, v3),
+                (v1, v2, v3),
+                (v2, v0, v3)
+            ] 
+            if n.dot(e) > 0 else 
+            [
+                (v0, v1, v2),
+                (v1, v0, v3),
+                (v2, v1, v3),
+                (v0, v2, v3)
+            ]
+        )
+
+    def _faceType(vectors, v, faces):
+        vt0 = vectors[faces[0]]
+        vt1 = vectors[faces[1]]
+        vt2 = vectors[faces[2]]
+
+        n = (vt1 - vt0).cross(vt2 - vt0)
+        d = (vt0 - v).dot(n)
+
+        return  1 if d > 0 else ( # convex
+               -1 if d < 0 else   # concav
+                0                 # coplane
+        )
+
+    def _nextFaces(i, currentFaces, types, edges):
+        faces = [face for j, face in enumerate(currentFaces) if types[j] >= 0]
+
+        for v0, v1, v2 in currentFaces:
+            if edges[v0][v1] < 0 and edges[v0][v1] != edges[v1][v0]:
+                faces.append((v0, v1, i))
+        
+            if edges[v1][v2] < 0 and edges[v1][v2] != edges[v2][v1]:
+                faces.append((v1, v2, i))
+
+            if edges[v2][v0] < 0 and edges[v2][v0] != edges[v0][v2]:
+                faces.append((v2, v0, i))
+        
+        return faces
+
+
 
     vectors = [Vector(*p) for p in sorted(toTuples(points))]
-    edges = [[]] * len(vectors)
 
+    leng_vectors = len(vectors)
+    edges = [[0] * leng_vectors for _ in range(leng_vectors)]
+    
+    vtIndices, faces = _fstTetrahedron(vectors)
+    for i in range(leng_vectors):
+        if not (i in vtIndices):
+            types = [_faceType(vectors, vectors[i], face) for face in faces]
+            for j in range(len(faces)):
+                edges[faces[j][0]][faces[j][1]] = types[j]
+                edges[faces[j][1]][faces[j][2]] = types[j]
+                edges[faces[j][2]][faces[j][0]] = types[j]
+            faces = _nextFaces(i, faces, types, edges)
 
-    return Polyhedron([], [])
+    return Polyhedron(vectors, faces)
