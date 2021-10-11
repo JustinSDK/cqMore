@@ -185,8 +185,7 @@ class Workplane(cadquery.Workplane):
         
         """
 
-        points, faces = uvSphere(radius, rings)
-        sphere = makePolyhedron(points, faces)
+        sphere = makePolyhedron(*uvSphere(radius, rings))
         spheres = self.eachpoint(lambda loc: sphere.moved(loc), True)
         
         if not combine:
