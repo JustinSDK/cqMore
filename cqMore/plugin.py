@@ -4,9 +4,10 @@ import cadquery
 from cadquery import Wire
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
-from .solid import polyhedron, surface, uvSphere
+from .plugin_solid import makePolyhedron, surface
+from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .spatial import hull2D
-from .wire import bool2D, makePolygon, polylineJoinWire
+from .polyhedron import uvSphere
 
 
 class Workplane(cadquery.Workplane):
@@ -184,7 +185,8 @@ class Workplane(cadquery.Workplane):
         
         """
 
-        sphere = uvSphere(radius, rings)
+        points, faces = uvSphere(radius, rings)
+        sphere = makePolyhedron(points, faces)
         spheres = self.eachpoint(lambda loc: sphere.moved(loc), True)
         
         if not combine:
@@ -215,7 +217,7 @@ class Workplane(cadquery.Workplane):
         
         """
 
-        poly = polyhedron(points, faces)
+        poly = makePolyhedron(points, faces)
         poly_all = self.eachpoint(lambda loc: poly.moved(loc), True)
         
         if not combine:
