@@ -2,9 +2,10 @@ from typing import Iterable, Union
 
 import cadquery
 from cadquery import Wire
+from cadquery.occ_impl.shapes import Compound, Solid
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
-from .plugin_solid import makePolyhedron, surface
+from .plugin_solid import makePolyhedron, surface, polylineJoin
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .spatial import hull2D, hull
 from .polyhedron import uvSphere
@@ -147,7 +148,7 @@ class Workplane(cadquery.Workplane):
         ## Parameters
 
         - `points`: the list of x, y points. 
-        - `join`: the wire as a join
+        - `join`: the wire as a join.
         - `forConstruction`: should the new wires be reference geometry only?
 
         ## Examples 
@@ -276,6 +277,33 @@ class Workplane(cadquery.Workplane):
         """
 
         return _each_combine_clean(self, makePolyhedron(*hull(points)), combine, clean)
+    
+    def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = True, clean: bool = True) -> T:
+        """
+        Place a join on each point. Hull each pair of joins and union all convex hulls.
+
+        ## Parameters
+
+        - `points`: the list of x, y points. 
+        - `join`: the sold as a join.
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
+
+        ## Examples 
+
+            from cqmore import Workplane
+
+            polyline = (Workplane()
+                        .polylineJoin(
+                            [(0, 0, 0), (10, 0, 0), (10, 0, 10), (10, 10, 10)], 
+                            Workplane().box(1, 1, 1)
+                            )
+                    )
+
+        """       
+
+        return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
+
 
 def _each_combine_clean(workplane, solid, combine, clean):
     all = workplane.eachpoint(lambda loc: solid.moved(loc), True)
