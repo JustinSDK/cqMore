@@ -1,9 +1,12 @@
-from typing import Iterable
+from typing import Iterable, Union, cast
 
-from cadquery import Edge, Face, Shell, Solid, Vector, Wire
+from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Vector, Wire
+from cadquery.occ_impl.shapes import Compound
 
-from .cq_typing import FaceIndices, MeshGrid, VectorLike
-from .util import toVectors
+from cqmore.spatial import hull
+
+from .cq_typing import T, FaceIndices, MeshGrid, VectorLike
+from .util import toTuples, toVectors
 
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
@@ -95,3 +98,26 @@ def surface(points: MeshGrid, thickness: float) -> Solid:
         return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
 
     return makePolyhedron(_all_pts(), _all_faces())
+
+def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) -> Union[Solid, Compound]:
+    if isinstance(join, Workplane):
+        joinSolidCompound = join.val()
+    elif isinstance(join, Solid) or isinstance(join, Compound):
+        joinSolidCompound = join
+    else:
+        raise ValueError("Join type '{}' is not allowed".format(type(join)))
+    
+    pts = toTuples(points)
+    join_vts = [v.toTuple() for v in cast(Shape, joinSolidCompound).Vertices()]
+    joins = [[(p[0] + vt[0], p[1] + vt[1], p[2] + vt[2]) for vt in join_vts] for p in pts]
+
+    workplanes = [
+        Workplane(makePolyhedron(*hull(joins[i] + joins[i + 1])))
+        for i in range(len(pts) - 1)
+    ]
+
+    wp = workplanes[0]
+    for i in range(1, len(workplanes)):
+        wp = wp.union(workplanes[i])
+
+    return cast(Union[Solid, Compound], wp.val())
