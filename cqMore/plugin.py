@@ -12,9 +12,9 @@ from .polyhedron import uvSphere
 
 class Workplane(cadquery.Workplane):
     """
-    Define plugins. You may simply use `cqMore.Workplane` to replace `cadquery.Workplane`. For example:
+    Define plugins. You may simply use `cqmore.Workplane` to replace `cadquery.Workplane`. For example:
 
-        from cqMore import Workplane
+        from cqmore import Workplane
 
         result = (Workplane()
                     .rect(10, 10)
@@ -22,11 +22,11 @@ class Workplane(cadquery.Workplane):
                     .extrude(1)
                  )
 
-    You may also attach methods of `cqMore.Workplane` to `cadquery.Workplane`, such as:
+    You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such as:
 
         from cadquery import Workplane
-        import cqMore
-        cqMore.extend(Workplane)
+        import cqmore
+        cqmore.extend(Workplane)
 
         result = (Workplane()
                     .rect(10, 10)
@@ -47,7 +47,7 @@ class Workplane(cadquery.Workplane):
         
         ## Examples
         
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             triangle = Workplane().makePolygon(((-2, -2), (2, -2), (0, 2))) 
 
@@ -66,7 +66,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -86,7 +86,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -106,7 +106,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             r1 = Workplane('YZ').rect(10, 10)
             r2 = Workplane('YZ').center(5, 5).rect(10, 10)
@@ -128,7 +128,7 @@ class Workplane(cadquery.Workplane):
         ## Examples 
 
             from random import random
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             points = [(random(), random()) for i in range(20)]
 
@@ -152,7 +152,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
             polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
@@ -175,7 +175,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             spheres = (Workplane()
                         .rect(5, 5, forConstruction=True)
@@ -209,7 +209,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import Workplane
+            from cqmore import Workplane
 
             points = ((5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5))
             faces = ((0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3))
@@ -238,7 +238,7 @@ class Workplane(cadquery.Workplane):
 
         ## Examples 
 
-            from cqMore import *
+            from cqmore import Workplane
 
             def paraboloid(x, y):
                 return (x, y, ((y ** 2) - (x ** 2)) / 4)
@@ -266,6 +266,21 @@ class Workplane(cadquery.Workplane):
             return self.union(sf_all, clean=clean)
 
 def extend(workplaneClz):
+    """
+    Extend `cadquery.Workplane`.
+
+    ## Parameters
+
+    - `workplaneClz`: `cadquery.Workplane`.
+
+    ## Examples 
+
+        from cadquery import Workplane
+        import cqmore
+        cqmore.extend(Workplane)
+
+    """
+
     for attr in dir(Workplane):
         if not attr.startswith('__'):
             setattr(workplaneClz, attr, getattr(Workplane, attr))

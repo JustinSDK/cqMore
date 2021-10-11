@@ -211,7 +211,7 @@ Create a surface with a coordinate meshgrid.
 
 ## Examples 
 
-    from cqmore import *
+    from cqmore import Workplane
 
     def paraboloid(x, y):
         return (x, y, ((y ** 2) - (x ** 2)) / 4)
