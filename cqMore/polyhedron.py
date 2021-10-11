@@ -1,3 +1,17 @@
+"""
+This module provides the `Polyhedron` class and functions for creating 
+`Polyhedron` instances. The `Polyhedron` class defines `points` and 
+`faces` attributes. Here is a way to use them.
+
+    from cqmore.polyhedron import uvSphere
+    from cqmore import Workplane
+
+    sphere = (Workplane()
+                .polyhedron(*uvSphere(radius = 10, rings = 5))
+            )
+
+"""
+
 from math import cos, radians, sin
 
 from typing import Iterable, NamedTuple
@@ -6,10 +20,59 @@ from .cq_typing import Point3D, FaceIndices
 from cadquery import Vector
 
 class Polyhedron(NamedTuple):
+    '''
+    Define a polyhedron.
+
+    ## Parameters
+
+    - `points`: points of vertices. 
+    - `faces`: face indices.
+
+    ## Examples     
+
+        from cqmore.polyhedron import Polyhedron
+        from cqmore import Workplane
+
+        points = (
+            (5, -5, -5), (-5, 5, -5), (5, 5, 5), (-5, -5, 5)
+        )
+
+        faces = (
+            (0, 1, 2), (0, 3, 1), (1, 3, 2), (0, 2, 3)
+        )
+
+        tetrahedron = Polyhedron(points, faces)
+        tetrahedrons = (Workplane()
+                        .rect(15, 15, forConstruction = True)
+                        .vertices()
+                        .polyhedron(*tetrahedron)
+                    )   
+
+    '''
+
     points: Iterable[Point3D]
     faces: Iterable[FaceIndices]
 
 def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
+    '''
+    Create a UV sphere.
+
+    ## Parameters
+
+    - `radius`: sphere radius
+    - `rings`: number of horizontal segments.
+
+    ## Examples 
+
+        from cqmore.polyhedron import uvSphere
+        from cqmore import Workplane
+
+        sphere = (Workplane()
+                    .polyhedron(*uvSphere(radius = 10, rings = 5))
+                )
+
+    '''
+
     angleStep = 180.0 / rings
     vectors = []
     for p in range(rings - 1, 0, -1):
