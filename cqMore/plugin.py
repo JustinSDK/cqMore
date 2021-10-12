@@ -7,8 +7,8 @@ from cadquery import Shape, Compound, Solid
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
 from .plugin_solid import makePolyhedron, surface, polylineJoin
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
-from .spatial import hull2D, hull
-from .polyhedron import uvSphere
+from .polygon import hull2D
+from .polyhedron import uvSphere, hull
 
 
 class Workplane(cadquery.Workplane):

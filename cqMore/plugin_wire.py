@@ -3,7 +3,7 @@ from typing import Iterable, Union, cast
 from cadquery import DirectionSelector, Wire, Workplane
 
 from .cq_typing import T, VectorLike
-from .spatial import hull2D
+from .polygon import hull2D
 from .util import toTuples, toVectors
 
 

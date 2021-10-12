@@ -3,7 +3,7 @@ from typing import Iterable, Union, cast
 from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Vector, Wire
 from cadquery.occ_impl.shapes import Compound
 
-from cqmore.spatial import hull
+from .polyhedron import hull
 
 from .cq_typing import T, FaceIndices, MeshGrid, VectorLike
 from .util import toTuples, toVectors
