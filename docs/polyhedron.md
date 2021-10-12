@@ -20,7 +20,7 @@ This module provides the `Polyhedron` class and functions for creating `Polyhedr
  Signature | Description
 --|--
 [`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
-`hull` | Create a convex hull through the provided points. 
+[`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 
 ----
 
@@ -74,3 +74,30 @@ Create a UV sphere.
              )
 
 ![uvSphere](images/polyhedron_uvSphere.JPG)
+
+# `hull`
+
+Create a convex hull through the provided points. 
+
+## Parameters
+
+- `points`: a list of 3D points. 
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polyhedron import hull
+
+    points = (
+        (50, 50, 50),
+        (50, 50, 0),
+        (-50, 50, 0),
+        (-50, -50, 0),
+        (50, -50, 0),
+        (0, 0, 50),
+        (0, 0, -50)
+    )
+
+    convex_hull = Workplane().polyhedron(*hull(points))
+
+![hull](images/polyhedron_hull.JPG)

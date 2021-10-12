@@ -117,6 +117,33 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
 
 
 def hull(points: Iterable[VectorLike]) -> Polyhedron:
+    """
+    Create a convex hull through the provided points. 
+
+    ## Parameters
+
+    - `points`: a list of 3D points. If it's `None`, attempt to hull all of the items on the stack 
+                to create a convex hull.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.polyhedron import hull
+
+        points = (
+            (50, 50, 50),
+            (50, 50, 0),
+            (-50, 50, 0),
+            (-50, -50, 0),
+            (50, -50, 0),
+            (0, 0, 50),
+            (0, 0, -50)
+        )
+
+        convex_hull = Workplane().polyhedron(*hull(points))
+
+        """
+
     def _tv1(vectors, vtIndices):
         v0 = vtIndices[0]
         for v1 in range(1, len(vectors)):
