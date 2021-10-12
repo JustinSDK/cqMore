@@ -122,7 +122,7 @@ Create a convex hull through the provided points.
 
 ## Parameters
 
-- `points`: the list of x, y points. 
+- `points = None`: the list of x, y points. If it's `None`, use all pending wires in the parent chain to create a convex hull.
 - `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples
@@ -134,6 +134,9 @@ Create a convex hull through the provided points.
 
     pts = Workplane().polyline(points).vertices()
     convex_hull = Workplane().hull2D(points)
+
+    # an equivalent way
+    # convex_hull = Workplane().polyline(points).close().hull2D()
 
 ![hull2D](images/workplane_hull2D.JPG)
 

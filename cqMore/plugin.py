@@ -117,13 +117,14 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toCut, 'cut')
 
-    def hull2D(self: T, points: Iterable[VectorLike], forConstruction: bool = False) -> T:
+    def hull2D(self: T, points: Iterable[VectorLike] = None, forConstruction: bool = False) -> T:
         """
         Create a convex hull through the provided points.
 
         ## Parameters
 
-        - `points`: the list of x, y points. 
+        - `points`: the list of x, y points. If it's `None`, use all pending wires 
+                    in the parent chain to create a convex hull.
         - `forConstruction`: should the new wires be reference geometry only?
 
         ## Examples 
@@ -135,10 +136,21 @@ class Workplane(cadquery.Workplane):
 
             pts = Workplane().polyline(points).vertices()
             convex_hull = Workplane().hull2D(points)
+            
+            # an equivalent way
+            # convex_hull = Workplane().polyline(points).close().hull2D()
 
         """
 
-        p = makePolygon(hull2D(points), forConstruction)
+        if points:
+            pts = points
+        else:
+            pts = (v.toTuple() 
+                for wire in self.ctx.popPendingWires()
+                    for v in wire.Vertices()
+            )
+
+        p = makePolygon(hull2D(pts), forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
     def polylineJoin2D(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
