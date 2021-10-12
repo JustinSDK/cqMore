@@ -131,8 +131,6 @@ Create a convex hull through the provided points.
     from cqmore import Workplane
 
     points = [(random(), random()) for i in range(20)]
-
-    pts = Workplane().polyline(points).vertices()
     convex_hull = Workplane().hull2D(points)
 
     # an equivalent way

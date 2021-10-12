@@ -1,5 +1,5 @@
 """
-This module provides the `Polyhedron` class and functions for creating 
+Provides the `Polyhedron` class and functions for creating 
 `Polyhedron` instances. The `Polyhedron` class defines `points` and 
 `faces` attributes. Here is a way to use them.
 
