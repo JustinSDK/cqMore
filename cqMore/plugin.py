@@ -2,7 +2,7 @@ from typing import Iterable, Union
 
 import cadquery
 from cadquery import Wire
-from cadquery.occ_impl.shapes import Compound, Solid
+from cadquery import Shape, Compound, Solid
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
 from .plugin_solid import makePolyhedron, surface, polylineJoin
@@ -260,17 +260,20 @@ class Workplane(cadquery.Workplane):
         
         return _each_combine_clean(self, surface(points, thickness), combine, clean)
 
-    def hull(self: T, points: Iterable[VectorLike], combine: bool = True, clean: bool = True) -> T:
+    def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
         """
-        Create a convex hull through the provided points.
+        Create a convex hull through the provided points. 
 
         ## Parameters
 
-        - `points`: a list of 3D points. 
+        - `points`: a list of 3D points. If it's `None`, attempt to hull all of the items on the stack 
+                    to create a convex hull.
         - `combine`: should the results be combined with other solids on the stack (and each other)?
         - `clean`: call `clean()` afterwards to have a clean shape.
 
         ## Examples 
+
+            # ex1
 
             from cqmore import Workplane
 
@@ -286,9 +289,24 @@ class Workplane(cadquery.Workplane):
 
             convex_hull = Workplane().hull(points)
 
+            # ex2
+
+            from cqmore import Workplane
+
+            convex_hull = Workplane().uvSphere(10).box(20, 20, 5).hull()
+
         """
 
-        return _each_combine_clean(self, makePolyhedron(*hull(points)), combine, clean)
+        if points:
+            pts = points
+        else:
+            items: Iterable[Shape] = (o for o in self.objects if isinstance(o, Shape))
+            pts = (v.toTuple() 
+                for shape in items
+                    for v in shape.Vertices()
+            )
+
+        return _each_combine_clean(self, makePolyhedron(*hull(pts)), combine, clean)
     
     def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = True, clean: bool = True) -> T:
         """

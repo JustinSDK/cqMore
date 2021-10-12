@@ -241,7 +241,7 @@ Create a convex hull through the provided points.
 
 ## Parameters
 
-- `points`: a list of 3D points. 
+- `points = None`: a list of 3D points. If it's `None`, attempt to hull all of the items on the stack to create a convex hull.
 - `combine = True`: should the results be combined with other solids on the stack (and each other)?
 - `clean = True`: call `clean()` afterwards to have a clean shape.
 
@@ -262,6 +262,17 @@ Create a convex hull through the provided points.
     convex_hull = Workplane().hull(points)
 
 ![hull](images/workplane_hull.JPG)
+
+
+    from cqmore import Workplane
+
+    convex_hull = (Workplane()
+                       .uvSphere(10)
+                       .box(20, 20, 5)
+                       .hull()
+                  )
+
+![hull](images/workplane_hull2.JPG)
 
 # `polylineJoin`
 
