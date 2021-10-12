@@ -20,6 +20,7 @@ This module provides the `Polyhedron` class and functions for creating `Polyhedr
  Signature | Description
 --|--
 [`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
+`hull` | Create a convex hull through the provided points. 
 
 ----
 
