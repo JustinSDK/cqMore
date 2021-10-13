@@ -6,7 +6,7 @@ Provide functions for creating simple polygons.
 
  Signature | Description
 --|--
-[`hull2D(points)`](polygon.md#hull) | Create a convex hull through the provided points. 
+[`hull2D(points)`](polygon.md#hull2D) | Create a convex hull through the provided points. 
 
 ----
 
