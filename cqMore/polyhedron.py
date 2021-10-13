@@ -1,7 +1,7 @@
 """
-Provides the `Polyhedron` class and functions for creating 
-`Polyhedron` instances. The `Polyhedron` class defines `points` and 
-`faces` attributes. Here is a way to use them.
+Provide the `Polyhedron` class and functions for creating `Polyhedron` instances. 
+The `Polyhedron` class defines `points` and `faces` attributes. Here is a way 
+to use them.
 
     from cqmore.polyhedron import uvSphere
     from cqmore import Workplane

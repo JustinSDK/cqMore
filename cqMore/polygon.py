@@ -1,5 +1,5 @@
 """
-Provides functions for creating simple polygons.
+Provide functions for creating simple polygons.
 
 """
 
@@ -15,8 +15,7 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
 
     ## Parameters
 
-    - `points`: the list of x, y points. If it's `None`, use all pending wires 
-                in the parent chain to create a convex hull.
+    - `points`: the list of x, y points. 
 
     ## Examples 
 
