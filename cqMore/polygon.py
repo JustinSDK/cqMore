@@ -49,4 +49,4 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
             convex_hull.pop()
         convex_hull.append(pts[i])
     
-    return cast(list[Point2D], convex_hull)
+    return cast(list[Point2D], convex_hull[:-1])
