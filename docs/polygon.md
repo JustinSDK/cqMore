@@ -38,7 +38,7 @@ Create a convex hull through the provided points.
 
 ## Parameters
 
-- `points`: the list of x, y points. 
+- `points`: a list of x, y points. 
 
 ## Examples     
 

@@ -51,7 +51,7 @@ Make a multiple sided wire through the provided points.
 
 ## Parameters
 
-- `points`: the list of x,y points of the polygon.
+- `points`: a list of x,y points make up the polygon.
 - `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples
@@ -122,7 +122,7 @@ Create a convex hull through the provided points.
 
 ## Parameters
 
-- `points = None`: the list of x, y points. If it's `None`, use all pending wires in the parent chain to create a convex hull.
+- `points = None`: a list of x, y points. If it's `None`, use all pending wires in the parent chain to create a convex hull.
 - `forConstruction = False`: should the new wires be reference geometry only?
 
 ## Examples
@@ -144,7 +144,7 @@ Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## Parameters
 
-- `points`: the list of x, y points. 
+- `points`: a list of x, y points. 
 - `join`: the wire as a join.
 - `forConstruction = False`: should the new wires be reference geometry only?
 
@@ -278,7 +278,7 @@ Place a join on each point. Hull each pair of joins and union all convex hulls.
 
 ## Parameters
 
-- `points`: the list of x, y points. 
+- `points`: a list of points. 
 - `join`: the sold as a join.
 - `combine = True`: should the results be combined with other solids on the stack (and each other)?
 - `clean = True`: call `clean()` afterwards to have a clean shape.

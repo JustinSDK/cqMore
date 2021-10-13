@@ -42,7 +42,7 @@ class Workplane(cadquery.Workplane):
         
         ## Parameters
 
-        - `points`: the list of x, y points of the polygon.
+        - `points`: a list of x, y points comprise the polygon.
         - `forConstruction`: should the new wires be reference geometry only?
         
         ## Examples
@@ -122,7 +122,7 @@ class Workplane(cadquery.Workplane):
 
         ## Parameters
 
-        - `points`: the list of x, y points. If it's `None`, use all pending wires 
+        - `points`: a list of x, y points. If it's `None`, use all pending wires 
                     in the parent chain to create a convex hull.
         - `forConstruction`: should the new wires be reference geometry only?
 
@@ -156,7 +156,7 @@ class Workplane(cadquery.Workplane):
 
         ## Parameters
 
-        - `points`: the list of x, y points. 
+        - `points`: a list of x, y points. 
         - `join`: the wire as a join.
         - `forConstruction`: should the new wires be reference geometry only?
 
@@ -311,7 +311,7 @@ class Workplane(cadquery.Workplane):
 
         ## Parameters
 
-        - `points`: the list of x, y points. 
+        - `points`: a list of points. 
         - `join`: the sold as a join.
         - `combine`: should the results be combined with other solids on the stack (and each other)?
         - `clean`: call `clean()` afterwards to have a clean shape.

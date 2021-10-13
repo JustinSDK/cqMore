@@ -40,7 +40,7 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
 
     ## Parameters
 
-    - `points`: the list of x, y points. 
+    - `points`: a list of x, y points. 
 
     ## Examples 
 
