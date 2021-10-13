@@ -25,7 +25,7 @@ Create a convex hull through the provided points.
     from cqmore.polygon import hull2D
 
     points = [(random(), random()) for i in range(20)]
-    convex_hull = Workplane().makePolygon(*hull2D(points)) 
+    convex_hull = Workplane().makePolygon(hull2D(points)) 
 
 ![hull2D](images/polygon_hull2D.JPG)
 

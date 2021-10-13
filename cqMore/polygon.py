@@ -23,7 +23,7 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
         from cqmore.polygon import hull2D
 
         points = [(random(), random()) for i in range(20)]
-        convex_hull = Workplane().makePolygon(*hull2D(points))
+        convex_hull = Workplane().makePolygon(hull2D(points))
 
     """
 
