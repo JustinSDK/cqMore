@@ -1,7 +1,6 @@
 from typing import Iterable, Union, cast
 
-from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Vector, Wire
-from cadquery.occ_impl.shapes import Compound
+from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Vector, Wire, Compound
 
 from .polyhedron import hull
 

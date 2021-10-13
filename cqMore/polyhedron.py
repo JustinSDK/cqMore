@@ -16,7 +16,7 @@ from math import cos, radians, sin
 
 from typing import Iterable, NamedTuple
 
-from cqmore.util import toTuples
+from .util import toTuples
 from .cq_typing import Point3D, FaceIndices, VectorLike
 from cadquery import Vector
 

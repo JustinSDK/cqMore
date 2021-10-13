@@ -1,8 +1,7 @@
 from typing import Iterable, Union
 
 import cadquery
-from cadquery import Wire
-from cadquery import Shape, Compound, Solid
+from cadquery import Wire, Shape, Compound, Solid
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
 from .plugin_solid import makePolyhedron, surface, polylineJoin
