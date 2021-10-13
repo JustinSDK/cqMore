@@ -139,14 +139,14 @@ class TestWorkplane3D(unittest.TestCase):
             sorted([v.toTuple() for v in actual])
         )
 
-    def test_surface(self):
+    def test_gridSurface(self):
         points = [
             [(0, 1, 0), (10, 0, 0), (20, 0, 0)],
             [(0, 10, 0), (10, 10, 1), (21, 10, 0)],
             [(0, 20, 0), (10, 21, 0), (20, 20, 0)]
         ]
 
-        sf = Workplane().surface(points, 1)
+        sf = Workplane().gridSurface(points, 1)
 
         self.assertEqual(32, sf.faces().size())
 

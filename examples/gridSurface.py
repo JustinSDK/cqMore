@@ -14,5 +14,5 @@ points = [[
 ] for y in range(min_value, max_value, step)]
 
 
-sf = Workplane().surface(points, thickness)
+sf = Workplane().gridSurface(points, thickness)
 # show_object(sf)

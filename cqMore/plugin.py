@@ -223,7 +223,7 @@ class Workplane(cadquery.Workplane):
 
         return _each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
 
-    def surface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
+    def gridSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
         """
         Create a surface with a coordinate meshgrid.
 
@@ -251,7 +251,7 @@ class Workplane(cadquery.Workplane):
                 for x in range(min_value, max_value, step)
             ] for y in range(min_value, max_value, step)]
 
-            sf = Workplane().surface(points, thickness)
+            sf = Workplane().gridSurface(points, thickness)
 
         """
         
