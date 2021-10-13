@@ -48,5 +48,6 @@ def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
         while len(convex_hull) >= upper_bound_start and _cross(convex_hull[-2], convex_hull[-1], pts[i]) <= 0:
             convex_hull.pop()
         convex_hull.append(pts[i])
-    
-    return cast(list[Point2D], convex_hull[:-1])
+    convex_hull.pop()
+
+    return cast(list[Point2D], convex_hull)
