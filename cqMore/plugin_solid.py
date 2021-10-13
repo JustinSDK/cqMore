@@ -31,7 +31,7 @@ def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -
         )
     )
 
-def surface(points: MeshGrid, thickness: float) -> Solid:
+def gridSurface(points: MeshGrid, thickness: float) -> Solid:
     leng_row = len(points)
     leng_col = len(points[0])
     leng_pts = leng_col * leng_row

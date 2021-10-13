@@ -4,7 +4,7 @@ import cadquery
 from cadquery import Wire, Shape, Compound, Solid
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
-from .plugin_solid import makePolyhedron, surface, polylineJoin
+from .plugin_solid import makePolyhedron, gridSurface, polylineJoin
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
 from .polyhedron import uvSphere, hull
@@ -255,7 +255,7 @@ class Workplane(cadquery.Workplane):
 
         """
         
-        return _each_combine_clean(self, surface(points, thickness), combine, clean)
+        return _each_combine_clean(self, gridSurface(points, thickness), combine, clean)
 
     def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
         """
