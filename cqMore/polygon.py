@@ -1,12 +1,34 @@
-from typing import Iterable, cast
+"""
+Provides functions for creating simple polygons.
 
-from cadquery import Vector
+"""
+
+from typing import Iterable, cast
 
 from .cq_typing import Point2D, VectorLike
 from .util import toTuples
 
 
 def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
+    """
+    Create a convex hull through the provided points.
+
+    ## Parameters
+
+    - `points`: the list of x, y points. If it's `None`, use all pending wires 
+                in the parent chain to create a convex hull.
+
+    ## Examples 
+
+        from random import random
+        from cqmore import Workplane
+        from polygon import hull2D
+
+        points = [(random(), random()) for i in range(20)]
+        convex_hull = Workplane().makePolygon(*hull2D(points))
+
+    """
+
     def _cross(o, a, b):
         return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
 
