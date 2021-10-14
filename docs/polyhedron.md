@@ -20,6 +20,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
  Signature | Description
 --|--
 [`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
+[`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 
 ----
@@ -74,6 +75,39 @@ Create a UV sphere.
              )
 
 ![uvSphere](images/polyhedron_uvSphere.JPG)
+
+# `gridSurface`
+
+Create a surface with a coordinate meshgrid.
+
+## Parameters
+
+- `points`: a coordinate meshgrid.
+- `thickness = 0`: the amount of being thick (return 2D surface if 0).
+
+## Examples 
+
+    from math import sqrt, cos, radians
+    from cqmore import Workplane
+    from cqmore.polyhedron import gridSurface
+
+    def ripple(x, y):
+        n = radians(sqrt(x ** 2 + y ** 2))
+        return (x, y, 30 * (cos(n) + cos(3 * n)))
+
+    min_value = -200
+    max_value = 200
+    step = 10
+    thickness = 5
+
+    points = [[
+            ripple(x, y) 
+        for x in range(min_value, max_value, step)
+    ] for y in range(min_value, max_value, step)]
+
+    sf = Workplane().polyhedron(*gridSurface(points, thickness))
+
+![gridSurface](images/polyhedron_gridSurface.JPG)
 
 # `hull`
 

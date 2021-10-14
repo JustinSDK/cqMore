@@ -1,18 +1,19 @@
-from cqmore import *
+from math import sqrt, cos, radians
+from cqmore import Workplane
 
-def paraboloid(x, y):
-    return (x, y, ((y ** 2) - (x ** 2)) / 4)
+def ripple(x: float, y: float):
+    n = radians(sqrt(x ** 2 + y ** 2))
+    return (x, y, 30 * (cos(n) + cos(3 * n)))
 
-min_value = -30
-max_value = 30
-step = 5
-thickness = 0.5
+min_value = -200
+max_value = 200
+step = 10
+thickness = 5
 
 points = [[
-        paraboloid(x / 10, y / 10) 
+        ripple(x, y) 
     for x in range(min_value, max_value, step)
 ] for y in range(min_value, max_value, step)]
-
 
 sf = Workplane().gridSurface(points, thickness)
 # show_object(sf)
