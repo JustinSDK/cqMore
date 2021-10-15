@@ -115,6 +115,163 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
 
     return Polyhedron(points, faces)
 
+def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
+    vectors = [
+        Vector(1, 1, 1), Vector(-1, -1, 1), Vector(-1, 1, -1), Vector(1, -1, -1)
+    ]
+    faces = [
+        (2, 1, 0), (0, 3, 2), (1, 3, 0), (2, 3, 1)
+    ]
+    return _divide_project(vectors, faces, radius, detail)
+
+def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
+    t = 1 / (3 ** 0.5)
+    vectors = [
+        Vector(t, t, t), Vector(-t, t, t), Vector(-t, -t, t), Vector(t, -t, t),
+        Vector(t, t, -t), Vector(-t, t, -t), Vector(-t, -t, -t), Vector(t, -t, -t)
+    ]
+    faces = [
+        (3, 7, 0), (7, 4, 0), 
+        (0, 4, 1), (4, 5, 1),
+        (5, 6, 2), (1, 5, 2),
+        (6, 7, 3), (2, 6, 3),
+        (2, 3, 0), (1, 2, 0),
+        (7, 6, 5), (4, 7, 5)
+    ]
+    return _divide_project(vectors, faces, radius, detail)
+
+def octahedron(radius: float, detail: int = 0) -> Polyhedron:
+    vectors = [
+        Vector(1, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 
+        Vector(0, -1, 0), Vector(0, 0, 1), Vector(0, 0, -1)
+    ]
+    faces = [
+        (0, 2, 4), (0, 4, 3),	(0, 3, 5),
+		(0, 5, 2), (1, 2, 5),	(1, 5, 3),
+		(1, 3, 4), (1, 4, 2)
+    ]
+    return _divide_project(vectors, faces, radius, detail)
+
+def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
+    t = (1 + 5 ** 0.5) / 2
+    r = 1 / t
+    vectors = [
+			# (±1, ±1, ±1)
+			Vector(-1, -1, -1), Vector(-1, -1, 1),
+			Vector(-1, 1, -1), Vector(-1, 1, 1),
+			Vector(1, -1, -1), Vector(1, -1, 1),
+			Vector(1, 1, -1), Vector(1, 1, 1),
+
+			# (0, ±1/φ, ±φ)
+			Vector(0, -r, -t), Vector(0, -r, t),
+			Vector(0, r, -t), Vector(0, r, t),
+
+			# (±1/φ, ±φ, 0)
+			Vector(-r, -t, 0), Vector(-r, t, 0),
+			Vector(r, -t, 0), Vector(r, t, 0),
+
+			# (±φ, 0, ±1/φ)
+			Vector(-t, 0, -r), Vector(t, 0, -r),
+			Vector(-t, 0, r), Vector(t, 0, r)
+    ]
+    faces = [
+        (3, 11, 7), (3, 7, 15), (3, 15, 13),
+        (7, 19, 17), (7, 17, 6), (7, 6, 15),
+        (17, 4, 8), (17, 8, 10), (17, 10, 6),
+        (8, 0, 16), (8, 16, 2), (8, 2, 10),
+        (0, 12, 1), (0, 1, 18), (0, 18, 16),
+        (6, 10, 2), (6, 2, 13), (6, 13, 15),
+        (2, 16, 18), (2, 18, 3), (2, 3, 13),
+        (18, 1, 9), (18, 9, 11), (18, 11, 3),
+        (4, 14, 12), (4, 12, 0), (4, 0, 8),
+        (11, 9, 5), (11, 5, 19), (11, 19, 7),
+        (19, 5, 14), (19, 14, 4), (19, 4, 17),
+        (1, 12, 14), (1, 14, 5), (1, 5, 9)
+    ]
+    return _divide_project(vectors, faces, radius, detail)
+
+def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
+    t = (1 + 5 ** 0.5) / 2
+    vectors = [
+        Vector(-1, t, 0), Vector(1, t, 0), Vector(- 1, -t, 0), Vector(1, -t, 0),
+        Vector(0, -1, t), Vector(0, 1, t), Vector(0, -1, -t),  Vector(0, 1, -t),
+        Vector(t, 0, -1), Vector(t, 0, 1), Vector(-t, 0, -1),  Vector(-t, 0, 1)
+    ]
+    faces = [
+        (0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11),
+        (1, 5, 9), (5, 11, 4), (11, 10, 2),	(10, 7, 6),	(7, 1, 8),
+        (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),	(3, 8, 9),
+        (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)
+    ]
+    return _divide_project(vectors, faces, radius, detail)
+
+def _divide_project(vectors, faces, radius, detail):
+    def _idx(ci, ri, ri_base):
+        return ci + ri_base[ri]
+
+    def _divide(vectors, detail):
+        rows = detail + 1
+        vc =  vectors[1] - vectors[0]
+        vr = vectors[2] - vectors[0]
+        dc = vc / rows
+        dr = vr / rows
+        vts = [
+            vectors[0] + ci * dc + ri * dr
+            for ri in range(0, rows + 1)
+                for ci in range(0, rows - ri + 1)
+        ]
+
+        acc = 0
+        ri_base = []
+        for ri in range(rows + 1):
+            ri_base.append(acc)
+            acc = acc + rows - ri + 1
+
+        faces = []
+        for ri in range(rows):
+            cols = rows - ri - 1
+            for ci in range(rows - ri):
+                faces.append([
+                    _idx(ci, ri, ri_base),
+                    _idx(ci + 1, ri, ri_base),
+                    _idx(ci, ri + 1, ri_base)
+                ])
+                if ci != cols:
+                    faces.append([
+                        _idx(ci + 1, ri, ri_base),
+                        _idx(ci + 1, ri + 1, ri_base),
+                        _idx(ci, ri + 1, ri_base)
+                    ])
+
+        return (vts, faces)
+
+    if detail == 0:
+        return Polyhedron(
+            [(vt / vt.Length * radius).toTuple() for vt in vectors],
+            faces
+        )
+
+    subdivided_all = []
+    for face in faces:
+        subdivided_all.append(
+            _divide([vectors[i] for i in face], detail)
+        )
+
+    flatten_points = [
+        (vt / vt.Length * radius).toTuple()
+        for vts, _ in subdivided_all
+            for vt in vts
+    ]
+    
+    pts_number_per_tri = len(subdivided_all[0][0])
+    flatten_faces = [
+        (face[0] + i * pts_number_per_tri, face[1] + i * pts_number_per_tri, face[2] + i * pts_number_per_tri)
+        for i in range(len(subdivided_all))
+            for face in subdivided_all[i][1]
+    ]
+
+    return Polyhedron(flatten_points, flatten_faces)
+    
 def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     """
     Create a surface with a coordinate meshgrid.
@@ -349,3 +506,4 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
     ]
 
     return Polyhedron(convex_vertices, convex_faces)
+
