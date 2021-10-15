@@ -20,6 +20,11 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
  Signature | Description
 --|--
 [`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
+[`tetrahedron(radius,[detail])`](polyhedron.md#tetrahedron) | Create a tetrahedron.
+[`hexahedron(radius,[detail])`](polyhedron.md#hexahedron) | Create a hexahedron.
+[`octahedron(radius,[detail])`](polyhedron.md#octahedron) | Create a octahedron.
+[`dodecahedron(radius,[detail])`](polyhedron.md#dodecahedron) | Create a dodecahedron.
+[`icosahedron(radius,[detail])`](polyhedron.md#icosahedron) | Create a icosahedron.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 
@@ -75,6 +80,131 @@ Create a UV sphere.
              )
 
 ![uvSphere](images/polyhedron_uvSphere.JPG)
+
+# `tetrahedron`
+
+Create a tetrahedron.
+
+## Parameters
+
+- `radius`: radius of the tetrahedron.
+- `detail`: setting this to a value greater than 0 adds vertices making it no longer a tetrahedron.
+
+## Examples 
+
+    from cqmore.polyhedron import tetrahedron
+    from cqmore import Workplane
+
+    radius = 1
+    polyhedra = Workplane()
+    for detail in range(5):
+        polyhedra.add(
+            Workplane()
+                .polyhedron(*tetrahedron(radius, detail))
+                .translate((2 * radius * detail, 0, 0))
+        )
+
+![tetrahedron](images/polyhedron_tetrahedron.JPG)
+
+# `hexahedron`
+
+Create a hexahedron.
+
+## Parameters
+
+- `radius`: radius of the hexahedron.
+- `detail`: setting this to a value greater than 0 adds vertices making it no longer a hexahedron.
+
+## Examples 
+
+    from cqmore.polyhedron import hexahedron
+    from cqmore import Workplane
+
+    radius = 1
+    polyhedra = Workplane()
+    for detail in range(5):
+        polyhedra.add(
+            Workplane()
+                .polyhedron(*hexahedron(radius, detail))
+                .translate((2 * radius * detail, 0, 0))
+        )
+
+![hexahedron](images/polyhedron_hexahedron.JPG)
+
+# `octahedron`
+
+Create a octahedron.
+
+## Parameters
+
+- `radius`: radius of the octahedron.
+- `detail`: setting this to a value greater than 0 adds vertices making it no longer a octahedron.
+
+## Examples 
+
+    from cqmore.polyhedron import octahedron
+    from cqmore import Workplane
+
+    radius = 1
+    polyhedra = Workplane()
+    for detail in range(5):
+        polyhedra.add(
+            Workplane()
+                .polyhedron(*octahedron(radius, detail))
+                .translate((2 * radius * detail, 0, 0))
+        )
+
+![octahedron](images/polyhedron_octahedron.JPG)
+
+# `dodecahedron`
+
+Create a dodecahedron.
+
+## Parameters
+
+- `radius`: radius of the dodecahedron.
+- `detail`: setting this to a value greater than 0 adds vertices making it no longer a dodecahedron.
+
+## Examples 
+
+    from cqmore.polyhedron import dodecahedron
+    from cqmore import Workplane
+
+    radius = 1
+    polyhedra = Workplane()
+    for detail in range(5):
+        polyhedra.add(
+            Workplane()
+                .polyhedron(*dodecahedron(radius, detail))
+                .translate((2 * radius * detail, 0, 0))
+        )
+
+![dodecahedron](images/polyhedron_dodecahedron.JPG)
+
+# `icosahedron`
+
+Create a icosahedron.
+
+## Parameters
+
+- `radius`: radius of the icosahedron.
+- `detail`: setting this to a value greater than 0 adds vertices making it no longer a icosahedron.
+
+## Examples 
+
+    from cqmore.polyhedron import icosahedron
+    from cqmore import Workplane
+
+    radius = 1
+    polyhedra = Workplane()
+    for detail in range(5):
+        polyhedra.add(
+            Workplane()
+                .polyhedron(*icosahedron(radius, detail))
+                .translate((2 * radius * detail, 0, 0))
+        )
+
+![icosahedron](images/polyhedron_icosahedron.JPG)
 
 # `gridSurface`
 

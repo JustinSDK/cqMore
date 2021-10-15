@@ -60,7 +60,7 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
 
     ## Parameters
 
-    - `radius`: sphere radius
+    - `radius`: sphere radius.
     - `rings`: number of horizontal segments.
 
     ## Examples 
@@ -116,6 +116,30 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
     return Polyhedron(points, faces)
 
 def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
+    '''
+    Create a tetrahedron.
+
+    ## Parameters
+
+    - `radius`: radius of the tetrahedron.
+    - `detail`: setting this to a value greater than 0 adds vertices making it no longer a tetrahedron.
+
+    ## Examples 
+
+        from cqmore.polyhedron import tetrahedron
+        from cqmore import Workplane
+
+        radius = 1
+        polyhedra = Workplane()
+        for detail in range(5):
+            polyhedra.add(
+                Workplane()
+                    .polyhedron(*tetrahedron(radius, detail))
+                    .translate((2 * radius * detail, 0, 0))
+            )
+
+    '''
+
     vectors = [
         Vector(1, 1, 1), Vector(-1, -1, 1), Vector(-1, 1, -1), Vector(1, -1, -1)
     ]
@@ -125,6 +149,30 @@ def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
     return _divide_project(vectors, faces, radius, detail)
 
 def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
+    '''
+    Create a hexahedron.
+
+    ## Parameters
+
+    - `radius`: radius of the hexahedron.
+    - `detail`: setting this to a value greater than 0 adds vertices making it no longer a hexahedron.
+
+    ## Examples 
+
+        from cqmore.polyhedron import hexahedron
+        from cqmore import Workplane
+
+        radius = 1
+        polyhedra = Workplane()
+        for detail in range(5):
+            polyhedra.add(
+                Workplane()
+                    .polyhedron(*hexahedron(radius, detail))
+                    .translate((2 * radius * detail, 0, 0))
+            )
+
+    '''
+
     t = 1 / (3 ** 0.5)
     vectors = [
         Vector(t, t, t), Vector(-t, t, t), Vector(-t, -t, t), Vector(t, -t, t),
@@ -141,6 +189,30 @@ def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
     return _divide_project(vectors, faces, radius, detail)
 
 def octahedron(radius: float, detail: int = 0) -> Polyhedron:
+    '''
+    Create a octahedron.
+
+    ## Parameters
+
+    - `radius`: radius of the octahedron.
+    - `detail`: setting this to a value greater than 0 adds vertices making it no longer a octahedron.
+
+    ## Examples 
+
+        from cqmore.polyhedron import octahedron
+        from cqmore import Workplane
+
+        radius = 1
+        polyhedra = Workplane()
+        for detail in range(5):
+            polyhedra.add(
+                Workplane()
+                    .polyhedron(*octahedron(radius, detail))
+                    .translate((2 * radius * detail, 0, 0))
+            )
+
+    '''
+
     vectors = [
         Vector(1, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 
         Vector(0, -1, 0), Vector(0, 0, 1), Vector(0, 0, -1)
@@ -153,6 +225,30 @@ def octahedron(radius: float, detail: int = 0) -> Polyhedron:
     return _divide_project(vectors, faces, radius, detail)
 
 def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
+    '''
+    Create a dodecahedron.
+
+    ## Parameters
+
+    - `radius`: radius of the dodecahedron.
+    - `detail`: setting this to a value greater than 0 adds vertices making it no longer a dodecahedron.
+
+    ## Examples 
+
+        from cqmore.polyhedron import dodecahedron
+        from cqmore import Workplane
+
+        radius = 1
+        polyhedra = Workplane()
+        for detail in range(5):
+            polyhedra.add(
+                Workplane()
+                    .polyhedron(*dodecahedron(radius, detail))
+                    .translate((2 * radius * detail, 0, 0))
+            )
+
+    '''
+
     t = (1 + 5 ** 0.5) / 2
     r = 1 / t
     vectors = [
@@ -191,6 +287,30 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
     return _divide_project(vectors, faces, radius, detail)
 
 def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
+    '''
+    Create a icosahedron.
+
+    ## Parameters
+
+    - `radius`: radius of the icosahedron.
+    - `detail`: setting this to a value greater than 0 adds vertices making it no longer a icosahedron.
+
+    ## Examples 
+
+        from cqmore.polyhedron import icosahedron
+        from cqmore import Workplane
+
+        radius = 1
+        polyhedra = Workplane()
+        for detail in range(5):
+            polyhedra.add(
+                Workplane()
+                    .polyhedron(*icosahedron(radius, detail))
+                    .translate((2 * radius * detail, 0, 0))
+            )
+
+    '''
+
     t = (1 + 5 ** 0.5) / 2
     vectors = [
         Vector(-1, t, 0), Vector(1, t, 0), Vector(- 1, -t, 0), Vector(1, -t, 0),
