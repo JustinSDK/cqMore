@@ -18,4 +18,4 @@ for u in range(0, 720 + u_step, u_step):
     
     points.append(row)
 
-twisted_strips = Workplane().gridSurface(points, thickness)
+twisted_strip = Workplane().gridSurface(points, thickness)
