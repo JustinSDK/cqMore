@@ -88,7 +88,7 @@ Create a tetrahedron.
 ## Parameters
 
 - `radius`: radius of the tetrahedron.
-- `detail`: setting this to a value greater than 0 adds vertices making it no longer a tetrahedron.
+- `detail = 0`: setting this to a value greater than 0 adds vertices making it no longer a tetrahedron.
 
 ## Examples 
 
@@ -113,7 +113,7 @@ Create a hexahedron.
 ## Parameters
 
 - `radius`: radius of the hexahedron.
-- `detail`: setting this to a value greater than 0 adds vertices making it no longer a hexahedron.
+- `detail = 0`: setting this to a value greater than 0 adds vertices making it no longer a hexahedron.
 
 ## Examples 
 
@@ -138,7 +138,7 @@ Create a octahedron.
 ## Parameters
 
 - `radius`: radius of the octahedron.
-- `detail`: setting this to a value greater than 0 adds vertices making it no longer a octahedron.
+- `detail = 0`: setting this to a value greater than 0 adds vertices making it no longer a octahedron.
 
 ## Examples 
 
@@ -163,7 +163,7 @@ Create a dodecahedron.
 ## Parameters
 
 - `radius`: radius of the dodecahedron.
-- `detail`: setting this to a value greater than 0 adds vertices making it no longer a dodecahedron.
+- `detail = 0`: setting this to a value greater than 0 adds vertices making it no longer a dodecahedron.
 
 ## Examples 
 
@@ -188,7 +188,7 @@ Create a icosahedron.
 ## Parameters
 
 - `radius`: radius of the icosahedron.
-- `detail`: setting this to a value greater than 0 adds vertices making it no longer a icosahedron.
+- `detail = 0`: setting this to a value greater than 0 adds vertices making it no longer a icosahedron.
 
 ## Examples 
 
