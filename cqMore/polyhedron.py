@@ -430,18 +430,18 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     leng_pts = leng_col * leng_row
 
     def _all_pts():
-        face = Face.makeSplineApprox([[
-                        Vector(*points[ri][ci]) 
-                for ri in range(leng_row)
-            ] for ci in range(leng_col)]
-        )
-
         if thickness == 0:
             front_thicken_pts = [] 
             for row in points:
                 for vt in toVectors(row):
                     front_thicken_pts.append([vt.x, vt.y, vt.z])
             return front_thicken_pts
+
+        face = Face.makeSplineApprox([[
+                        Vector(*points[ri][ci]) 
+                for ri in range(leng_row)
+            ] for ci in range(leng_col)]
+        )
 
         half_thickness = thickness / 2
         front_thicken_pts = [] 
@@ -477,10 +477,10 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         rx = leng_col - 1
         for ri in range(leng_row - 1):
             side_faces2.append([rx + (ri + 1) * leng_col + leng_pts, rx + (ri + 1) * leng_col, rx + ri * leng_col])
-            side_faces2.append([rx + ri * leng_row + leng_pts, rx + (ri + 1) * leng_col + leng_pts, rx + ri * leng_col])
+            side_faces2.append([rx + ri * leng_col + leng_pts, rx + (ri + 1) * leng_col + leng_pts, rx + ri * leng_col])
 
             side_faces4.append([ri * leng_col, (ri + 1) * leng_col, (ri + 1) * leng_col + leng_pts])
-            side_faces4.append([ri * leng_col, (ri + 1) * leng_col + leng_pts, ri * leng_row + leng_pts])
+            side_faces4.append([ri * leng_col, (ri + 1) * leng_col + leng_pts, ri * leng_col + leng_pts])
 
         side_faces3 = []
         for ci in range(leng_pts - leng_col, leng_pts - 1):
