@@ -6,6 +6,7 @@ radius = 10
 font_name = 'Arial Black'
 font_size = 5
 font_distance = 1
+detail = 0
 
 platonic_polyhedra = {
     4: tetrahedron, 
@@ -17,17 +18,18 @@ platonic_polyhedra = {
 
 dice = (Workplane()
            .polyhedron(
-               *platonic_polyhedra[number_of_faces](radius)
+               *platonic_polyhedra[number_of_faces](radius, detail)
            )
        )
 
 faces = dice.faces().vals()
-for i in range(len(faces)):
+nums = len(faces)
+for i in range(nums):
     dice = dice.cut(
         Workplane(faces[i])
-            .workplane()
+            .workplane(origin = faces[i].Center())
             .text(
-                str(number_of_faces - i), 
+                str(nums - i), 
                 font_size, 
                 -font_distance,
                 font = font_name
