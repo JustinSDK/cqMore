@@ -17,6 +17,7 @@ class TestPolygon(unittest.TestCase):
         )
         self.assertEqual(8, len(polygon))
 
+
     def test_hull2D(self):
         points = [
             (0.855355763576732, 0.16864474737612778), 
