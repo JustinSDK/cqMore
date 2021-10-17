@@ -430,10 +430,12 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     leng_pts = leng_col * leng_row
 
     def _all_pts():
+        vectors = [toVectors(row) for row in points]
+
         if thickness == 0:
             front_thicken_pts = [] 
-            for row in points:
-                for vt in toVectors(row):
+            for row in vectors:
+                for vt in row:
                     front_thicken_pts.append([vt.x, vt.y, vt.z])
             return front_thicken_pts
 
