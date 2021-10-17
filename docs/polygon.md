@@ -7,6 +7,7 @@ Provide functions for creating simple polygons.
  Signature | Description
 --|--
 [`taiwan(h[,distance])`](polygon.md#taiwan) | Create a convex hull through the provided points. 
+[`regularPolygon(nSides, radius[,thetaStart,thetaEnd])`](polygon.md#regularPolygon) | Create a regular polygon.
 [`hull2D(points)`](polygon.md#hull2D) | Create a convex hull through the provided points. 
 
 ----
@@ -31,6 +32,47 @@ Create a Taiwan profile.
             )
 
 ![taiwan](images/polygon_taiwan.JPG)
+
+# `regularPolygon`
+
+Create a regular polygon.
+
+## Parameters
+
+- `nSides`: number of sides. 
+- `radius`: the size of the polygon.
+- `thetaStart = 0`: start angle for the first segment.
+- `thetaEnd = 360`: end angle for the last segment.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polygon import regularPolygon
+
+    polygon = (Workplane()
+                    .makePolygon(regularPolygon(nSides = 6, radius = 10))
+                    .extrude(1)
+                )
+
+![regularPolygon](images/polygon_regularPolygon.JPG)
+
+
+    from cqmore import Workplane
+    from cqmore.polygon import regularPolygon
+
+    polygon = (Workplane()
+                    .makePolygon(
+                        regularPolygon(
+                            nSides = 6, 
+                            radius = 10, 
+                            thetaStart = 45, 
+                            thetaEnd = 270
+                        )
+                    )
+                    .extrude(1)
+                )       
+
+![regularPolygon](images/polygon_regularPolygon2.JPG)
 
 # `hull2D`
 

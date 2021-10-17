@@ -38,6 +38,46 @@ def taiwan(h: float, distance: float = 0) -> list[Point2D]:
 
 
 def regularPolygon(nSides: int, radius: float, thetaStart: float = 0, thetaEnd: float = 360) -> list[Point2D]:
+    """
+    Create a regular polygon.
+
+    ## Parameters
+
+    - `nSides`: number of sides. 
+    - `radius`: the size of the polygon.
+    - `thetaStart`: start angle for the first segment.
+    - `thetaEnd`: end angle for the last segment.
+
+    ## Examples 
+
+        # ex1
+
+        from cqmore import Workplane
+        from cqmore.polygon import regularPolygon
+
+        polygon = (Workplane()
+                      .makePolygon(regularPolygon(nSides = 6, radius = 10))
+                      .extrude(1)
+                  )
+
+        # ex2
+
+        from cqmore import Workplane
+        from cqmore.polygon import regularPolygon
+
+        polygon = (Workplane()
+                        .makePolygon(
+                            regularPolygon(
+                                nSides = 6, 
+                                radius = 10, 
+                                thetaStart = 45, 
+                                thetaEnd = 270
+                            )
+                        )
+                        .extrude(1)
+                    )        
+
+    """
 
     def _polygon(a, end):
         return [
@@ -50,7 +90,7 @@ def regularPolygon(nSides: int, radius: float, thetaStart: float = 0, thetaEnd: 
 
     da = thetaEnd - thetaStart
     if da > 360:
-        raise ValueError('(thetaEnd - thetaStart) > 360')
+        raise ValueError('(thetaEnd - thetaStart) must be <= 360')
 
     a = da / nSides
 
