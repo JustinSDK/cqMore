@@ -15,25 +15,31 @@ class TestPolyhedron(unittest.TestCase):
             cast(list[FaceIndices], sphere.faces)
         )
 
+
     def test_tetrahedron(self):
         polyhedron = tetrahedron(1, 1)
         self.assertEqual(4 * 4, len(cast(list, polyhedron.faces)))
+
 
     def test_hexahedron(self):
         polyhedron = hexahedron(1, 1)
         self.assertEqual(6 * 2 * 4, len(cast(list, polyhedron.faces)))
 
+
     def test_octahedron(self):
         polyhedron = octahedron(1, 1)
         self.assertEqual(8 * 4, len(cast(list, polyhedron.faces)))
+
 
     def test_dodecahedron(self):
         polyhedron = dodecahedron(1, 1)
         self.assertEqual(12 * 3 * 4, len(cast(list, polyhedron.faces)))
 
+
     def test_icosahedron(self):
         polyhedron = icosahedron(1, 1)
         self.assertEqual(20 * 4, len(cast(list, polyhedron.faces)))
+
 
     def test_gridSurfae(self):
         points = [
@@ -46,6 +52,7 @@ class TestPolyhedron(unittest.TestCase):
 
         self.assertEqual(18, len(cast(list, sf.points)))
         self.assertEqual(32, len(cast(list, sf.faces)))
+
 
     def test_hull(self):
         points = (
@@ -62,6 +69,7 @@ class TestPolyhedron(unittest.TestCase):
 
         self.assertEqual(10, len(cast(list, convex_hull.faces)))
         self.assertEqual(7, len(cast(list, convex_hull.points)))
+
 
 if __name__ == '__main__':
     unittest.main()

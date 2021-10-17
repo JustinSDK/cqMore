@@ -27,10 +27,12 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     planeZdir = DirectionSelector(-workplane.plane.zDir)
     return booled.faces(planeZdir).wires().toPending()
 
+
 def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> Wire:
     vts = toVectors(points)
     vts.append(vts[0])
     return Wire.makePolygon(vts, forConstruction)
+
 
 def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
     if isinstance(join, Workplane):

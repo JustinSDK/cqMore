@@ -2,6 +2,7 @@ from typing import TypeVar, Union
 
 from cadquery import Vector, Workplane
 
+
 T = TypeVar('T', bound = 'Workplane')
 Point2D = tuple[float, float]
 Point3D = tuple[float, float, float]

@@ -9,6 +9,7 @@ from typing import Iterable, cast
 from .cq_typing import Point2D, VectorLike
 from .util import toTuples
 
+
 def taiwan(h: float, distance: float = 0) -> list[Point2D]:
     """
     Create a Taiwan profile.
@@ -35,6 +36,7 @@ def taiwan(h: float, distance: float = 0) -> list[Point2D]:
     tw = [(p[0] / 15 * h, p[1] / 15 * h) for p in profile]
     return tw if distance == 0 else [tw[i] for i in range(len(tw) - 1) if (tw[i][0] - tw[i + 1][0]) ** 2 + (tw[i][1] - tw[i + 1][1]) ** 2 > distance ** 2]
 
+
 def regularPolygon(nSides: int, radius: float, thetaStart: float = 0, thetaEnd: float = 360) -> list[Point2D]:
 
     def _polygon(a, end):
@@ -53,6 +55,7 @@ def regularPolygon(nSides: int, radius: float, thetaStart: float = 0, thetaEnd: 
     a = da / nSides
 
     return _polygon(a, nSides) if da == 360 else [(0.0, 0.0)] + _polygon(a, nSides + 1)
+
 
 def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
     """

@@ -56,6 +56,7 @@ class Workplane(cadquery.Workplane):
         p = makePolygon(points, forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
+
     def intersect2D(self: T, toIntersect: Union[T, Wire]) -> T:
         """
         Intersect the provided wire from the current wire. 
@@ -76,6 +77,7 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toIntersect, 'intersect')
         
+
     def union2D(self: T, toUnion: Union[T, Wire]) -> T:
         """
         Union the provided wire from the current wire. 
@@ -96,6 +98,7 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toUnion, 'union')
 
+
     def cut2D(self: T, toCut: Union[T, Wire]) -> T:
         """
         Cut the provided wire from the current wire. 
@@ -115,6 +118,7 @@ class Workplane(cadquery.Workplane):
         """
 
         return bool2D(self, toCut, 'cut')
+
 
     def hull2D(self: T, points: Iterable[VectorLike] = None, forConstruction: bool = False) -> T:
         """
@@ -150,6 +154,7 @@ class Workplane(cadquery.Workplane):
         p = makePolygon(hull2D(pts), forConstruction)
         return self.eachpoint(lambda loc: p.moved(loc), True)
 
+
     def polylineJoin2D(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
         """
         Place a join on each point. Hull each pair of joins and union all convex hulls.
@@ -171,6 +176,7 @@ class Workplane(cadquery.Workplane):
 
         polyline = polylineJoinWire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
+
 
     def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
         """
@@ -223,6 +229,7 @@ class Workplane(cadquery.Workplane):
 
         return _each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
 
+
     def gridSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
         """
         Create a surface with a coordinate meshgrid.
@@ -256,6 +263,7 @@ class Workplane(cadquery.Workplane):
         """
         
         return _each_combine_clean(self, makePolyhedron(*gridSurface(points, thickness)), combine, clean)
+
 
     def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
         """
@@ -305,6 +313,7 @@ class Workplane(cadquery.Workplane):
 
         return _each_combine_clean(self, makePolyhedron(*hull(pts)), combine, clean)
     
+
     def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = True, clean: bool = True) -> T:
         """
         Place a join on each point. Hull each pair of joins and union all convex hulls.
@@ -338,6 +347,7 @@ def _each_combine_clean(workplane, solid, combine, clean):
         return all
     else:
         return workplane.union(all, clean=clean)
+
 
 def extend(workplaneClz):
     """

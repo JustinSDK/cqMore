@@ -7,6 +7,7 @@ from .polyhedron import hull
 from .cq_typing import T, FaceIndices, MeshGrid, VectorLike
 from .util import toTuples, toVectors
 
+
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
         leng_vertices = len(face_indices)   
@@ -30,6 +31,7 @@ def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -
             for face_indices in faces
         )
     )
+    
 
 def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) -> Union[Solid, Compound]:
     if isinstance(join, Workplane):

@@ -54,6 +54,7 @@ class Polyhedron(NamedTuple):
     points: Iterable[Point3D]
     faces: Iterable[FaceIndices]
 
+
 def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
     '''
     Create a UV sphere.
@@ -115,6 +116,7 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
 
     return Polyhedron(points, faces)
 
+
 def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
     Create a tetrahedron.
@@ -147,6 +149,7 @@ def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
         (2, 1, 0), (0, 3, 2), (1, 3, 0), (2, 3, 1)
     ]
     return _divide_project(vectors, faces, radius, detail)
+
 
 def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
@@ -188,6 +191,7 @@ def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
     ]
     return _divide_project(vectors, faces, radius, detail)
 
+
 def octahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
     Create a octahedron.
@@ -223,6 +227,7 @@ def octahedron(radius: float, detail: int = 0) -> Polyhedron:
 		(1, 3, 4), (1, 4, 2)
     ]
     return _divide_project(vectors, faces, radius, detail)
+
 
 def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
@@ -286,6 +291,7 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
     ]
     return _divide_project(vectors, faces, radius, detail)
 
+
 def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
     Create a icosahedron.
@@ -324,6 +330,7 @@ def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
         (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)
     ]
     return _divide_project(vectors, faces, radius, detail)
+
 
 def _divide_project(vectors, faces, radius, detail):
     def _idx(ci, ri, ri_base):
@@ -392,6 +399,7 @@ def _divide_project(vectors, faces, radius, detail):
 
     return Polyhedron(flatten_points, flatten_faces)
     
+
 def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     """
     Create a surface with a coordinate meshgrid.
@@ -512,6 +520,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
 
     return Polyhedron(_all_pts(), _all_faces())
+
 
 def hull(points: Iterable[VectorLike]) -> Polyhedron:
     """

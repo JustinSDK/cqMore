@@ -21,5 +21,6 @@ class TestPolygon(unittest.TestCase):
 
         self.assertEqual(6, len(hull2D(points)))
 
+
 if __name__ == '__main__':
     unittest.main()

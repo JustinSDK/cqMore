@@ -7,8 +7,6 @@ from cadquery import Vector, Vertex, Wire
 from cqmore import Workplane
 
 class TestWorkplane2D(unittest.TestCase):
-    # Wire
-    
     def test_makePolygon(self):
         points = [
             (0, 0, 0), (10, 0, 0), (0, 10, 0), (-10, 0, 0)
@@ -35,6 +33,7 @@ class TestWorkplane2D(unittest.TestCase):
         for i in range(len(expected)):
             self.assertWireEqual(expected[i], actual[i])
 
+
     def test_intersect2D(self):
         r1 = Workplane().rect(10, 10)
         r2 = Workplane().center(5, 5).rect(10, 10)
@@ -46,6 +45,7 @@ class TestWorkplane2D(unittest.TestCase):
         wire = cast(Wire, r2.val())
         actual = cast(Wire, r1.intersect2D(wire).val())
         self.assertWireEqual(expected, actual)
+
 
     def test_union2D(self):
         r1 = Workplane().rect(10, 10)
@@ -61,6 +61,7 @@ class TestWorkplane2D(unittest.TestCase):
         actual = cast(Wire, r1.union2D(wire).val())
         self.assertWireEqual(expected, actual)         
 
+
     def test_cut2D(self):
         r1 = Workplane().rect(10, 10)
         r2 = Workplane().center(5, 5).rect(10, 10)
@@ -74,6 +75,7 @@ class TestWorkplane2D(unittest.TestCase):
         wire = cast(Wire, r2.val())
         actual = cast(Wire, r1.cut2D(wire).val())
         self.assertWireEqual(expected, actual)       
+
 
     def test_hull2D(self):
         points = [
@@ -91,10 +93,12 @@ class TestWorkplane2D(unittest.TestCase):
         pts = Workplane().hull2D(points, forConstruction = True).vertices().vals()
         self.assertEqual(6, len(pts))
 
+
     def test_polylineJoin2D(self):
         points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
         polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
         self.assertEqual(18, len(polyline.vertices().vals()))
+
 
     def assertWireEqual(self, expected, actual):
         self.assertEqual(expected.geomType(), actual.geomType())
@@ -107,8 +111,6 @@ class TestWorkplane2D(unittest.TestCase):
         )
 
 class TestWorkplane3D(unittest.TestCase):
-    # Solid
-
     def test_uvSphere(self):
         spheres = (Workplane()
                       .rect(5, 5, forConstruction=True)
@@ -117,6 +119,7 @@ class TestWorkplane3D(unittest.TestCase):
                   )
 
         self.assertEqual(200, len(spheres.faces().vals()))
+
 
     def test_polyhedron(self):
         points = (
@@ -139,6 +142,7 @@ class TestWorkplane3D(unittest.TestCase):
             sorted([v.toTuple() for v in actual])
         )
 
+
     def test_gridSurface(self):
         points = [
             [(0, 1, 0), (10, 0, 0), (20, 0, 0)],
@@ -152,6 +156,7 @@ class TestWorkplane3D(unittest.TestCase):
 
         vertices = sf.vertices()
         self.assertEqual(18, vertices.size())
+
 
     def test_hull(self):
         points = (
@@ -169,6 +174,7 @@ class TestWorkplane3D(unittest.TestCase):
         self.assertEqual(10, len(convex_hull.faces().vals()))
         self.assertEqual(7, len(convex_hull.vertices().vals()))
 
+
     def test_polylineJoin(self):
         polyline = (Workplane()
                         .polylineJoin(
@@ -177,6 +183,7 @@ class TestWorkplane3D(unittest.TestCase):
                         )
                     )
         self.assertEqual(16, len(polyline.vertices().vals()))
+
 
 if __name__ == '__main__':
     unittest.main()
