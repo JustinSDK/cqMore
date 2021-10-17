@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'cqMore',
+    name = 'cqmore',
     version = '0.0.0',
     description = 'cadquery plugin (under construction)',
     author = 'Justin Lin',
