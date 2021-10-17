@@ -1,3 +1,6 @@
+from typing import cast
+
+from cadquery import Face
 from cqmore import Workplane
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
 
@@ -27,7 +30,7 @@ nums = len(faces)
 for i in range(nums):
     dice = dice.cut(
         Workplane(faces[i])
-            .workplane(origin = faces[i].Center())
+            .workplane(origin = cast(Face, faces[i]).Center())
             .text(
                 str(nums - i), 
                 font_size, 
