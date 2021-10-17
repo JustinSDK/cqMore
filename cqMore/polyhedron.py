@@ -429,6 +429,23 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     leng_col = len(points[0])
     leng_pts = leng_col * leng_row
 
+    def _append_face_normals(ci, ri, vectors, vt_normal_lt):
+        v0 = vectors[ri][ci]
+        v1 = vectors[ri][ci + 1]
+        v2 = vectors[ri + 1][ci + 1]
+
+        vt_normal_lt[ri][ci].append((v1 - v0).cross(v2 - v0))
+        vt_normal_lt[ri][ci + 1].append((v2 - v1).cross(v0 - v1))
+        vt_normal_lt[ri + 1][ci + 1].append((v0 - v2).cross(v1 - v2))
+
+        v0 = vectors[ri][ci]
+        v1 = vectors[ri + 1][ci + 1]
+        v2 = vectors[ri + 1][ci]
+
+        vt_normal_lt[ri][ci].append((v1 - v0).cross(v2 - v0))
+        vt_normal_lt[ri + 1][ci + 1].append((v2 - v1).cross(v0 - v1))
+        vt_normal_lt[ri + 1][ci].append((v0 - v2).cross(v1 - v2))
+
     def _all_pts():
         vectors = [toVectors(row) for row in points]
 
@@ -439,22 +456,25 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
                     front_thicken_pts.append([vt.x, vt.y, vt.z])
             return front_thicken_pts
 
-        face = Face.makeSplineApprox([[
-                        Vector(*points[ri][ci]) 
-                for ri in range(leng_row)
-            ] for ci in range(leng_col)]
-        )
+        vt_normal_lt = [[[] for _ in range(leng_col)] for _ in range(leng_row)]
+        for ri in range(leng_row - 1):
+            for ci in range(leng_col - 1):
+                _append_face_normals(ci, ri, vectors, vt_normal_lt)
 
         half_thickness = thickness / 2
         front_thicken_pts = [] 
         back_thicken_pts = [] 
-        for row in points:
-            for vt in toVectors(row):
-                n = face.normalAt(vt).normalized()
+
+        for ri in range(leng_row):
+            for ci in range(leng_col):
+                # vertex normal
+                n = sum(vt_normal_lt[ri][ci], Vector()).normalized()
+                vt = vectors[ri][ci]
                 v = vt + n.multiply(half_thickness)
                 front_thicken_pts.append([v.x, v.y, v.z])
                 v = vt + n.multiply(-half_thickness)
                 back_thicken_pts.append([v.x, v.y, v.z])
+
         return front_thicken_pts + back_thicken_pts
 
     def _all_faces():
