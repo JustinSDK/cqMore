@@ -2,10 +2,21 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.polygon import hull2D
-from typing import cast
+from cqmore.polygon import regularPolygon, hull2D
 
 class TestPolygon(unittest.TestCase):
+    def test_regularPolygon(self):
+        polygon = regularPolygon(nSides = 6, radius = 10)
+        self.assertEqual(6, len(polygon))
+
+        polygon = regularPolygon(
+            nSides = 6, 
+            radius = 10, 
+            thetaStart = 45, 
+            thetaEnd = 270
+        )
+        self.assertEqual(8, len(polygon))
+
     def test_hull2D(self):
         points = [
             (0.855355763576732, 0.16864474737612778), 
