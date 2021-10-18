@@ -3,7 +3,6 @@ from typing import cast
 from cadquery import Face
 from cqmore import Workplane
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
-import cq_editor.widgets.debugger as debugger
 
 number_of_faces = 12 # 4, 6, 8, 12 or 20
 radius = 10
