@@ -3,6 +3,7 @@ from typing import cast
 from cadquery import Face
 from cqmore import Workplane
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
+import cq_editor.widgets.debugger as debugger
 
 number_of_faces = 12 # 4, 6, 8, 12 or 20
 radius = 10
@@ -27,8 +28,9 @@ dice = (Workplane()
 
 faces = dice.faces().vals()
 nums = len(faces)
+texts = Workplane()
 for i in range(nums):
-    dice = dice.cut(
+    texts.add(
         Workplane(faces[i])
             .workplane(origin = cast(Face, faces[i]).Center())
             .text(
@@ -38,3 +40,7 @@ for i in range(nums):
                 font = font_name
             )
     )
+
+dice = dice.cut(texts)
+
+globals()['show_object'](dice)
