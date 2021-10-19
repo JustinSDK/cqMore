@@ -144,15 +144,14 @@ class Workplane(cadquery.Workplane):
         """
 
         if points:
-            pts = points
-        else:
-            pts = (v.toTuple() 
-                for wire in self.ctx.popPendingWires()
-                    for v in wire.Vertices()
-            )
+            p = makePolygon(hull2D(points), forConstruction)
+            return self.eachpoint(lambda loc: p.moved(loc), True)
 
-        p = makePolygon(hull2D(pts), forConstruction)
-        return self.eachpoint(lambda loc: p.moved(loc), True)
+        wires = self.ctx.popPendingWires()
+        
+        p = makePolygon(hull2D(v.toTuple() for wire in wires for v in wire.Vertices()), forConstruction)
+        moved = self.eachpoint(lambda loc: p.moved(loc), True)
+        return self.newObject([o for o in moved.objects if not (o in wires)])
 
 
     def polylineJoin2D(self: T, points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> T:
