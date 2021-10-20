@@ -58,13 +58,13 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
     return cast(Union[Solid, Compound], wp.val())
 
 
-def rotateExtrude(workplane: Workplane, radius: float) -> Compound:
-    circlePath = workplane.parametricCurve(parametricEquation(circle, radius = radius))
+def rotateExtrude(workplane: Workplane, radius: float, angle: float = 360) -> Compound:
+    circlePath = workplane.parametricCurve(parametricEquation(circle, radius = radius), stop = angle / 360)
 
     xDir = workplane.plane.xDir.normalized()
-    toExtruded = workplane.rotate(workplane.plane.origin, xDir, 90).translate(xDir * radius)
+    toExtruded = workplane.rotateAboutCenter(xDir, 90).translate(xDir * radius)
     rotateExtruded = (
-        Workplane(Plane(origin = (radius, 0, 0), normal = workplane.plane.zDir))
+        Workplane(Plane(origin = (0, 0, 0), normal = workplane.plane.zDir))
             .add(toExtruded)
             .toPending()
             .sweep(circlePath)
