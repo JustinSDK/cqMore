@@ -19,7 +19,6 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 
  Signature | Description
 --|--
-`rotateExtrude(radius[,angle,N,combine,clean])` | Use all un-extruded wires in the parent chain to create a rotational solid.
 [`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
 [`tetrahedron(radius,[detail])`](polyhedron.md#tetrahedron) | Create a tetrahedron.
 [`hexahedron(radius,[detail])`](polyhedron.md#hexahedron) | Create a hexahedron.
