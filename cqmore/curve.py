@@ -1,7 +1,8 @@
 from math import sin, cos, tau
 
+from .cq_typing import Point2D
 
-def circle(t, radius):
+def circle(t: float, radius: float) -> Point2D:
     theta = t * tau
     return (radius * cos(theta), radius * sin(theta))
 

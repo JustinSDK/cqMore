@@ -1,10 +1,10 @@
-from typing import Iterable, Union
+from typing import Iterable, Union, cast
 
 import cadquery
-from cadquery import Wire, Shape, Compound, Solid
+from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
-from .plugin_solid import makePolyhedron, polylineJoin
+from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
 from .polyhedron import uvSphere, gridSurface, hull
@@ -338,6 +338,17 @@ class Workplane(cadquery.Workplane):
         """       
 
         return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
+
+    
+    def rotateExtrude(self: T, radius: float, combine: bool = True, clean: bool = True) -> T:
+        faces = cast(list[Face], self.extrude(1).faces(DirectionSelector(-self.plane.zDir)).vals())
+        extruded_lt = [rotateExtrude(Workplane(face).workplane(origin = face.Center()).add(face.Wires()), radius) for face in faces]
+        
+        newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
+        if not combine:
+            return newWorkplane
+        else:
+            return newWorkplane.combine(clean = clean)
 
 
 def _each_combine_clean(workplane, solid, combine, clean):
