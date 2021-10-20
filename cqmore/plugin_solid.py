@@ -62,7 +62,7 @@ def rotateExtrude(workplane: Workplane, radius: float) -> Compound:
     circlePath = workplane.parametricCurve(parametricEquation(circle, radius = radius))
 
     xDir = workplane.plane.xDir.normalized()
-    toExtruded = workplane.rotate((0, 0, 0), xDir, 90).translate(xDir * radius)
+    toExtruded = workplane.rotate(workplane.plane.origin, xDir, 90).translate(xDir * radius)
     rotateExtruded = (
         Workplane(Plane(origin = (radius, 0, 0), normal = workplane.plane.zDir))
             .add(toExtruded)
