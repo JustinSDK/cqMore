@@ -1,11 +1,12 @@
 from typing import Iterable, Union, cast
 
-from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Vector, Wire, Compound
+from cadquery import Plane, Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound
 
 from .polyhedron import hull
 
-from .cq_typing import T, FaceIndices, MeshGrid, VectorLike
+from .cq_typing import T, FaceIndices, VectorLike
 from .util import toTuples, toVectors
+from .curve import parametricEquation, circle
 
 
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
@@ -55,3 +56,18 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
         wp = wp.union(workplanes[i])
 
     return cast(Union[Solid, Compound], wp.val())
+
+
+def rotateExtrude(workplane: Workplane, radius: float) -> Compound:
+    circlePath = Workplane().parametricCurve(parametricEquation(circle, radius = radius))
+
+    toExtruded = workplane.rotate((0, 0, 0), (1, 0, 0), 90).translate((radius, 0, 0))
+    rotateExtruded = (
+        Workplane(Plane(origin = (radius, 0, 0), normal = workplane.plane.zDir))
+            .add(toExtruded)
+            .toPending()
+            .sweep(circlePath)
+            .val()
+    )
+
+    return cast(Compound, rotateExtruded)
