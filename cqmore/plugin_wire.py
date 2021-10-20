@@ -23,8 +23,7 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     else:
         raise ValueError("Cannot {} type '{}'".format(boolMethod, type(toBool)))
     
-    wp = Workplane(workplane.plane).add(workplane.ctx.popPendingWires()).toPending()
-    booled = Workplane.__dict__[boolMethod](wp.extrude(1), toExtruded.extrude(1))
+    booled = Workplane.__dict__[boolMethod](workplane.extrude(1), toExtruded.extrude(1))
     planeZdir = DirectionSelector(-workplane.plane.zDir)
     return booled.faces(planeZdir).wires().toPending()
 
