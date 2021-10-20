@@ -340,9 +340,17 @@ class Workplane(cadquery.Workplane):
         return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
 
     
-    def rotateExtrude(self: T, radius: float, angle: float = 360, combine: bool = True, clean: bool = True) -> T:
+    def rotateExtrude(self: T, radius: float, angle: float = 360, N: int = 96, combine: bool = True, clean: bool = True) -> T:
         faces = cast(list[Face], self.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
-        extruded_lt = [rotateExtrude(Workplane(face).workplane(origin = face.Center()).add(face.Wires()), radius, angle) for face in faces]
+        extruded_lt = [
+            rotateExtrude(
+                Workplane(face).workplane(origin = face.Center()).add(face.Wires()), 
+                radius, 
+                angle,
+                N
+            ) 
+            for face in faces
+        ]
         
         newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
         if not combine:
