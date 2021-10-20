@@ -341,7 +341,8 @@ class Workplane(cadquery.Workplane):
 
     
     def rotateExtrude(self: T, radius: float, angle: float = 360, N: int = 96, combine: bool = True, clean: bool = True) -> T:
-        faces = cast(list[Face], self.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
+        wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
+        faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
         extruded_lt = [
             rotateExtrude(
                 Workplane(face).workplane(origin = face.Center()).add(face.Wires()), 
