@@ -10,13 +10,13 @@ from .util import toTuples, toVectors
 def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     if isinstance(toBool, Workplane):
         toExtruded = (
-            Workplane(toBool.plane)
-                .add(toBool.vals())
+            Workplane(workplane.plane)
+                .add(toBool.ctx.pendingWires)
                 .toPending()
         )
     elif isinstance(toBool, Wire):
         toExtruded = (
-            Workplane()
+            Workplane(workplane.plane)
                 .add(toBool)
                 .toPending()
         )
@@ -25,8 +25,7 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
     
     booled = Workplane.__dict__[boolMethod](workplane.extrude(1), toExtruded.extrude(1))
     planeZdir = DirectionSelector(-workplane.plane.zDir)
-    return booled.faces(planeZdir).wires().toPending()
-
+    return booled
 
 def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> Wire:
     vts = toVectors(points)
