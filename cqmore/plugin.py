@@ -1,7 +1,7 @@
 from typing import Iterable, Union, cast
 
 import cadquery
-from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector
+from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector, Location, Vector
 
 from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
 from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude
@@ -343,14 +343,15 @@ class Workplane(cadquery.Workplane):
     def rotateExtrude(self: T, radius: float, angle: float = 360, N: int = 96, combine: bool = True, clean: bool = True) -> T:
         wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
         faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
+        origins = [loc.toTuple()[0] for loc in _pnts(self)]
         extruded_lt = [
             rotateExtrude(
-                Workplane(face).workplane(origin = face.Center()).add(face.Wires()), 
+                Workplane(faces[i]).workplane(origin = origins[i]).add(faces[i].Wires()), 
                 radius, 
                 angle,
                 N
             ) 
-            for face in faces
+            for i in range(len(faces))
         ]
         
         newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
@@ -367,6 +368,24 @@ def _each_combine_clean(workplane, solid, combine, clean):
     else:
         return workplane.union(all, clean=clean)
 
+
+def _pnts(workplane):
+    pnts = []
+    plane = workplane.plane
+    loc = workplane.plane.location
+
+    if len(workplane.objects) == 0:
+        # nothing on the stack. here, we'll assume we should operate with the
+        # origin as the context point
+        pnts.append(Location())
+    else:
+        for o in workplane.objects:
+            if isinstance(o, (Vector, Shape)):
+                pnts.append(loc.inverse * Location(plane, o.Center()))
+            else:
+                pnts.append(o)
+    
+    return (p for p in pnts)
 
 def extend(workplaneClz):
     """
