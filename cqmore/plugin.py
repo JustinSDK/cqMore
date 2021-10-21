@@ -340,7 +340,7 @@ class Workplane(cadquery.Workplane):
         return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
 
     
-    def rotateExtrude(self: T, radius: float, angle: float = 360, origins: list[Point2D] = None, N: int = 96, combine: bool = True, clean: bool = True) -> T:
+    def rotateExtrude(self: T, radius: float, angle: float = 360, origins: list[Point2D] = None, combine: bool = True, clean: bool = True) -> T:
         wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
         faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
         orgs = origins if origins else [loc.toTuple()[0][0:2] for loc in _pnts(self)]
@@ -348,8 +348,7 @@ class Workplane(cadquery.Workplane):
             rotateExtrude(
                 Workplane(self.plane).center(*orgs[i]).add(faces[i]).wires(), 
                 radius, 
-                angle,
-                N
+                angle
             ) 
             for i in range(len(faces))
         ]
