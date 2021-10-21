@@ -3,7 +3,7 @@ from typing import Iterable, Union, cast
 import cadquery
 from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector, Location, Vector
 
-from .cq_typing import FaceIndices, MeshGrid, T, VectorLike
+from .cq_typing import FaceIndices, MeshGrid, T, Point2D, VectorLike
 from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
@@ -340,13 +340,13 @@ class Workplane(cadquery.Workplane):
         return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
 
     
-    def rotateExtrude(self: T, radius: float, angle: float = 360, N: int = 96, combine: bool = True, clean: bool = True) -> T:
+    def rotateExtrude(self: T, radius: float, angle: float = 360, origins: list[Point2D] = None, N: int = 96, combine: bool = True, clean: bool = True) -> T:
         wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
         faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
-        origins = [loc.toTuple()[0][0:2] for loc in _pnts(self)]
+        orgs = origins if origins else [loc.toTuple()[0][0:2] for loc in _pnts(self)]
         extruded_lt = [
             rotateExtrude(
-                Workplane(self.plane).center(*origins[i]).add(faces[i]).wires(), 
+                Workplane(self.plane).center(*orgs[i]).add(faces[i]).wires(), 
                 radius, 
                 angle,
                 N
