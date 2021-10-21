@@ -177,6 +177,27 @@ class Workplane(cadquery.Workplane):
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
 
+    def rotateExtrude(self: T, radius: float, angle: float = 360, center: Union[Point2D, list[Point2D]] = None, combine: bool = True, clean: bool = True) -> T:
+        wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
+        faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
+        orgs = ((center if isinstance(center, list) else [center]) 
+                    if center else [loc.toTuple()[0][0:2] for loc in _pnts(self)])
+        extruded_lt = [
+            rotateExtrude(
+                Workplane(self.plane).center(*orgs[i]).add(faces[i]).wires(), 
+                radius, 
+                angle
+            ) 
+            for i in range(len(faces))
+        ]
+        
+        newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
+        if not combine:
+            return newWorkplane
+        else:
+            return newWorkplane.combine(clean = clean)
+
+
     def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
         """
         Create a UV sphere.
@@ -338,26 +359,6 @@ class Workplane(cadquery.Workplane):
         """       
 
         return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
-
-    
-    def rotateExtrude(self: T, radius: float, angle: float = 360, origins: list[Point2D] = None, combine: bool = True, clean: bool = True) -> T:
-        wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
-        faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
-        orgs = origins if origins else [loc.toTuple()[0][0:2] for loc in _pnts(self)]
-        extruded_lt = [
-            rotateExtrude(
-                Workplane(self.plane).center(*orgs[i]).add(faces[i]).wires(), 
-                radius, 
-                angle
-            ) 
-            for i in range(len(faces))
-        ]
-        
-        newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
-        if not combine:
-            return newWorkplane
-        else:
-            return newWorkplane.combine(clean = clean)
 
 
 def _each_combine_clean(workplane, solid, combine, clean):
