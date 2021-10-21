@@ -68,7 +68,7 @@ def rotateExtrude(workplane: Workplane, radius: float, angle: float, N: int) -> 
                  )
 
     xDir = workplane.plane.xDir.normalized()
-    toExtruded = workplane.rotateAboutCenter(xDir, 90).translate(xDir * radius)
+    toExtruded = workplane.rotate(workplane.plane.origin, workplane.plane.origin + xDir, 90).translate(xDir * radius)
     rotateExtruded = (
         Workplane(workplane.plane)
             .add(toExtruded)
