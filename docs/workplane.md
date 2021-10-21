@@ -37,7 +37,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
-`rotateExtrude(radius[,angle,origins,N,combine,clean])` | Use all un-extruded wires in the parent chain to create a rotational solid.
+`rotateExtrude(radius[,angle,origins,combine,clean])` | Use all un-extruded wires in the parent chain to create a rotational solid.
 [`uvSphere(radius,[rings,combine,clean])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`gridSurface(points,[thickness,combine,clean])`](workplane.md#gridSurface) | Create a surface with a coordinate meshgrid.
