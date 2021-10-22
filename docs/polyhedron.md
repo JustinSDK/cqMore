@@ -232,8 +232,8 @@ Create a surface with a coordinate meshgrid.
 
     points = [[
             ripple(x, y) 
-        for x in range(min_value, max_value, step)
-    ] for y in range(min_value, max_value, step)]
+        for y in range(min_value, max_value, step)
+    ] for x in range(min_value, max_value, step)]
 
     sf = Workplane().polyhedron(*gridSurface(points, thickness))
 

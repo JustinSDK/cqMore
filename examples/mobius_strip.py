@@ -8,9 +8,9 @@ thickness = 0.1
 
 # not precise, but workable
 points = []
-for u in range(0, 360 + u_step, u_step):
+for vi in range(11):
     row = []
-    for vi in range(11):
+    for u in range(0, 360 + u_step, u_step):
         v = -1 + vi * v_step
         row.append((
             (1 + v / 2 * cos(radians(u / 2))) * cos(radians(u)), 

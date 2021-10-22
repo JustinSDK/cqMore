@@ -426,18 +426,20 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
         points = [[
                 ripple(x, y) 
-            for x in range(min_value, max_value, step)
-        ] for y in range(min_value, max_value, step)]
+            for y in range(min_value, max_value, step)
+        ] for x in range(min_value, max_value, step)]
 
         sf = Workplane().polyhedron(*gridSurface(points, thickness))
 
     """
 
-    leng_row = len(points)
-    leng_col = len(points[0])
+    vectors = [toVectors([points[ci][ri] for ci in range(len(points))]) for ri in range(len(points[0]))]
+
+    leng_row = len(vectors)
+    leng_col = len(vectors[0])
     leng_pts = leng_col * leng_row
 
-    def _append_face_normals(ci, ri, vectors, vt_normal_lt):
+    def _append_face_normals(ci, ri, vt_normal_lt):
         v0 = vectors[ri][ci]
         v1 = vectors[ri][ci + 1]
         v2 = vectors[ri + 1][ci + 1]
@@ -455,8 +457,6 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         vt_normal_lt[ri + 1][ci].append((v0 - v2).cross(v1 - v2))
 
     def _all_pts():
-        vectors = [toVectors(row) for row in points]
-
         if thickness == 0:
             front_thicken_pts = [] 
             for row in vectors:
@@ -467,7 +467,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         vt_normal_lt = [[[] for _ in range(leng_col)] for _ in range(leng_row)]
         for ri in range(leng_row - 1):
             for ci in range(leng_col - 1):
-                _append_face_normals(ci, ri, vectors, vt_normal_lt)
+                _append_face_normals(ci, ri, vt_normal_lt)
 
         half_thickness = thickness / 2
         front_thicken_pts = [] 
