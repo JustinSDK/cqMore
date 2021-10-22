@@ -8,8 +8,6 @@ from .cq_typing import T, FaceIndices, VectorLike, MeshGrid
 from .util import toTuples, toVectors
 from .curve import parametricEquation, circle
 
-from importlib import import_module
-
 from OCP.BRepOffset import BRepOffset_MakeOffset, BRepOffset_Skin # type: ignore
 from OCP.GeomAbs import GeomAbs_Intersection # type: ignore
 
