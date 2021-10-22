@@ -38,10 +38,10 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
  Signature | Description
 --|--
 [`rotateExtrude(radius[,angle,origins,combine,clean])`](workplane.md#rotateExtrude) | Use all un-extruded wires in the parent chain to create a rotational solid.
-[`splineApproxSurface(points,[thickness,combine,clean])`](workplane.md#splineApproxSurface) | Approximate a spline surface through the provided points.
+[`splineApproxSurface(points[,thickness,combine,clean])`](workplane.md#splineApproxSurface) | Approximate a spline surface through the provided points.
 [`uvSphere(radius,[rings,combine,clean])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
-[`gridSurface(points,[thickness,combine,clean])`](workplane.md#gridSurface) | Create a surface with a coordinate meshgrid.
+[`gridSurface(points[,thickness,combine,clean])`](workplane.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`hull([points,combine,clean])`](workplane.md#hull) | Create a convex hull through the provided points. 
 [`polylineJoin(points,join[,combine,clean])`](workplane.md#polylineJoin) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
