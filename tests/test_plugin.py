@@ -120,6 +120,23 @@ class TestWorkplane3D(unittest.TestCase):
         
         self.assertEqual(10, workplane.faces().size())
     
+    def test_splineApproxSurface(self):
+        def paraboloid(x, y):
+            return (x, y, ((y ** 2) - (x ** 2)) / 4)
+
+        min_value = -30
+        max_value = 30
+        step = 5
+        thickness = 0.5
+
+        points = [[
+                paraboloid(x / 10, y / 10) 
+            for y in range(min_value, max_value + step, step)
+        ] for x in range(min_value, max_value + step, step)]
+
+        surface = Workplane().splineApproxSurface(points, thickness)
+        self.assertEqual(6, surface.faces().size())
+        
 
     def test_uvSphere(self):
         spheres = (Workplane()
