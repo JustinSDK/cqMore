@@ -191,11 +191,16 @@ class Workplane(cadquery.Workplane):
             for i in range(len(faces))
         ]
         
-        newWorkplane = self.newObject([o for o in self.objects if not isinstance(o, Wire)]).add(extruded_lt)
-        if not combine:
-            return newWorkplane
+        r = Compound.makeCompound(extruded_lt)
+        if combine:
+            newS = self.newObject([o for o in self.objects if not isinstance(o, Wire)])._combineWithBase(r)
         else:
-            return newWorkplane.combine(clean = clean)
+            newS = self.newObject([r])
+
+        if clean:
+            newS = newS.clean()
+
+        return newS
 
 
     def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
