@@ -1,13 +1,17 @@
 from typing import Iterable, Union, cast
 
-from cadquery import Plane, Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound
+from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound
 
 from .polyhedron import hull
 
-from .cq_typing import T, FaceIndices, VectorLike
+from .cq_typing import T, FaceIndices, VectorLike, MeshGrid
 from .util import toTuples, toVectors
 from .curve import parametricEquation, circle
 
+from importlib import import_module
+
+from OCP.BRepOffset import BRepOffset_MakeOffset, BRepOffset_Skin # type: ignore
+from OCP.GeomAbs import GeomAbs_Intersection # type: ignore
 
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     def _edges(vectors, face_indices):
@@ -78,3 +82,25 @@ def rotateExtrude(workplane: Workplane, radius: float, angle: float) -> Compound
     )
 
     return cast(Compound, rotateExtruded)
+
+def splineApproxSurface(points: MeshGrid, thickness: float = 0) -> Union[Solid, Face]:    
+    face = Face.makeSplineApprox([toVectors(col) for col in points])
+
+    # THICKEN SURFACE
+    # abs() because negative values are allowed to set direction of thickening
+    if abs(thickness) > 0: 
+        solid = BRepOffset_MakeOffset()
+        solid.Initialize(
+            face.wrapped,
+            thickness,
+            1.0e-5,
+            BRepOffset_Skin,
+            False,
+            False,
+            GeomAbs_Intersection,
+            True,
+        )  # The last True is important to make solid
+        solid.MakeOffsetShape()
+        return Solid(solid.Shape())
+    else:
+        return face
