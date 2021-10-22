@@ -249,6 +249,38 @@ class Workplane(cadquery.Workplane):
         return newS
 
     def splineApproxSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:    
+        """
+        Create a surface with a coordinate meshgrid.
+
+        ## Parameters
+
+        - `points`: a 2D list of Vectors that represent the control points.
+        - `thickness`: the amount of being thick (return 2D surface if 0).
+        - `combine`: should the results be combined with other solids on the stack (and each other)?
+        - `clean`: call `clean()` afterwards to have a clean shape.
+
+        ## Examples 
+
+            from cqmore import Workplane
+
+            def paraboloid(x, y):
+                return (x, y, ((y ** 2) - (x ** 2)) / 4)
+
+            min_value = -30
+            max_value = 30
+            step = 5
+            thickness = 0.5
+
+            points = [[
+                    paraboloid(x / 10, y / 10) 
+                for y in range(min_value, max_value + step, step)
+            ] for x in range(min_value, max_value + step, step)]
+
+            solid = Workplane().splineApproxSurface(points, thickness)
+
+
+        """
+
         return _solid_each_combine_clean(self, splineApproxSurface(points, thickness), combine, clean)
 
     def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
