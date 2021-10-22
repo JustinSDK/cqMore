@@ -111,6 +111,16 @@ class TestWorkplane2D(unittest.TestCase):
         )
 
 class TestWorkplane3D(unittest.TestCase):
+    def test_rotateExtrude(self):
+        workplane = (Workplane()
+                        .polyline([(5, 0), (6, 0), (6, 4), (4, 5), (4, 8), (3, 8), (3, 4), (5, 3)])
+                        .close()  
+                        .rotateExtrude(3, 180, center = (0, 0))
+                    )
+        
+        self.assertEqual(10, workplane.faces().size())
+    
+
     def test_uvSphere(self):
         spheres = (Workplane()
                       .rect(5, 5, forConstruction=True)
