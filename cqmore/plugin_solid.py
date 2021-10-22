@@ -83,6 +83,7 @@ def rotateExtrude(workplane: Workplane, radius: float, angle: float) -> Compound
 
     return cast(Compound, rotateExtruded)
 
+
 def splineApproxSurface(points: MeshGrid, thickness: float) -> Union[Solid, Face]:    
     face = Face.makeSplineApprox([toVectors(col) for col in points])
 
