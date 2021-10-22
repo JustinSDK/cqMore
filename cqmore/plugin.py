@@ -7,7 +7,7 @@ from .cq_typing import FaceIndices, MeshGrid, T, Point2D, VectorLike
 from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude, splineApproxSurface
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
-from .polyhedron import uvSphere, gridSurface, hull
+from .polyhedron import hull
 
 
 class Workplane(cadquery.Workplane):
@@ -340,9 +340,14 @@ class Workplane(cadquery.Workplane):
 
             # ex2
 
-            from cqmore import Workplane
+                from cqmore import Workplane
+                from cqmore.polyhedron import uvSphere
 
-            convex_hull = Workplane().uvSphere(10).box(20, 20, 5).hull()
+                convex_hull = (Workplane()
+                                  .polyhedron(*uvSphere(10))
+                                  .box(20, 20, 5)
+                                  .hull()
+                              )
 
         """
 

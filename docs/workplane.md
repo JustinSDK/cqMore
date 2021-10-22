@@ -284,9 +284,10 @@ Create a convex hull through the provided points.
 
 
     from cqmore import Workplane
+    from cqmore.polyhedron import uvSphere
 
     convex_hull = (Workplane()
-                       .uvSphere(10)
+                       .polyhedron(*uvSphere(10))
                        .box(20, 20, 5)
                        .hull()
                   )
