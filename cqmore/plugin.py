@@ -272,7 +272,7 @@ class Workplane(cadquery.Workplane):
         
         """
         
-        return _each_combine_clean(self, makePolyhedron(*uvSphere(radius, rings)), combine, clean)
+        return _solid_each_combine_clean(self, makePolyhedron(*uvSphere(radius, rings)), combine, clean)
 
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
@@ -298,7 +298,7 @@ class Workplane(cadquery.Workplane):
         
         """
 
-        return _each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
+        return _solid_each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
 
 
     def gridSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
@@ -333,7 +333,7 @@ class Workplane(cadquery.Workplane):
 
         """
         
-        return _each_combine_clean(self, makePolyhedron(*gridSurface(points, thickness)), combine, clean)
+        return _solid_each_combine_clean(self, makePolyhedron(*gridSurface(points, thickness)), combine, clean)
 
 
     def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
@@ -382,7 +382,7 @@ class Workplane(cadquery.Workplane):
                     for v in shape.Vertices()
             )
 
-        return _each_combine_clean(self, makePolyhedron(*hull(pts)), combine, clean)
+        return _solid_each_combine_clean(self, makePolyhedron(*hull(pts)), combine, clean)
     
 
     def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = True, clean: bool = True) -> T:
@@ -409,10 +409,10 @@ class Workplane(cadquery.Workplane):
 
         """       
 
-        return _each_combine_clean(self, polylineJoin(points, join), combine, clean)
+        return _solid_each_combine_clean(self, polylineJoin(points, join), combine, clean)
 
 
-def _each_combine_clean(workplane, solid, combine, clean):
+def _solid_each_combine_clean(workplane, solid, combine, clean):
     all = workplane.eachpoint(lambda loc: solid.moved(loc), True)
     if not combine:
         return all
