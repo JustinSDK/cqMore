@@ -231,7 +231,7 @@ Approximate a spline surface through the provided points.
         for y in range(min_value, max_value + step, step)
     ] for x in range(min_value, max_value + step, step)]
 
-    solid = Workplane().splineApproxSurface(points, thickness)
+    surface = Workplane().splineApproxSurface(points, thickness)
 
 ![splineApproxSurface](images/workplane_splineApproxSurface.JPG)
 
