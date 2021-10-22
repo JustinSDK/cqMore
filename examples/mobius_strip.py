@@ -1,5 +1,6 @@
 from math import sin, cos, radians
 from cqmore import Workplane
+from cqmore.polyhedron import gridSurface
 
 u_step = 10
 v_step = 0.2
@@ -19,4 +20,4 @@ for u in range(0, 360 + u_step, u_step):
     
     points.append(row)
 
-mobius_strip = Workplane().gridSurface(points, thickness)
+mobius_strip = Workplane().polyhedron(*gridSurface(points, thickness))

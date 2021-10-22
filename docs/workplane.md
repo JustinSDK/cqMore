@@ -39,9 +39,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 --|--
 [`rotateExtrude(radius[,angle,origins,combine,clean])`](workplane.md#rotateExtrude) | Use all un-extruded wires in the parent chain to create a rotational solid.
 [`splineApproxSurface(points[,thickness,combine,clean])`](workplane.md#splineApproxSurface) | Approximate a spline surface through the provided points.
-[`uvSphere(radius,[rings,combine,clean])`](workplane.md#uvsphere) | Create a UV sphere.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
-[`gridSurface(points[,thickness,combine,clean])`](workplane.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`hull([points,combine,clean])`](workplane.md#hull) | Create a convex hull through the provided points. 
 [`polylineJoin(points,join[,combine,clean])`](workplane.md#polylineJoin) | Place a join on each point. Hull each pair of joins and union all convex hulls.
 
@@ -235,29 +233,6 @@ Approximate a spline surface through the provided points.
 
 ![splineApproxSurface](images/workplane_splineApproxSurface.JPG)
 
-# `uvSphere`
-
-Create a UV sphere.
-
-## Parameters
-
-- `radius`: sphere radius.
-- `rings = 2`: number of horizontal segments.
-- `combine = True`: should the results be combined with other solids on the stack (and each other)?
-- `clean = True`: call `clean()` afterwards to have a clean shape.
-
-## Examples 
-
-    from cqmore import Workplane
-
-    spheres = (Workplane()
-                  .rect(5, 5, forConstruction = True)
-                  .vertices()
-                  .uvSphere(2, rings = 5)
-              )
-
-![uvSphere](images/workplane_uvSphere.JPG)
-
 # `polyhedron`
 
 Create any polyhedron with 3D points(vertices) and faces that enclose the solid. Each face contains the indices (0 based) of 3 or more points from the `points`.
@@ -278,38 +253,6 @@ Create any polyhedron with 3D points(vertices) and faces that enclose the solid.
     tetrahedron = Workplane().polyhedron(points, faces)
 
 ![polyhedron](images/workplane_polyhedron.JPG)
-
-# `gridSurface`
-
-Create a surface with a coordinate meshgrid.
-
-## Parameters
-
-- `points`: a coordinate meshgrid.
-- `thickness = 0`: the amount of being thick (return 2D surface if 0).
-- `combine = True`: should the results be combined with other solids on the stack (and each other)?
-- `clean = True`: call `clean()` afterwards to have a clean shape.
-
-## Examples 
-
-    from cqmore import Workplane
-
-    def paraboloid(x, y):
-        return (x, y, ((y ** 2) - (x ** 2)) / 4)
-
-    min_value = -30
-    max_value = 30
-    step = 5
-    thickness = 0.5
-
-    points = [[
-            paraboloid(x / 10, y / 10) 
-        for x in range(min_value, max_value, step)
-    ] for y in range(min_value, max_value, step)]
-
-    sf = Workplane().gridSurface(points, thickness)
-
-![gridSurface](images/workplane_gridSurface.JPG)
 
 # `hull`
 

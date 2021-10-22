@@ -136,16 +136,6 @@ class TestWorkplane3D(unittest.TestCase):
 
         surface = Workplane().splineApproxSurface(points, thickness)
         self.assertEqual(6, surface.faces().size())
-        
-
-    def test_uvSphere(self):
-        spheres = (Workplane()
-                      .rect(5, 5, forConstruction=True)
-                      .vertices()
-                      .uvSphere(2, rings = 5)
-                  )
-
-        self.assertEqual(200, len(spheres.faces().vals()))
 
 
     def test_polyhedron(self):
@@ -168,21 +158,6 @@ class TestWorkplane3D(unittest.TestCase):
             sorted(points), 
             sorted([v.toTuple() for v in actual])
         )
-
-
-    def test_gridSurface(self):
-        points = [
-            [(0, 1, 0), (10, 0, 0), (20, 0, 0)],
-            [(0, 10, 0), (10, 10, 1), (21, 10, 0)],
-            [(0, 20, 0), (10, 21, 0), (20, 20, 0)]
-        ]
-
-        sf = Workplane().gridSurface(points, 1)
-
-        self.assertEqual(32, sf.faces().size())
-
-        vertices = sf.vertices()
-        self.assertEqual(18, vertices.size())
 
 
     def test_hull(self):

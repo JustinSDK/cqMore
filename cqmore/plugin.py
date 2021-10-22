@@ -282,31 +282,6 @@ class Workplane(cadquery.Workplane):
 
         return _solid_each_combine_clean(self, splineApproxSurface(points, thickness), combine, clean)
 
-    def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
-        """
-        Create a UV sphere.
-
-        ## Parameters
-
-        - `radius`: sphere radius.
-        - `rings`: number of horizontal segments.
-        - `combine`: should the results be combined with other solids on the stack (and each other)?
-        - `clean`: call `clean()` afterwards to have a clean shape.
-
-        ## Examples 
-
-            from cqmore import Workplane
-
-            spheres = (Workplane()
-                        .rect(5, 5, forConstruction=True)
-                        .vertices()
-                        .uvSphere(2, rings = 5)
-                    )
-        
-        """
-        
-        return _solid_each_combine_clean(self, makePolyhedron(*uvSphere(radius, rings)), combine, clean)
-
 
     def polyhedron(self: T, points: Iterable[VectorLike], faces: Iterable[FaceIndices], combine: bool = True, clean: bool = True) -> T:
         """
@@ -332,41 +307,6 @@ class Workplane(cadquery.Workplane):
         """
 
         return _solid_each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
-
-
-    def gridSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:
-        """
-        Create a surface with a coordinate meshgrid.
-
-        ## Parameters
-
-        - `points`: a coordinate meshgrid.
-        - `thickness`: the amount of being thick (return 2D surface if 0).
-        - `combine`: should the results be combined with other solids on the stack (and each other)?
-        - `clean`: call `clean()` afterwards to have a clean shape.
-
-        ## Examples 
-
-            from cqmore import Workplane
-
-            def paraboloid(x, y):
-                return (x, y, ((y ** 2) - (x ** 2)) / 4)
-
-            min_value = -30
-            max_value = 30
-            step = 5
-            thickness = 0.5
-
-            points = [[
-                    paraboloid(x / 10, y / 10) 
-                for x in range(min_value, max_value, step)
-            ] for y in range(min_value, max_value, step)]
-
-            sf = Workplane().gridSurface(points, thickness)
-
-        """
-        
-        return _solid_each_combine_clean(self, makePolyhedron(*gridSurface(points, thickness)), combine, clean)
 
 
     def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
