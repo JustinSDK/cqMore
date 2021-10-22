@@ -4,7 +4,7 @@ import cadquery
 from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector, Location, Vector
 
 from .cq_typing import FaceIndices, MeshGrid, T, Point2D, VectorLike
-from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude
+from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude, splineApproxSurface
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
 from .polyhedron import uvSphere, gridSurface, hull
@@ -248,6 +248,8 @@ class Workplane(cadquery.Workplane):
 
         return newS
 
+    def splineApproxSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:    
+        return _solid_each_combine_clean(self, splineApproxSurface(points, thickness), combine, clean)
 
     def uvSphere(self: T, radius: float, rings: int = 2, combine: bool = True, clean: bool = True) -> T:
         """
