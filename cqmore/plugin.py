@@ -250,7 +250,7 @@ class Workplane(cadquery.Workplane):
 
     def splineApproxSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:    
         """
-        Create a surface with a coordinate meshgrid.
+        Approximate a spline surface through the provided points.
 
         ## Parameters
 
@@ -277,7 +277,6 @@ class Workplane(cadquery.Workplane):
             ] for x in range(min_value, max_value + step, step)]
 
             solid = Workplane().splineApproxSurface(points, thickness)
-
 
         """
 
