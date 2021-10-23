@@ -15,9 +15,10 @@ def helix(t: float, radius: float, slope: float) -> Point3D:
 
 def torusKnot(t: float, p: int, q: int) -> Point3D:
     phi = t * tau
-    r = cos(q * phi) + 2
+    q_phi = q * phi
     p_phi = p * phi
-    return (r * cos(p_phi), r * sin(p_phi), -sin(q * phi))
+    r = cos(q_phi) + 2
+    return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
 
 
 def parametricEquation(f: Callable[..., Union[Point2D, Point3D]], *args: Any, **kwargs: Any) -> Callable[[float], Union[Point2D, Point3D]]:
