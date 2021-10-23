@@ -1,5 +1,5 @@
 from math import sin, cos, tau
-from typing import Any, Callable, Protocol, Union
+from typing import Any, Callable, Union
 
 from .cq_typing import Point2D, Point3D
 
