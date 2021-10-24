@@ -3,9 +3,9 @@ from cqmore.curve import torusKnot, parametricEquation
 
 from cadquery import Plane, Vector
 
-origin = torusKnot(0, p=3, q=2)
-v1 = Vector(*torusKnot(0.9, p=3, q=2))
-v2 = Vector(*torusKnot(0.1, p=3, q=2))
+origin = torusKnot(0, p = 2, q = 3)
+v1 = Vector(*torusKnot(0.9, p = 2, q = 3))
+v2 = Vector(*torusKnot(0.1, p = 2, q = 3))
 
 r = (Workplane(Plane(origin = origin, normal=(v2 - v1)))
         .polygon(5, 1)
