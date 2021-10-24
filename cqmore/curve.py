@@ -104,7 +104,7 @@ def parametricEquation(func: Callable[..., Union[Point2D, Point3D]], *args: Any,
 
     ## Parameters
 
-    - `func`: a parametric variable in the range 0 to 1.
+    - `func`: the parametric equation of a curve.
     - `*args`: the positional arguments.
     - `**kwargs`: the keyword arguments.
 
