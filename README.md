@@ -43,4 +43,4 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 - [`cqmore.Workplane`](docs/workplane.md)
 - [`cqmore.polygon`](docs/polygon.md)
 - [`cqmore.polyhedron`](docs/polyhedron.md)
-- `cqmore.curve`
+- [`cqmore.curve`](docs/curve.md)

@@ -1,0 +1,112 @@
+# `cqmore.curve`
+
+Provide parametric equations of curves.
+
+## Functions
+
+ Signature | Description
+--|--
+[`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
+[`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
+[`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
+[`parametricEquation(func,*args,**kwargs)`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
+
+----
+
+# `circle`
+
+The parametric equation of a circle. 
+
+## Parameters
+
+- `t` : a parametric variable in the range 0 to 1.
+- `radius` : circle radius. 
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import circle
+
+    radius = 1
+
+    c = (Workplane()
+            .parametricCurve(lambda t: circle(t, radius))
+            .center(radius * 3, 0)
+            .polyline([circle(t / 10, radius) for t in range(6)]).close()
+            .extrude(1)
+        )
+
+![circle](images/curve_circle.JPG)
+
+# `helix`
+
+The parametric equation of a helix.
+
+## Parameters
+
+- `t` : as it increases, the point traces a right-handed helix about the z-axis, in a right-handed coordinate system.
+- `radius`: the helix radius. 
+- `slope `: the helix slope. 
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import helix
+
+    radius = 1
+    slope = 1
+
+    c = (Workplane()
+            .parametricCurve(lambda t: helix(t, radius, slope), stop = 3)
+        )
+
+![helix](images/curve_helix.JPG)
+
+# `torusKnot`
+
+The parametric equation of a [torus knot](https://en.wikipedia.org/wiki/Torus_knot).
+
+## Parameters
+
+- `t` : a parametric variable in the range 0 to 1.
+- `p`: the p parameter of The (p,q)-torus knot.
+- `q `: the q parameter of The (p,q)-torus knot.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import torusKnot
+
+    p = 11
+    q = 13
+
+    c = (Workplane()
+            .polyline([torusKnot(t / 360, p, q) for t in range(360)])
+            .close()
+        )
+
+![torusKnot](images/curve_torusKnot.JPG)
+
+# `parametricEquation`
+
+Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
+
+## Parameters
+
+- `func`: a parametric variable in the range 0 to 1.
+- `*args`: the positional arguments.
+- `**kwargs`: the keyword arguments.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import torusKnot, parametricEquation
+
+    p = 4
+    q = 9
+
+    c = (Workplane()
+            .parametricCurve(parametricEquation(torusKnot, p = p, q = q))
+        )
+
+![parametricEquation](images/curve_parametricEquation.JPG)

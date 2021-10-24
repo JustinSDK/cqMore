@@ -7,7 +7,7 @@ Provide functions for creating simple polygons.
  Signature | Description
 --|--
 [`taiwan(h[,distance])`](polygon.md#taiwan) | Create a convex hull through the provided points. 
-[`regularPolygon(nSides, radius[,thetaStart,thetaEnd])`](polygon.md#regularPolygon) | Create a regular polygon.
+[`regularPolygon(nSides,radius[,thetaStart,thetaEnd])`](polygon.md#regularPolygon) | Create a regular polygon.
 [`hull2D(points)`](polygon.md#hull2D) | Create a convex hull through the provided points. 
 
 ----
