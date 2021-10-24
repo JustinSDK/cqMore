@@ -16,8 +16,8 @@ def taiwan(h: float, distance: float = 0) -> list[Point2D]:
 
     ## Parameters
 
-    - `h` : The height of Taiwan.
-    - `distance` : used for simplifying the shape. If the distance between a point and its 
+    - `h`: The height of Taiwan.
+    - `distance`: used for simplifying the shape. If the distance between a point and its 
                    previous points is not greater than distance, the point will be kept. 
 
     ## Examples 
