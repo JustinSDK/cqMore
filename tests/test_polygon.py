@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.polygon import regularPolygon, hull2D
+from cqmore.polygon import regularPolygon, hull2D, star
 
 class TestPolygon(unittest.TestCase):
     def test_regularPolygon(self):
@@ -16,6 +16,11 @@ class TestPolygon(unittest.TestCase):
             thetaEnd = 270
         )
         self.assertEqual(8, len(polygon))
+
+
+    def test_star(self):
+        polygon = star(outerRadius = 10, innerRadius = 5, n = 8)
+        self.assertEqual(16, len(polygon))
 
 
     def test_hull2D(self):

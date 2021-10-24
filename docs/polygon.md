@@ -8,6 +8,7 @@ Provide functions for creating simple polygons.
 --|--
 [`taiwan(h[,distance])`](polygon.md#taiwan) | Create a convex hull through the provided points. 
 [`regularPolygon(nSides,radius[,thetaStart,thetaEnd])`](polygon.md#regularPolygon) | Create a regular polygon.
+[`star([outerRadius,innerRadius,n])`](polygon.md#star) | Create a star.
 [`hull2D(points)`](polygon.md#hull2D) | Create a convex hull through the provided points. 
 
 ----
@@ -73,6 +74,30 @@ Create a regular polygon.
                 )       
 
 ![regularPolygon](images/polygon_regularPolygon2.JPG)
+
+# `star`
+
+Create a star.
+
+## Parameters
+
+- `outerRadius`: the outer radius of the star. 
+- `innerRadius`: The inner radius of the star.
+- `n`: the burst number.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polygon import star
+
+    polygon = (Workplane()
+                    .makePolygon(
+                        star(outerRadius = 10, innerRadius = 5, n = 8)
+                    )
+                    .extrude(1)
+                )    
+
+![star](images/polygon_star.JPG)
 
 # `hull2D`
 

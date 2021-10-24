@@ -3,7 +3,7 @@ Provide functions for creating simple polygons.
 
 """
 
-from math import sin, cos, radians
+from math import sin, cos, radians, tau
 from typing import Iterable, cast
 
 from .cq_typing import Point2D, VectorLike
@@ -95,6 +95,43 @@ def regularPolygon(nSides: int, radius: float, thetaStart: float = 0, thetaEnd: 
     a = da / nSides
 
     return _polygon(a, nSides) if da == 360 else [(0.0, 0.0)] + _polygon(a, nSides + 1)
+
+
+def star(outerRadius: float = 1, innerRadius: float =  0.381966, n: int = 5) -> list[Point2D]:
+    """
+    Create a star.
+
+    ## Parameters
+
+    - `outerRadius`: the outer radius of the star. 
+    - `innerRadius`: The inner radius of the star.
+    - `n`: the burst number.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.polygon import star
+
+        polygon = (Workplane()
+                        .makePolygon(
+                            star(outerRadius = 10, innerRadius = 5, n = 8)
+                        )
+                        .extrude(1)
+                    )    
+
+    """
+
+    right = tau / 4
+    thetaStep = tau / n
+    half_thetaStep = thetaStep / 2
+    points = []
+    for i in range(n):
+        a = thetaStep * i + right
+        outerPoint = (outerRadius * cos(a), outerRadius * sin(a))
+        innerPoint = (innerRadius * cos(a + half_thetaStep), innerRadius * sin(a + half_thetaStep))
+        points.append(outerPoint)
+        points.append(innerPoint)
+    return points
 
 
 def hull2D(points: Iterable[VectorLike]) -> list[Point2D]:
