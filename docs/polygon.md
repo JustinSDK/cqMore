@@ -77,13 +77,13 @@ Create a regular polygon.
 
 # `star`
 
-Create a star.
+Create a star. Default to a pentagram.
 
 ## Parameters
 
-- `outerRadius`: the outer radius of the star. 
-- `innerRadius`: The inner radius of the star.
-- `n`: the burst number.
+- `outerRadius = 1`: the outer radius of the star. 
+- `innerRadius = 0.381966`: The inner radius of the star.
+- `n = 5`: the burst number.
 
 ## Examples 
 
