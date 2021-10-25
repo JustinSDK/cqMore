@@ -121,6 +121,43 @@ def helix(t: float, radius: float, slope: float) -> Point3D:
     return (radius * cos(theta), radius * sin(theta), radius * slope * t)
 
 
+def sphericalSpiral(t: float, radius: float, c: float = 2):
+    '''
+    The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
+
+    ## Parameters
+
+    - `t`: as it increases, the point traces a right-handed helix about the z-axis, 
+           in a right-handed coordinate system.
+    - `radius`: the sphere radius. 
+    - `c `: equal to twice the number of turns. 
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import sphericalSpiral
+
+        radius = 10
+        c = 10
+
+        spiral = (Workplane()
+                    .parametricCurve(lambda t: sphericalSpiral(t, radius, c))
+                )
+
+    '''
+
+    theta = t * pi
+    sinTheta = sin(theta)
+    cosTheta = cos(theta)
+    sinCTheta = sin(c * theta)
+    cosCTheta = cos(c * theta)
+    return (
+               radius * sinTheta * cosCTheta, 
+               radius * sinTheta * sinCTheta,
+               radius * cosTheta
+           )
+
+
 def torusKnot(t: float, p: int, q: int) -> Point3D:
     '''
     The parametric equation of a [torus knot](https://en.wikipedia.org/wiki/Torus_knot).

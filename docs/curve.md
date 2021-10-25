@@ -10,6 +10,7 @@ Provide parametric equations of curves.
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
 [`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a logarithmic spiral.  
 [`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
+[`sphericalSpiral(t,radius[,c])`](curve.md#sphericalSpiral) | The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
 [`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
 [`parametricEquation(func[,*args,**kwargs])`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
 
@@ -107,6 +108,31 @@ The parametric equation of a helix.
         )
 
 ![helix](images/curve_helix.JPG)
+
+# `sphericalSpiral`
+
+The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
+
+## Parameters
+
+- `t`: as it increases, the point traces a right-handed helix about the z-axis, 
+        in a right-handed coordinate system.
+- `radius`: the sphere radius. 
+- `c = 2`: equal to twice the number of turns. 
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import sphericalSpiral
+
+    radius = 10
+    c = 10
+
+    spiral = (Workplane()
+                .parametricCurve(lambda t: sphericalSpiral(t, radius, c))
+            )
+
+![sphericalSpiral](images/curve_sphericalSpiral.JPG)
 
 # `torusKnot`
 
