@@ -7,9 +7,10 @@ Provide parametric equations of curves.
  Signature | Description
 --|--
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
+[`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral. 
 [`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
 [`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
-[`parametricEquation(func,*args,**kwargs)`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
+[`parametricEquation(func[,*args,**kwargs])`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
 
 ----
 
