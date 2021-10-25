@@ -2,13 +2,18 @@
 
 Provide parametric equations of curves.
 
-## Functions
+## 2D Functions
 
  Signature | Description
 --|--
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
 [`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a logarithmic spiral.  
+
+## 3D Functions
+
+ Signature | Description
+--|--
 [`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
 [`sphericalSpiral(t,radius[,c])`](curve.md#sphericalSpiral) | The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
 [`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
