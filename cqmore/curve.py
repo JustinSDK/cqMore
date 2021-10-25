@@ -3,7 +3,7 @@ Provide parametric equations of curves.
 
 """
 
-from math import sin, cos, tau
+from math import sin, cos, tau, pi, e, log, sqrt
 from typing import Any, Callable, Union
 
 from .cq_typing import Point2D, Point3D
@@ -37,6 +37,34 @@ def circle(t: float, radius: float) -> Point2D:
     return (radius * cos(theta), radius * sin(theta))
 
 
+def logarithmicSpiral(t: float, a: float = 1, k: float = 0.306349) -> Point2D:
+    '''
+    The parametric equation of a [logarithmic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral). 
+    Default to a golden spiral.
+
+    ## Parameters
+
+    - `t`: as it increases, the point traces a right-handed spiral about the z-axis, 
+           in a right-handed coordinate system.
+    - `a`: the a parameter of the logarithmic spiral. 
+    - `k`: the k parameter of the logarithmic spiral. 
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import logarithmicSpiral
+
+        spiral = (Workplane()
+                    .polyline([logarithmicSpiral(t / 360) for t in range(360 * 5)])
+                 )
+
+    '''
+
+    theta = t * tau
+    coef = a * e ** (k * theta)
+    return (coef * cos(theta), coef * sin(theta))
+    
+
 def helix(t: float, radius: float, slope: float) -> Point3D:
     '''
     The parametric equation of a helix.
@@ -44,7 +72,7 @@ def helix(t: float, radius: float, slope: float) -> Point3D:
     ## Parameters
 
     - `t`: as it increases, the point traces a right-handed helix about the z-axis, 
-            in a right-handed coordinate system.
+           in a right-handed coordinate system.
     - `radius`: the helix radius. 
     - `slope `: the helix slope. 
 
@@ -73,8 +101,8 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     ## Parameters
 
     - `t`: a parametric variable in the range 0 to 1.
-    - `p`: the p parameter of The (p,q)-torus knot.
-    - `q`: the q parameter of The (p,q)-torus knot.
+    - `p`: the p parameter of the (p,q)-torus knot.
+    - `q`: the q parameter of the (p,q)-torus knot.
 
     ## Examples 
 
