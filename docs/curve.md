@@ -38,6 +38,28 @@ The parametric equation of a circle.
 
 ![circle](images/curve_circle.JPG)
 
+# `logarithmicSpiral`
+
+The parametric equation of a [logarithmic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral). 
+Default to a golden spiral.
+
+## Parameters
+
+- `t`: as it increases, the point traces a right-handed spiral about the z-axis, in a right-handed coordinate system.
+- `a`: the a parameter of the logarithmic spiral. 
+- `k`: the k parameter of the logarithmic spiral. 
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import logarithmicSpiral
+
+    spiral = (Workplane()
+                .polyline([logarithmicSpiral(t / 360) for t in range(360 * 5)])
+             )
+
+![logarithmicSpiral](images/curve_logarithmicSpiral.JPG)
+
 # `helix`
 
 The parametric equation of a helix.
@@ -69,8 +91,8 @@ The parametric equation of a [torus knot](https://en.wikipedia.org/wiki/Torus_kn
 ## Parameters
 
 - `t` : a parametric variable in the range 0 to 1.
-- `p`: the p parameter of The (p,q)-torus knot.
-- `q `: the q parameter of The (p,q)-torus knot.
+- `p`: the p parameter of the (p,q)-torus knot.
+- `q `: the q parameter of the (p,q)-torus knot.
 
 ## Examples 
 
