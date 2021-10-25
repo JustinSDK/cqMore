@@ -127,8 +127,7 @@ def sphericalSpiral(t: float, radius: float, c: float = 2):
 
     ## Parameters
 
-    - `t`: as it increases, the point traces a right-handed helix about the z-axis, 
-           in a right-handed coordinate system.
+    - `t`: a parametric variable in the range 0 to 1.
     - `radius`: the sphere radius. 
     - `c `: equal to twice the number of turns. 
 

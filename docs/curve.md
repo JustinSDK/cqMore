@@ -74,8 +74,7 @@ The parametric equation of a [archimedean spiral](https://en.wikipedia.org/wiki/
 
 ## Parameters
 
-- `t`: as it increases, the point traces a right-handed spiral about the z-axis, 
-        in a right-handed coordinate system.
+- `t`: as it increases, the point traces a right-handed spiral about the z-axis, in a right-handed coordinate system.
 - `a`: move the centerpoint of the spiral outward from the origin. 
 - `b`: control the distance between loops.
 
@@ -120,8 +119,7 @@ The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Sp
 
 ## Parameters
 
-- `t`: as it increases, the point traces a right-handed helix about the z-axis, 
-        in a right-handed coordinate system.
+- `t`: a parametric variable in the range 0 to 1.
 - `radius`: the sphere radius. 
 - `c = 2`: equal to twice the number of turns. 
 
@@ -135,7 +133,7 @@ The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Sp
 
     spiral = (Workplane()
                 .parametricCurve(lambda t: sphericalSpiral(t, radius, c))
-            )
+             )
 
 ![sphericalSpiral](images/curve_sphericalSpiral.JPG)
 
