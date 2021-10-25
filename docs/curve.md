@@ -7,7 +7,8 @@ Provide parametric equations of curves.
  Signature | Description
 --|--
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
-[`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral. 
+[`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
+[`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a logarithmic spiral.  
 [`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
 [`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
 [`parametricEquation(func[,*args,**kwargs])`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
@@ -60,6 +61,28 @@ Default to a golden spiral.
              )
 
 ![logarithmicSpiral](images/curve_logarithmicSpiral.JPG)
+
+# `archimedeanSpiral`
+
+The parametric equation of a [archimedean spiral](https://en.wikipedia.org/wiki/Archimedean_spiral). 
+
+## Parameters
+
+- `t`: as it increases, the point traces a right-handed spiral about the z-axis, 
+        in a right-handed coordinate system.
+- `a`: move the centerpoint of the spiral outward from the origin. 
+- `b`: control the distance between loops.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import archimedeanSpiral
+
+    spiral = (Workplane()
+                .polyline([archimedeanSpiral(t / 360, 1, 1) for t in range(360 * 5)])
+            )
+
+![archimedeanSpiral](images/curve_archimedeanSpiral.JPG)
 
 # `helix`
 

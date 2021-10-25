@@ -61,9 +61,36 @@ def logarithmicSpiral(t: float, a: float = 1, k: float = 0.306349) -> Point2D:
     '''
 
     theta = t * tau
-    coef = a * e ** (k * theta)
-    return (coef * cos(theta), coef * sin(theta))
+    r = a * e ** (k * theta)
+    return (r * cos(theta), r * sin(theta))
     
+
+def archimedeanSpiral(t: float, a: float, b: float) -> Point2D:
+    '''
+    The parametric equation of a [archimedean spiral](https://en.wikipedia.org/wiki/Archimedean_spiral). 
+
+    ## Parameters
+
+    - `t`: as it increases, the point traces a right-handed spiral about the z-axis, 
+           in a right-handed coordinate system.
+    - `a`: move the centerpoint of the spiral outward from the origin. 
+    - `b`: control the distance between loops.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import archimedeanSpiral
+
+        spiral = (Workplane()
+                    .polyline([archimedeanSpiral(t / 360, 1, 1) for t in range(360 * 5)])
+                )
+
+    '''
+
+    theta = t * tau
+    r = a + b * theta
+    return (r * cos(theta), r * sin(theta))
+
 
 def helix(t: float, radius: float, slope: float) -> Point3D:
     '''
