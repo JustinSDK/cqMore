@@ -47,8 +47,8 @@ Default to a golden spiral.
 ## Parameters
 
 - `t`: as it increases, the point traces a right-handed spiral about the z-axis, in a right-handed coordinate system.
-- `a`: the a parameter of the logarithmic spiral. 
-- `k`: the k parameter of the logarithmic spiral. 
+- `a = 1`: the a parameter of the logarithmic spiral. 
+- `k = 0.306349`: the k parameter of the logarithmic spiral. 
 
 ## Examples 
 
