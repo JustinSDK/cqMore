@@ -60,28 +60,6 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
     return cast(Union[Solid, Compound], wp.val())
 
 
-def rotateExtrude(workplane: Workplane, radius: float, angle: float) -> Compound:
-    circlePath = (Workplane(workplane.plane)
-                    .parametricCurve(
-                        parametricEquation(circle, radius = radius),
-                        N = 96, 
-                        stop = angle / 360
-                    )
-                 )
-
-    xDir = workplane.plane.xDir.normalized()
-    toExtruded = workplane.rotate(workplane.plane.origin, workplane.plane.origin + xDir, 90).translate(xDir * radius)
-    rotateExtruded = (
-        Workplane(workplane.plane)
-            .add(toExtruded)
-            .toPending()
-            .sweep(circlePath)
-            .val()
-    )
-
-    return cast(Compound, rotateExtruded)
-
-
 def splineApproxSurface(points: MeshGrid, thickness: float) -> Union[Solid, Face]:    
     face = Face.makeSplineApprox([toVectors(col) for col in points])
 

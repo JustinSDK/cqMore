@@ -4,7 +4,7 @@ import cadquery
 from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector, Location, Vector
 
 from .cq_typing import FaceIndices, MeshGrid, T, Point2D, VectorLike
-from .plugin_solid import makePolyhedron, polylineJoin, rotateExtrude, splineApproxSurface
+from .plugin_solid import makePolyhedron, polylineJoin, splineApproxSurface
 from .plugin_wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
 from .polyhedron import hull
@@ -176,77 +176,6 @@ class Workplane(cadquery.Workplane):
         polyline = polylineJoinWire(points, join, forConstruction)
         return self.eachpoint(lambda loc: polyline.moved(loc), True)
 
-
-    def rotateExtrude(self: T, radius: float, angle: float = 360, center: Union[Point2D, list[Point2D]] = None, combine: bool = True, clean: bool = True) -> T:
-        """
-        Use all un-extruded wires in the parent chain to create a rotational solid.
-
-        ## Parameters
-
-        - `radius`: the radius of rotation. 
-        - `angle`: the number of degrees to sweep, starting at the positive X axis.
-        - `center`: the center of rotation. A 2D point or a list of 2D points. 
-                    If it's ignore, use the wire center, suitable for a symmetric wire.
-        - `combine`: should the results be combined with other solids on the stack (and each other)?
-        - `clean`: call `clean()` afterwards to have a clean shape.
-
-        ## Examples 
-
-            # ex1
-
-            from cqmore import Workplane
-
-            workplane = (Workplane()
-                            .polyline([(5, 0), (6, 0), (6, 4), (4, 5), (4, 8), (3, 8), (3, 4), (5, 3)])
-                            .close()  
-                            .rotateExtrude(3, 180, center = (0, 0))
-                        )
-
-            # ex2
-
-            from cqmore import Workplane
-            from cqmore.polygon import regularPolygon
-
-            centers = [(10, 0), (-10, 0)] 
-            workplane = (Workplane()
-                            .polygon(5, 1)
-                            .rotateExtrude(3)
-                            .pushPoints(centers)
-                            .makePolygon(
-                                    regularPolygon(
-                                        nSides = 4, 
-                                        radius = 1,
-                                        thetaEnd = 90
-                                    )
-                                )   
-                            .rotateExtrude(3, 180, centers)
-                        )
-
-        """
-
-        wires = Workplane(self.plane).add(self.ctx.popPendingWires()).toPending()
-        faces = cast(list[Face], wires.extrude(-1).faces(DirectionSelector(self.plane.zDir)).vals())
-        orgs = ((center if isinstance(center, list) else [center]) 
-                    if center else [loc.toTuple()[0][0:2] for loc in _pnts(self)])
-        extruded_lt = [
-            rotateExtrude(
-                Workplane(self.plane).center(*orgs[i]).add(faces[i]).wires(), 
-                radius, 
-                angle
-            ) 
-            for i in range(len(faces))
-        ]
-        
-        r = Compound.makeCompound(extruded_lt)
-        if combine:
-            newS = self.newObject([o for o in self.objects if not isinstance(o, Wire)])._combineWithBase(r)
-        else:
-            newS = self.newObject([r])
-
-        if clean:
-            newS = newS.clean()
-
-        return newS
 
     def splineApproxSurface(self: T, points: MeshGrid, thickness: float = 0, combine: bool = True, clean: bool = True) -> T:    
         """

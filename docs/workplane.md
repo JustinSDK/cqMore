@@ -37,7 +37,6 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
 
  Signature | Description
 --|--
-[`rotateExtrude(radius[,angle,origins,combine,clean])`](workplane.md#rotateExtrude) | Use all un-extruded wires in the parent chain to create a rotational solid.
 [`splineApproxSurface(points[,thickness,combine,clean])`](workplane.md#splineApproxSurface) | Approximate a spline surface through the provided points.
 [`polyhedron(points,faces[,combine,clean])`](workplane.md#polyhedron) | Create any polyhedron through 3D points(vertices) and faces that enclose the solid.
 [`hull([points,combine,clean])`](workplane.md#hull) | Create a convex hull through the provided points. 
@@ -156,50 +155,6 @@ Place a join on each point. Hull each pair of joins and union all convex hulls.
     polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
 
 ![polylineJoin2D](images/workplane_polylineJoin2D.JPG)
-
-# `rotateExtrude`
-
-Use all un-extruded wires in the parent chain to create a rotational solid.
-
-## Parameters
-
-- `radius`: the radius of rotation. 
-- `angle = 360`: the number of degrees to sweep, starting at the positive X axis.
-- `center = None`: the center of rotation. A 2D point or a list of 2D points. If it's ignore, use the wire center, suitable for a symmetric wire.
-- `combine = True`: should the results be combined with other solids on the stack (and each other)?
-- `clean = True`: call `clean()` afterwards to have a clean shape.
-
-## Examples 
-
-    from cqmore import Workplane
-
-    workplane = (Workplane()
-                    .polyline([(5, 0), (6, 0), (6, 4), (4, 5), (4, 8), (3, 8), (3, 4), (5, 3)])
-                    .close()  
-                    .rotateExtrude(3, 180, center = (0, 0))
-                )
-
-![rotateExtrude](images/workplane_rotateExtrude.JPG)
-
-    from cqmore import Workplane
-    from cqmore.polygon import regularPolygon
-
-    centers = [(10, 0), (-10, 0)] 
-    workplane = (Workplane()
-                    .polygon(5, 1)
-                    .rotateExtrude(3)
-                    .pushPoints(centers)
-                    .makePolygon(
-                            regularPolygon(
-                                nSides = 4, 
-                                radius = 1,
-                                thetaEnd = 90
-                            )
-                        )   
-                    .rotateExtrude(3, 180, centers)
-                )
-
-![rotateExtrude](images/workplane_rotateExtrude2.JPG)
 
 # `splineApproxSurface`
 
