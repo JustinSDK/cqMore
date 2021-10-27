@@ -659,6 +659,45 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
     return Polyhedron(convex_vertices, convex_faces)
 
 
+def superellipsoid(e: float, n: float, nTheta = 24, nPhi = None) -> Polyhedron:
+    def _sgn(x):
+        if x < 0:
+            return -1
+        elif x == 0:
+            return 0
+        else:
+            return 1
+    
+    def _c(w, m):
+        cosw = cos(w)
+        return _sgn(cosw) * pow(abs(cosw), m)
+
+    def _s(w, m):
+        sinw = sin(w)
+        return _sgn(sinw) * pow(abs(sinw), m)
+
+    a = 1
+    b = 1
+    c = 1
+
+    real_nPhi = (nPhi if nPhi else nTheta // 2) + 2
+    thetaStep = tau / nTheta
+    phiStep = tau / (real_nPhi * 2)
+    sections = []
+    for p in range(1, real_nPhi):
+        phi = -pi / 2 + p * phiStep
+        section = []
+        for t in range(nTheta):
+            theta = t * thetaStep
+            x = a * _c(phi, n) * _c(theta, e)
+            y = b * _c(phi, n) * _s(theta, e)
+            z = c * _s(phi, n)
+            section.append((x, y, z))
+        sections.append(section)
+    
+    return sweep(sections)
+
+
 def sweep(sections: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedron:
     def _revolving_faces(s, leng_per_section):
         faces = []
