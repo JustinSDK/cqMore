@@ -292,7 +292,7 @@ class Workplane(cadquery.Workplane):
         return _solid_each_combine_clean(self, makePolyhedron(*hull(pts)), combine, clean)
     
 
-    def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = True, clean: bool = True) -> T:
+    def polylineJoin(self: T, points: Iterable[VectorLike], join: Union[T, Solid, Compound], combine: bool = False, clean: bool = True) -> T:
         """
         Place a join on each point. Hull each pair of joins and union all convex hulls.
 

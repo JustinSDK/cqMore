@@ -163,9 +163,9 @@ Approximate a spline surface through the provided points.
 ## Parameters
 
 - `points`: a 2D list of Vectors that represent the control points.
-- `thickness`: the amount of being thick (return 2D surface if 0).
-- `combine`: should the results be combined with other solids on the stack (and each other)?
-- `clean`: call `clean()` afterwards to have a clean shape.
+- `thickness = 0`: the amount of being thick (return 2D surface if 0).
+- `combine = False`: should the results be combined with other solids on the stack (and each other)?
+- `clean = True`: call `clean()` afterwards to have a clean shape.
 
 ## Examples 
 
