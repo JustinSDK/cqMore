@@ -12,13 +12,13 @@ to use them.
 
 """
 
-from math import cos, radians, sin
+from math import cos, radians, sin, pi, tau
 
-from typing import Iterable, NamedTuple
+from typing import Iterable, NamedTuple, Union, cast
 
 from .util import toTuples, toVectors
 from .cq_typing import MeshGrid, Point3D, FaceIndices, VectorLike
-from cadquery import Vector, Face
+from cadquery import Vector
 
 class Polyhedron(NamedTuple):
     '''
@@ -658,3 +658,31 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
 
     return Polyhedron(convex_vertices, convex_faces)
 
+
+def sweep(sections: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedron:
+    def _revolving_faces(s, leng_per_section):
+        faces = []
+        for i in range(leng_per_section):
+            faces.append((
+                leng_per_section * s + i % leng_per_section,
+                leng_per_section * s + (i + 1) % leng_per_section,
+                leng_per_section * (s + 1) + i % leng_per_section
+            ))
+            faces.append((
+                leng_per_section * s + (i + 1) % leng_per_section,
+                leng_per_section * (s + 1) + (i + 1) % leng_per_section,
+                leng_per_section * (s + 1) + i % leng_per_section
+            ))
+        return faces
+
+    leng_sections = len(sections)
+    leng_per_section = len(sections[0])
+
+    faces = []
+    faces.append(tuple(range(leng_per_section))[::-1])
+    for s in range(leng_sections - 1):
+        faces.extend(_revolving_faces(s, leng_per_section))
+    faces.append(tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections)))
+
+    sects = cast(list[Point3D], [p for section in sections for p in toTuples(section)])
+    return Polyhedron(sects, faces)
