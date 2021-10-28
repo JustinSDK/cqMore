@@ -288,4 +288,4 @@ Create a swept polyhedron.
 
     r = Workplane().polyhedron(*sweep(profiles))
 
-![sweep]](images/polyhedron_sweep.JPG)
+![sweep](images/polyhedron_sweep.JPG)
