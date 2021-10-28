@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.polyhedron import gridSurface, uvSphere, hull
+from cqmore.polyhedron import gridSurface, sweep, uvSphere, hull
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
 from cqmore.cq_typing import FaceIndices
 from typing import cast
@@ -70,6 +70,17 @@ class TestPolyhedron(unittest.TestCase):
         self.assertEqual(10, len(cast(list, convex_hull.faces)))
         self.assertEqual(7, len(cast(list, convex_hull.points)))
 
+    def test_hull(self):
+        profiles = [
+            [(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0)],
+            [(0, 0, 10), (20, 0, 10), (20, 20, 10), (0, 20, 10)],
+            [(0, 0, 35), (5, 0, 35), (5, 5, 35), (0, 5, 35)],
+        ]
+
+        p = sweep(profiles)
+
+        self.assertEqual(18, len(cast(list, p.faces)))
+        self.assertEqual(12, len(cast(list, p.points)))
 
 if __name__ == '__main__':
     unittest.main()
