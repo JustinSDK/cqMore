@@ -70,7 +70,7 @@ class TestPolyhedron(unittest.TestCase):
         self.assertEqual(10, len(cast(list, convex_hull.faces)))
         self.assertEqual(7, len(cast(list, convex_hull.points)))
 
-    def test_hull(self):
+    def test_sweep(self):
         profiles = [
             [(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0)],
             [(0, 0, 10), (20, 0, 10), (20, 20, 10), (0, 20, 10)],
