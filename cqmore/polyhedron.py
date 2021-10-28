@@ -698,7 +698,29 @@ def superellipsoid(e: float, n: float, nTheta = 24, nPhi = None) -> Polyhedron:
     return sweep(sections)
 
 
-def sweep(sections: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedron:
+def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedron:
+    """
+    Create a swept polyhedron.
+
+    ## Parameters
+
+    - `profiles`: list of profiles.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.polyhedron import sweep
+
+        profiles = [
+            [(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0)],
+            [(0, 0, 10), (20, 0, 10), (20, 20, 10), (0, 20, 10)],
+            [(0, 0, 35), (5, 0, 35), (5, 5, 35), (0, 5, 35)],
+        ]
+
+        r = Workplane().polyhedron(*sweep(profiles))
+
+        """
+
     def _revolving_faces(s, leng_per_section):
         faces = []
         for i in range(leng_per_section):
@@ -714,8 +736,8 @@ def sweep(sections: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedro
             ))
         return faces
 
-    leng_sections = len(sections)
-    leng_per_section = len(sections[0])
+    leng_sections = len(profiles)
+    leng_per_section = len(profiles[0])
 
     faces = []
     faces.append(tuple(range(leng_per_section))[::-1])
@@ -723,5 +745,5 @@ def sweep(sections: Union[list[list[Point3D]], list[list[Vector]]]) -> Polyhedro
         faces.extend(_revolving_faces(s, leng_per_section))
     faces.append(tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections)))
 
-    sects = cast(list[Point3D], [p for section in sections for p in toTuples(section)])
+    sects = cast(list[Point3D], [p for section in profiles for p in toTuples(section)])
     return Polyhedron(sects, faces)

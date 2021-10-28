@@ -27,6 +27,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 [`icosahedron(radius,[detail])`](polyhedron.md#icosahedron) | Create a icosahedron.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
+[`sweep(profiles)`](polyhedron.md#sweep) | Create a swept polyhedron.
 
 ----
 
@@ -265,3 +266,26 @@ Create a convex hull through the provided points.
     convex_hull = Workplane().polyhedron(*hull(points))
 
 ![hull](images/polyhedron_hull.JPG)
+
+# `sweep`
+
+Create a swept polyhedron.
+
+## Parameters
+
+- `profiles`: list of profiles.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polyhedron import sweep
+
+    profiles = [
+        [(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0)],
+        [(0, 0, 10), (20, 0, 10), (20, 20, 10), (0, 20, 10)],
+        [(0, 0, 35), (5, 0, 35), (5, 5, 35), (0, 5, 35)],
+    ]
+
+    r = Workplane().polyhedron(*sweep(profiles))
+
+![sweep]](images/polyhedron_sweep.JPG)
