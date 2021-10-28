@@ -660,6 +660,23 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
 
 
 def superellipsoid(e: float, n: float, nTheta = 24, nPhi = None) -> Polyhedron:
+    """
+    Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
+
+    ## Parameters
+
+    - `e`: the east-west parameter.
+    - `n`: the north-south parameter.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.polyhedron import superellipsoid
+
+        r = Workplane().polyhedron(*superellipsoid(2.5, .25))
+
+    """
+
     def _sgn(x):
         if x < 0:
             return -1

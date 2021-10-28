@@ -26,6 +26,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 [`dodecahedron(radius,[detail])`](polyhedron.md#dodecahedron) | Create a dodecahedron.
 [`icosahedron(radius,[detail])`](polyhedron.md#icosahedron) | Create a icosahedron.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
+[`superellipsoid(e,n)`](polyhedron.md#superellipsoid) | Create a superellipsoid.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 [`sweep(profiles)`](polyhedron.md#sweep) | Create a swept polyhedron.
 
@@ -239,6 +240,24 @@ Create a surface with a coordinate meshgrid.
     sf = Workplane().polyhedron(*gridSurface(points, thickness))
 
 ![gridSurface](images/polyhedron_gridSurface.JPG)
+
+# `superellipsoid`
+
+Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
+
+## Parameters
+
+- `e`: the east-west parameter.
+- `n`: the north-south parameter.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polyhedron import superellipsoid
+
+    r = Workplane().polyhedron(*superellipsoid(2.5, .25))
+
+![superellipsoid](images/polyhedron_superellipsoid.JPG)
 
 # `hull`
 
