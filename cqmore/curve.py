@@ -121,9 +121,9 @@ def helix(t: float, radius: float, slope: float) -> Point3D:
     return (radius * cos(theta), radius * sin(theta), radius * slope * t)
 
 
-def sphericalSpiral(t: float, radius: float, c: float = 2):
+def sphericalSpiral(t: float, radius: float, c: float = 2) -> Point3D:
     '''
-    The parametric equation of a [Spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
+    The parametric equation of a [spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
 
     ## Parameters
 
@@ -187,6 +187,52 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     p_phi = p * phi
     r = cos(q_phi) + 2
     return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
+
+
+def superformula(t: float, m: float, n1: float, n2: float, n3: float, a: float = 1, b: float = 1) -> Point2D:
+    '''
+    The parametric equation of a [superformula](https://en.wikipedia.org/wiki/Superformula).
+
+    ## Parameters
+
+    - `t`: a parametric variable in the range 0 to 1.
+    - `m`: the m parameter of the superformula.
+    - `n1`: the n1 parameter of the superformula.
+    - `n2`: the n2 parameter of the superformula.
+    - `n3`: the n3 parameter of the superformula.
+    - `a = 1`: the a parameter of the superformula.
+    - `b = 1`: the b parameter of the superformula.
+    
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import superformula
+
+        params = [
+            [3, 4.5, 10, 10],
+            [4, 12, 15, 15],
+            [7, 10, 6, 6],
+            [5, 4, 4, 4],
+            [5, 2, 7, 7]
+        ]
+
+        r1 = Workplane()
+        for i in range(5):
+            r1 = (r1.center(4, 0)
+                    .parametricCurve(lambda t: superformula(t, *params[i]))
+                    .extrude(1)
+                 )
+
+    '''
+
+    phi = t * tau
+    r = pow(
+        pow(abs(cos(m * phi / 4) / a), n2) + 
+        pow(abs(sin(m * phi / 4) / b), n3),
+        - 1 / n1    
+    )
+    return (r * cos(phi), r * sin(phi))
 
 
 def parametricEquation(func: Callable[..., Union[Point2D, Point3D]], *args: Any, **kwargs: Any) -> Callable[[float], Union[Point2D, Point3D]]:
