@@ -123,7 +123,7 @@ The parametric equation of a [superformula](https://en.wikipedia.org/wiki/Superf
         r1 = (r1.center(4, 0)
                 .parametricCurve(lambda t: superformula(t, *params[i]))
                 .extrude(1)
-                )
+             )
 
 ![superformula](images/curve_superformula.JPG)
 
