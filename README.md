@@ -36,7 +36,7 @@ You may also attach methods of `cqmore.Workplane` to `cadquery.Workplane`, such 
                 .rect(10, 10)
                 .makePolygon(((-2, -2), (2, -2), (2, 2), (-2, 2)))
                 .extrude(1)
-            )
+             )
 
 ## API Reference
 
