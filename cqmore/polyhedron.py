@@ -400,6 +400,51 @@ def _divide_project(vectors, faces, radius, detail):
     return Polyhedron(flatten_points, flatten_faces)
     
 
+def star(outerRadius: float = 1, innerRadius: float =  0.381966, height: float = 0.5, n: int = 5) -> Polyhedron:
+    """
+    Create a star.
+
+    ## Parameters
+
+    - `outerRadius`: the outer radius of the star. 
+    - `innerRadius`: the inner radius of the star.
+    - `height`: the star height.
+    - `n`: the burst number.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.polyhedron import star
+
+        polyhedron = Workplane().polyhedron(*star()) 
+
+    """
+
+    right = tau / 4
+    thetaStep = tau / n
+    half_thetaStep = thetaStep / 2
+    points = []
+    for i in range(n):
+        a = thetaStep * i + right
+        outerPoint = (outerRadius * cos(a), outerRadius * sin(a), 0)
+        innerPoint = (innerRadius * cos(a + half_thetaStep), innerRadius * sin(a + half_thetaStep), 0)
+        points.append(outerPoint)
+        points.append(innerPoint)
+    
+    half_height = height / 2
+    points.append((0, 0, half_height))
+    points.append((0, 0, -half_height))
+
+    leng_star = n * 2
+    
+    faces = []
+    for i in range(leng_star):
+        faces.append((i, (i + 1) % leng_star, leng_star))
+        faces.append((leng_star + 1, (i + 1) % leng_star, i))
+
+    return Polyhedron(points, faces)
+
+
 def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
     """
     Create a surface with a coordinate meshgrid.

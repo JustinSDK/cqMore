@@ -25,6 +25,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 [`octahedron(radius,[detail])`](polyhedron.md#octahedron) | Create a octahedron.
 [`dodecahedron(radius,[detail])`](polyhedron.md#dodecahedron) | Create a dodecahedron.
 [`icosahedron(radius,[detail])`](polyhedron.md#icosahedron) | Create a icosahedron.
+[`star([outerRadius, innerRadius, height, n])`](polyhedron.md#star) | Create a star.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`superellipsoid(e,n)`](polyhedron.md#superellipsoid) | Create a superellipsoid.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
@@ -207,6 +208,26 @@ Create a icosahedron.
         )
 
 ![icosahedron](images/polyhedron_icosahedron.JPG)
+
+# `star`
+
+Create a star. Default to a pentagram.
+
+## Parameters
+
+- `outerRadius = 1`: the outer radius of the star. 
+- `innerRadius = 0.381966`: the inner radius of the star.
+- `height = 0.5`: the star height.
+- `n = 5`: the burst number.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.polyhedron import star
+
+    polyhedron = Workplane().polyhedron(*star())
+
+![star](images/polyhedron_star.JPG)
 
 # `gridSurface`
 

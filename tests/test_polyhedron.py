@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.polyhedron import gridSurface, superellipsoid, sweep, uvSphere, hull
+from cqmore.polyhedron import gridSurface, star, superellipsoid, sweep, uvSphere, hull
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
 from cqmore.cq_typing import FaceIndices
 from typing import cast
@@ -39,6 +39,13 @@ class TestPolyhedron(unittest.TestCase):
     def test_icosahedron(self):
         polyhedron = icosahedron(1, 1)
         self.assertEqual(20 * 4, len(cast(list, polyhedron.faces)))
+
+    
+    def test_star(self):
+        polyhedron = star()
+
+        self.assertEqual(12, len(cast(list, polyhedron.points)))
+        self.assertEqual(20, len(cast(list, polyhedron.faces)))
 
 
     def test_gridSurface(self):
