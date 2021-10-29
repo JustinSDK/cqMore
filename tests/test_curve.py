@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, torusKnot, logarithmicSpiral
+from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superformula, torusKnot, logarithmicSpiral
 
 class TestCurve(unittest.TestCase):
     def test_circle(self):
@@ -25,6 +25,11 @@ class TestCurve(unittest.TestCase):
             archimedeanSpiral(0.5, 1, 1)
         )
 
+    def test_superformula(self):
+        self.assertEqual(
+            (-1.851749424574581, 2.2677390056282136e-16), 
+            superformula(0.5, 3, 4.5, 10, 10)
+        )
 
     def test_helix(self):
         self.assertEqual(
