@@ -82,7 +82,7 @@ Create a star. Default to a pentagram.
 ## Parameters
 
 - `outerRadius = 1`: the outer radius of the star. 
-- `innerRadius = 0.381966`: The inner radius of the star.
+- `innerRadius = 0.381966`: the inner radius of the star.
 - `n = 5`: the burst number.
 
 ## Examples 
