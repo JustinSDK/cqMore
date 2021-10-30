@@ -2,7 +2,7 @@ from typing import Iterable, cast
 
 from cadquery import Vector
 
-from .cq_typing import VectorLike
+from ._typing import VectorLike
 
 
 def toVectors(points: Iterable[VectorLike]) -> list[Vector]:

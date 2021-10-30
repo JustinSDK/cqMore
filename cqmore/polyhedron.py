@@ -16,8 +16,8 @@ from math import cos, radians, sin, pi, tau
 
 from typing import Iterable, NamedTuple, Union, cast
 
-from .util import toTuples, toVectors
-from .cq_typing import MeshGrid, Point3D, FaceIndices, VectorLike
+from ._util import toTuples, toVectors
+from ._typing import MeshGrid, Point3D, FaceIndices, VectorLike
 from cadquery import Vector
 
 class Polyhedron(NamedTuple):

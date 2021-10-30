@@ -6,8 +6,8 @@ Provide functions for creating simple polygons.
 from math import sin, cos, radians, tau
 from typing import Iterable, cast
 
-from .cq_typing import Point2D, VectorLike
-from .util import toTuples
+from ._typing import Point2D, VectorLike
+from ._util import toTuples
 
 
 def taiwan(h: float, distance: float = 0) -> list[Point2D]:

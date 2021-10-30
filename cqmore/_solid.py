@@ -4,9 +4,8 @@ from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound
 
 from .polyhedron import hull
 
-from .cq_typing import T, FaceIndices, VectorLike, MeshGrid
-from .util import toTuples, toVectors
-from .curve import parametricEquation, circle
+from ._typing import T, FaceIndices, VectorLike, MeshGrid
+from ._util import toTuples, toVectors
 
 from OCP.BRepOffset import BRepOffset_MakeOffset, BRepOffset_Skin # type: ignore
 from OCP.GeomAbs import GeomAbs_Intersection # type: ignore

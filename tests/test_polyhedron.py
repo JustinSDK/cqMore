@@ -4,7 +4,7 @@ sys.path.append('..')
 
 from cqmore.polyhedron import gridSurface, star, superellipsoid, sweep, uvSphere, hull
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
-from cqmore.cq_typing import FaceIndices
+from cqmore._typing import FaceIndices
 from typing import cast
 
 class TestPolyhedron(unittest.TestCase):

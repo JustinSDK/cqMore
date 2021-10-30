@@ -1,11 +1,11 @@
 from typing import Iterable, Union, cast
 
 import cadquery
-from cadquery import Wire, Shape, Face, Compound, Solid, DirectionSelector, Location, Vector
+from cadquery import Wire, Shape, Compound, Solid, Location, Vector
 
-from .cq_typing import FaceIndices, MeshGrid, T, Point2D, VectorLike
-from .plugin_solid import makePolyhedron, polylineJoin, splineApproxSurface
-from .plugin_wire import bool2D, makePolygon, polylineJoinWire
+from ._typing import FaceIndices, MeshGrid, T, VectorLike
+from ._solid import makePolyhedron, polylineJoin, splineApproxSurface
+from ._wire import bool2D, makePolygon, polylineJoinWire
 from .polygon import hull2D
 from .polyhedron import hull
 

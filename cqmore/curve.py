@@ -6,7 +6,7 @@ Provide parametric equations of curves.
 from math import sin, cos, tau, pi, e, log, sqrt
 from typing import Any, Callable, Union
 
-from .cq_typing import Point2D, Point3D
+from ._typing import Point2D, Point3D
 
 def circle(t: float, radius: float) -> Point2D:
     '''
