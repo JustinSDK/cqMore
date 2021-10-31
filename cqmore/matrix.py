@@ -19,7 +19,7 @@ class Matrix3D:
 
     # Post-Multiplication (Right-Multiplication)
     
-    def __mul__(self, that: 'Matrix3D') -> 'Matrix3D':
+    def __matmul__(self, that: 'Matrix3D') -> 'Matrix3D':
         return Matrix3D(self.wrapped @ that.wrapped)
 
 
