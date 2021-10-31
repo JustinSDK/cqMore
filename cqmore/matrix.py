@@ -16,12 +16,12 @@ class Matrix3D:
         else:
             self.wrapped = numpy.array(m)
 
+
+    # Post-Multiplication (Right-Multiplication)
     
     def __mul__(self, that: 'Matrix3D') -> 'Matrix3D':
         return Matrix3D(self.wrapped @ that.wrapped)
 
-
-    # Post-Multiplication (Right-Multiplication)
 
     def translate(self, v: Union[Point3D, Vector]) -> 'Matrix3D':
         return Matrix3D(self.wrapped @ _translation(v))
