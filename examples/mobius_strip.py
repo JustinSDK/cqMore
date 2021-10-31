@@ -1,23 +1,19 @@
-from math import sin, cos, radians
-from cqmore import Workplane
-from cqmore.polyhedron import gridSurface
+from cqmore import Workplane, Matrix3D
+from cqmore.polyhedron import sweep
 
-u_step = 10
-v_step = 0.2
-thickness = 0.1
+profile = [(10, -1, 0), (10, 1, 0), (-10, 1, 0), (-10, -1, 0)]
 
-# not precise, but workable
-points = []
-for vi in range(11):
-    row = []
-    for u in range(0, 360 + u_step, u_step):
-        v = -1 + vi * v_step
-        row.append((
-            (1 + v / 2 * cos(radians(u / 2))) * cos(radians(u)), 
-            (1 + v / 2 * cos(radians(u / 2))) * sin(radians(u)), 
-            v / 2 * sin(radians(u / 2))
-        ))
-    
-    points.append(row)
+mat = Matrix3D()
+translation = mat.translate((20, 0, 0))
+rotationX = mat.rotateX(90)
 
-mobius_strip = Workplane().polyhedron(*gridSurface(points, thickness))
+step = 15
+sects = []
+for i in range(24):
+    m = mat.rotateZ(i * step) * translation * rotationX * mat.rotateZ(i * step / 2)
+    s = [m.transform(p) for p in profile]
+    sects.append(s)
+
+rotationX = Workplane().polyhedron(
+                *sweep(sects, close_idx = 2)
+            )
