@@ -760,7 +760,7 @@ def superellipsoid(e: float, n: float, nTheta = 24, nPhi = None) -> Polyhedron:
     return sweep(sections)
 
 
-def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close = False) -> Polyhedron:
+def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close: bool = False) -> Polyhedron:
     """
     Create a swept polyhedron.
 
