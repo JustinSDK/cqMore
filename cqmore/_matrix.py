@@ -21,28 +21,31 @@ class Matrix3D:
         return Matrix3D(self.wrapped @ that.wrapped)
 
 
+    # Post-Multiplication (Right-Multiplication)
+
     def translate(self, v: Union[Point3D, Vector]) -> 'Matrix3D':
-        return Matrix3D(_translate(self.wrapped, v))
+        return Matrix3D(self.wrapped @ _translation(v))
 
 
     def rotateX(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(_rotateX(self.wrapped, angle))
+        return Matrix3D(self.wrapped @ _rotationX(angle))
 
         
     def rotateY(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(_rotateY(self.wrapped, angle))
+        return Matrix3D(self.wrapped @ _rotationY(angle))
 
 
     def rotateZ(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(_rotateZ(self.wrapped, angle))
+        return Matrix3D(self.wrapped @ _rotationZ(angle))
 
 
     def rotate(self, direction: Union[Point3D, Vector], angle: float) -> 'Matrix3D':
-        return Matrix3D(_rotate(self.wrapped, direction, angle))
+        return Matrix3D(self.wrapped @ _rotation(direction, angle))
 
 
     def transform(self, v: Union[Point3D, Vector]) -> Point3D:
-        return _transform(self.wrapped, v)
+        vt = (v.x, v.y, v.z, 1) if isinstance(v, Vector) else v + (1,)
+        return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
 
 _identity = [
@@ -55,11 +58,9 @@ _identity = [
 def _create() -> numpy.ndarray:
     return numpy.array(_identity)
 
-# Post-Multiplication (Right-Multiplication)
-
-def _translate(m: numpy.ndarray, v: Union[Point3D, Vector]) -> numpy.ndarray:
+def _translation(v: Union[Point3D, Vector]) -> numpy.ndarray:
     vt = (v.x, v.y, v.z) if isinstance(v, Vector) else v
-    return m @ numpy.array([
+    return numpy.array([
         [1, 0, 0, vt[0]],
         [0, 1, 0, vt[1]],
         [0, 0, 1, vt[2]],
@@ -67,11 +68,11 @@ def _translate(m: numpy.ndarray, v: Union[Point3D, Vector]) -> numpy.ndarray:
     ]) 
 
 
-def _rotateX(m: numpy.ndarray, angle: float) -> numpy.ndarray:
+def _rotationX(angle: float) -> numpy.ndarray:
     rad = radians(angle)
     c = cos(rad)
     s = sin(rad)
-    return m @ numpy.array([
+    return numpy.array([
         [1, 0, 0, 0],
         [0, c, -s, 0],
         [0, s, c, 0],
@@ -79,11 +80,11 @@ def _rotateX(m: numpy.ndarray, angle: float) -> numpy.ndarray:
     ]) 
 
 
-def _rotateY(m: numpy.ndarray, angle: float) -> numpy.ndarray:
+def _rotationY(angle: float) -> numpy.ndarray:
     rad = radians(angle)
     c = cos(rad)
     s = sin(rad)
-    return m @ numpy.array([
+    return numpy.array([
         [c, 0, s, 0],
         [0, 1, 0, 0],
         [-s, 0, c, 0],
@@ -91,11 +92,11 @@ def _rotateY(m: numpy.ndarray, angle: float) -> numpy.ndarray:
     ]) 
 
 
-def _rotateZ(m: numpy.ndarray, angle: float) -> numpy.ndarray:
+def _rotationZ(angle: float) -> numpy.ndarray:
     rad = radians(angle)
     c = cos(rad)
     s = sin(rad)
-    return m @ numpy.array([
+    return numpy.array([
         [c, -s, 0, 0],
         [s, c, 0, 0],
         [0, 0, 1, 0],
@@ -103,13 +104,8 @@ def _rotateZ(m: numpy.ndarray, angle: float) -> numpy.ndarray:
     ]) 
 
 
-def _transform(m: numpy.ndarray, v: Union[Point3D, Vector]) -> Point3D:
-    vt = (v.x, v.y, v.z, 1) if isinstance(v, Vector) else v + (1,)
-    return cast(Point3D, tuple((m @ vt)[:-1]))
-
-
 # Quaternions and spatial rotation
-def _rotate(m: numpy.ndarray, direction: Union[Point3D, Vector], angle: float) -> numpy.ndarray:
+def _rotation(direction: Union[Point3D, Vector], angle: float) -> numpy.ndarray:
     dir = direction if isinstance(direction, Vector) else Vector(*direction)
     axis = dir.normalized()
     half_a = radians(angle / 2)
@@ -130,7 +126,7 @@ def _rotate(m: numpy.ndarray, direction: Union[Point3D, Vector], angle: float) -
     wx = w * x2
     wy = w * y2
     wz = w * z2  
-    return m @ numpy.array([
+    return numpy.array([
         [1 - yy - zz, yx - wz, zx + wy, 0],
         [yx + wz, 1 - xx - zz, zy - wx, 0],
         [zx - wy, zy + wx, 1 - xx - yy, 0],
