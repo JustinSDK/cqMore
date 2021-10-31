@@ -760,7 +760,7 @@ def superellipsoid(e: float, n: float, nTheta = 24, nPhi = None) -> Polyhedron:
     return sweep(sections)
 
 
-def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close: bool = False) -> Polyhedron:
+def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close_idx: int = -1) -> Polyhedron:
     """
     Create a swept polyhedron.
 
@@ -787,14 +787,14 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close: bool 
         faces = []
         for i in range(leng_per_section):
             faces.append((
-                leng_per_section * s + i % leng_per_section,
+                leng_per_section * s + i,
                 leng_per_section * s + (i + 1) % leng_per_section,
-                leng_per_section * (s + 1) + i % leng_per_section
+                leng_per_section * (s + 1) + i
             ))
             faces.append((
                 leng_per_section * s + (i + 1) % leng_per_section,
                 leng_per_section * (s + 1) + (i + 1) % leng_per_section,
-                leng_per_section * (s + 1) + i % leng_per_section
+                leng_per_section * (s + 1) + i
             ))
         return faces
 
@@ -806,21 +806,21 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], close: bool 
     for s in range(leng_sections - 1):
         faces.extend(_revolving_faces(s, leng_per_section))
     
-    if close:
-        for i in range(leng_per_section):
-            faces.append((
-                leng_per_section * (leng_sections - 1) + i % leng_per_section,
-                leng_per_section * (leng_sections - 1) + (i + 1) % leng_per_section,
-                i % leng_per_section
-            ))
-            faces.append((
-                leng_per_section * (leng_sections - 1) + (i + 1) % leng_per_section,
-                (i + 1) % leng_per_section,
-                i % leng_per_section
-            ))
-    else:
+    if close_idx == -1:
         faces.append(tuple(range(leng_per_section))[::-1])
         faces.append(tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections)))
+    else:
+        for i in range(leng_per_section):
+            faces.append((
+                leng_per_section * (leng_sections - 1) + (close_idx + i) % leng_per_section,
+                leng_per_section * (leng_sections - 1) + (close_idx + i + 1) % leng_per_section,
+                i
+            ))
+            faces.append((
+                leng_per_section * (leng_sections - 1) + (close_idx + i + 1) % leng_per_section,
+                (i + 1) % leng_per_section,
+                i
+            ))
 
     sects = cast(list[Point3D], [p for section in profiles for p in toTuples(section)])
     return Polyhedron(sects, faces)
