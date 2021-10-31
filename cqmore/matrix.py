@@ -8,45 +8,32 @@ from ._typing import Point3D
 
 
 class Matrix3D:
-    def __init__(self, m: Iterable[Iterable[float]] = None):
-        if m is None:
-            self.wrapped = _create()
-        elif isinstance(m, numpy.ndarray):
+    def __init__(self, m: Iterable[Iterable[float]]):
+        if isinstance(m, numpy.ndarray):
             self.wrapped = m
         else:
             self.wrapped = numpy.array(m)
 
 
     # Post-Multiplication (Right-Multiplication)
-    
     def __matmul__(self, that: 'Matrix3D') -> 'Matrix3D':
         return Matrix3D(self.wrapped @ that.wrapped)
-
-
-    def translate(self, v: Union[Point3D, Vector]) -> 'Matrix3D':
-        return Matrix3D(self.wrapped @ _translation(v))
-
-
-    def rotateX(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(self.wrapped @ _rotationX(angle))
-
-        
-    def rotateY(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(self.wrapped @ _rotationY(angle))
-
-
-    def rotateZ(self, angle: float) -> 'Matrix3D':
-        return Matrix3D(self.wrapped @ _rotationZ(angle))
-
-
-    def rotate(self, direction: Union[Point3D, Vector], angle: float) -> 'Matrix3D':
-        return Matrix3D(self.wrapped @ _rotation(direction, angle))
 
 
     def transform(self, v: Union[Point3D, Vector]) -> Point3D:
         vt = (v.x, v.y, v.z, 1) if isinstance(v, Vector) else v + (1,)
         return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
+
+_identity = [
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1]
+]
+
+def identity() -> numpy.ndarray:
+    return numpy.array(_identity)
 
 def translation(v: Union[Point3D, Vector]) -> Matrix3D:
     return Matrix3D(_translation(v))
@@ -67,16 +54,6 @@ def rotationZ(angle: float) -> Matrix3D:
 def rotation(direction: Union[Point3D, Vector], angle: float) -> Matrix3D:
     return Matrix3D(_rotation(direction, angle))
 
-
-_identity = [
-    [1, 0, 0, 0],
-    [0, 1, 0, 0],
-    [0, 0, 1, 0],
-    [0, 0, 0, 1]
-]
-
-def _create() -> numpy.ndarray:
-    return numpy.array(_identity)
 
 def _translation(v: Union[Point3D, Vector]) -> numpy.ndarray:
     vt = (v.x, v.y, v.z) if isinstance(v, Vector) else v
