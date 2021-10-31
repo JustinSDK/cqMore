@@ -1,20 +1,18 @@
 from cqmore import Workplane
-from cqmore.matrix import Matrix3D
+from cqmore.matrix import translation, rotationX, rotationZ
 from cqmore.polyhedron import sweep
 
 profile = [(10, -1, 0), (10, 1, 0), (-10, 1, 0), (-10, -1, 0)]
 
-mat = Matrix3D()
-translation = mat.translate((20, 0, 0))
-rotationX = mat.rotateX(90)
+translationX20 = translation((20, 0, 0))
+rotationX90 = rotationX(90)
 
-step = 15
-sects = []
+angle_step = 15
+profiles = []
 for i in range(24):
-    m = mat.rotateZ(i * step) * translation * rotationX * mat.rotateZ(i * step / 2)
-    s = [m.transform(p) for p in profile]
-    sects.append(s)
+    m = rotationZ(i * angle_step) * translationX20 * rotationX90 * rotationZ(i * angle_step / 2)
+    profiles.append([m.transform(p) for p in profile])
 
 rotationX = Workplane().polyhedron(
-                *sweep(sects, close_idx = 2)
+                *sweep(profiles, close_idx = 2)
             )
