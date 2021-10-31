@@ -7,7 +7,7 @@ from math import cos, sin, radians
 from ._typing import Point3D
 
 
-class Matrix:
+class Matrix3D:
     def __init__(self, m: Iterable[Iterable[float]] = None):
         if m is None:
             self.wrapped = _create()
@@ -17,28 +17,28 @@ class Matrix:
             self.wrapped = numpy.array(m)
 
     
-    def __mul__(self, that: 'Matrix') -> 'Matrix':
-        return Matrix(self.wrapped @ that.wrapped)
+    def __mul__(self, that: 'Matrix3D') -> 'Matrix3D':
+        return Matrix3D(self.wrapped @ that.wrapped)
 
 
-    def translate(self, v: Union[Point3D, Vector]) -> 'Matrix':
-        return Matrix(_translate(self.wrapped, v))
+    def translate(self, v: Union[Point3D, Vector]) -> 'Matrix3D':
+        return Matrix3D(_translate(self.wrapped, v))
 
 
-    def rotateX(self, angle: float) -> 'Matrix':
-        return Matrix(_rotateX(self.wrapped, angle))
+    def rotateX(self, angle: float) -> 'Matrix3D':
+        return Matrix3D(_rotateX(self.wrapped, angle))
 
         
-    def rotateY(self, angle: float) -> 'Matrix':
-        return Matrix(_rotateY(self.wrapped, angle))
+    def rotateY(self, angle: float) -> 'Matrix3D':
+        return Matrix3D(_rotateY(self.wrapped, angle))
 
 
-    def rotateZ(self, angle: float) -> 'Matrix':
-        return Matrix(_rotateZ(self.wrapped, angle))
+    def rotateZ(self, angle: float) -> 'Matrix3D':
+        return Matrix3D(_rotateZ(self.wrapped, angle))
 
 
-    def rotate(self, direction: Union[Point3D, Vector], angle: float) -> 'Matrix':
-        return Matrix(_rotate(self.wrapped, direction, angle))
+    def rotate(self, direction: Union[Point3D, Vector], angle: float) -> 'Matrix3D':
+        return Matrix3D(_rotate(self.wrapped, direction, angle))
 
 
     def transform(self, v: Union[Point3D, Vector]) -> Point3D:
