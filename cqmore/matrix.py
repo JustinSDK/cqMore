@@ -48,6 +48,26 @@ class Matrix3D:
         return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
 
+def translation(v: Union[Point3D, Vector]) -> Matrix3D:
+    return Matrix3D(_translation(v))
+
+
+def rotationX(angle: float) -> Matrix3D:
+    return Matrix3D(_rotationX(angle))
+
+
+def rotationY(angle: float) -> Matrix3D:
+    return Matrix3D(_rotationY(angle))
+
+
+def rotationZ(angle: float) -> Matrix3D:
+    return Matrix3D(_rotationZ(angle))
+
+
+def rotation(direction: Union[Point3D, Vector], angle: float) -> Matrix3D:
+    return Matrix3D(_rotation(direction, angle))
+
+
 _identity = [
     [1, 0, 0, 0],
     [0, 1, 0, 0],
