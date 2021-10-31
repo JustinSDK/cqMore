@@ -35,6 +35,7 @@ _identity = [
 def identity() -> numpy.ndarray:
     return numpy.array(_identity)
 
+
 def translation(v: Union[Point3D, Vector]) -> Matrix3D:
     return Matrix3D(_translation(v))
 
