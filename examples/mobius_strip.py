@@ -1,4 +1,5 @@
-from cqmore import Workplane, Matrix3D
+from cqmore import Workplane
+from cqmore.matrix import Matrix3D
 from cqmore.polyhedron import sweep
 
 profile = [(10, -1, 0), (10, 1, 0), (-10, 1, 0), (-10, -1, 0)]
