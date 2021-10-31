@@ -13,6 +13,4 @@ for i in range(24):
     m = rotationZ(i * angle_step) * translationX20 * rotationX90 * rotationZ(i * angle_step / 2)
     profiles.append([m.transform(p) for p in profile])
 
-rotationX = Workplane().polyhedron(
-                *sweep(profiles, close_idx = 2)
-            )
+r = Workplane().polyhedron(*sweep(profiles, close_idx = 2))
