@@ -8,17 +8,19 @@ def gyroid(x, y, z, thickness, end):
     if x == 0 or y == 0 or z == 0 or x == end or y == end or z == end:
         return 0
 
+    half_thickness = thickness / 2
+
     rx = radians(x)
     ry = radians(y)
     rz = radians(z)
     v = sin(rx) * cos(ry) + sin(ry) * cos(rz) + sin(rz) * cos(rx)
-    return 1 if -thickness < v < thickness else 0
+    return 1 if -half_thickness < v < half_thickness else 0
 vectorized_gyroid = np.frompyfunc(gyroid, 5, 1)
 
 
 width = 360
 step = 10
-thickness = 0.2
+thickness = 0.15
 
 end = width - step
 arange = np.arange(0, width, step)
