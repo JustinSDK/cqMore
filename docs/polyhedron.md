@@ -314,6 +314,7 @@ Create a swept polyhedron.
 ## Parameters
 
 - `profiles`: list of profiles.
+- `closeIdx`: setting it to a value >= 0 creates faces between the first and last profiles. The value decides which index of the last profile is connected to the first index of the first profile.
 
 ## Examples 
 
@@ -321,11 +322,26 @@ Create a swept polyhedron.
     from cqmore.polyhedron import sweep
 
     profiles = [
-        [(0, 0, 0), (10, 0, 0), (10, 10, 0), (0, 10, 0)],
-        [(0, 0, 10), (20, 0, 10), (20, 20, 10), (0, 20, 10)],
-        [(0, 0, 35), (5, 0, 35), (5, 5, 35), (0, 5, 35)],
+        [(10, 0, 0), (10, 0, 10), (20, 0, 10), (20, 0, 0)],
+        [(0, 10, 0), (0, 10, 10), (0, 20, 10), (0, 20, 0)],
+        [(-10, 0, 0), (-10, 0, 10), (-20, 0, 10), (-20, 0, 0)],
+        [(0, -10, 0), (0, -10, 10), (0, -20, 10), (0, -20, 0)]
     ]
 
     r = Workplane().polyhedron(*sweep(profiles))
 
 ![sweep](images/polyhedron_sweep.JPG)
+
+    from cqmore import Workplane
+    from cqmore.polyhedron import sweep
+
+    profiles = [
+        [(10, 0, 0), (10, 0, 10), (20, 0, 10), (20, 0, 0)],
+        [(0, 10, 0), (0, 10, 10), (0, 20, 10), (0, 20, 0)],
+        [(-10, 0, 0), (-10, 0, 10), (-20, 0, 10), (-20, 0, 0)],
+        [(0, -10, 0), (0, -10, 10), (0, -20, 10), (0, -20, 0)]
+    ]
+
+    r = Workplane().polyhedron(*sweep(profiles, closeIdx = 0))
+
+![sweep](images/polyhedron_sweep2.JPG)
