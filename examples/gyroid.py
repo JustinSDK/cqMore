@@ -20,7 +20,7 @@ vectorized_gyroid = np.frompyfunc(gyroid, 5, 1)
 
 width = 360
 step = 10
-thickness = 0.15
+thickness = 0.4
 
 end = width - step
 arange = np.arange(0, width, step)
