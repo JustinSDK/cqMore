@@ -767,7 +767,7 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
     ## Parameters
 
     - `profiles`: list of profiles.
-    - `closeIdx`: setting it to a value >= 0 creates faces between the first and last profiles. 
+    - `closeIdx`: setting it to a value >= 0 creates faces between the first and last profile. 
                   The value decides which index of the last profile is connected to the first index 
                   of the first profile.
 
