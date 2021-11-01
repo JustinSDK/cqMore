@@ -15,10 +15,6 @@ def gyroid(x, y, z, thickness, end):
     return 1 if -thickness < v < thickness else 0
 vectorized_gyroid = np.frompyfunc(gyroid, 5, 1)
 
-def is_triangle(points, f):
-    s = set([tuple(points[i]) for i in f])
-    return len(s) == 3
-
 
 width = 360
 step = 10
