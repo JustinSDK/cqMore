@@ -13,18 +13,16 @@ from OCP.GeomAbs import GeomAbs_Intersection # type: ignore
 import numpy
 
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
-    def _edges(vts):
-        return (Edge.makeLine(*vts[[-1 + i, i]]) for i in range(vts.size))
-
     vectors = numpy.array(toVectors(points))
-    face_vts = (vectors[face_indices] for face_indices in numpy.array(faces))
 
     return Solid.makeSolid(
         Shell.makeShell(
             Face.makeFromWires(
-                Wire.assembleEdges(_edges(vts))
+                Wire.assembleEdges(
+                    Edge.makeLine(*vts[[-1 + i, i]]) for i in range(vts.size)
+                )
             )
-            for vts in face_vts
+            for vts in (vectors[face] for face in numpy.array(faces))
         )
     )
     
