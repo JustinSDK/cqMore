@@ -14,7 +14,11 @@ To install cqMore directly from GitHub, run the following `pip` command:
 
 	pip install git+git://github.com/JustinSDK/cqMore.git
 
-## Introduction
+## Dependencies
+
+This plugin has no dependencies other than the cadquery library. 
+
+## Usage
 
 You may simply use `cqmore.Workplane` to replace `cadquery.Workplane`. For example:
 
