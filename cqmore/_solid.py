@@ -10,27 +10,21 @@ from ._util import toTuples, toVectors
 from OCP.BRepOffset import BRepOffset_MakeOffset, BRepOffset_Skin # type: ignore
 from OCP.GeomAbs import GeomAbs_Intersection # type: ignore
 
-def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
-    def _edges(vectors, face_indices):
-        leng_vertices = len(face_indices)   
-        return (
-            Edge.makeLine(
-                vectors[face_indices[i]], 
-                vectors[face_indices[(i + 1) % leng_vertices]]
-            ) 
-            for i in range(leng_vertices)
-        )
+import numpy
 
-    vectors = toVectors(points)
+def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
+    def _edges(vts):
+        return (Edge.makeLine(*vts[[-1 + i, i]]) for i in range(vts.size))
+
+    vectors = numpy.array(toVectors(points))
+    face_vts = (vectors[face_indices] for face_indices in numpy.array(faces))
 
     return Solid.makeSolid(
         Shell.makeShell(
             Face.makeFromWires(
-                Wire.assembleEdges(
-                    _edges(vectors, face_indices)
-                )
+                Wire.assembleEdges(_edges(vts))
             )
-            for face_indices in faces
+            for vts in face_vts
         )
     )
     
