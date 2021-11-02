@@ -20,8 +20,8 @@ class Matrix3D:
         return Matrix3D(self.wrapped @ that.wrapped)
 
 
-    def transform(self, v: Union[Point3D, Vector]) -> Point3D:
-        vt = (v.x, v.y, v.z, 1) if isinstance(v, Vector) else v + (1,)
+    def transform(self, point: Union[Point3D, Vector]) -> Point3D:
+        vt = (point.x, point.y, point.z, 1) if isinstance(point, Vector) else point + (1,)
         return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
 
