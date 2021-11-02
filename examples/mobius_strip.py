@@ -12,6 +12,6 @@ angle_step = 360 / frags
 profiles = []
 for i in range(frags):
     m = rotationZ(i * angle_step) @ translationX20 @ rotationX90 @ rotationZ(i * angle_step / 2)
-    profiles.append([m.transform(p) for p in profile])
+    profiles.append(m.transformAll(profile))
 
 r = Workplane().polyhedron(*sweep(profiles, closeIdx = 2))
