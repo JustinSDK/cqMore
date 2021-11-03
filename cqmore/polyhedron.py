@@ -505,11 +505,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
     def _all_pts():
         if thickness == 0:
-            front_thicken_pts = [] 
-            for row in vectors:
-                for vt in row:
-                    front_thicken_pts.append([vt.x, vt.y, vt.z])
-            return front_thicken_pts
+            return [(vt.x, vt.y, vt.z) for row in vectors for vt in row]
 
         vt_normal_lt = [[[] for _ in range(leng_col)] for _ in range(leng_row)]
         for ri in range(leng_row - 1):
@@ -526,9 +522,9 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
                 n = sum(vt_normal_lt[ri][ci], Vector()).normalized()
                 vt = vectors[ri][ci]
                 v = vt + n.multiply(half_thickness)
-                front_thicken_pts.append([v.x, v.y, v.z])
+                front_thicken_pts.append((v.x, v.y, v.z))
                 v = vt + n.multiply(-half_thickness)
-                back_thicken_pts.append([v.x, v.y, v.z])
+                back_thicken_pts.append((v.x, v.y, v.z))
 
         return front_thicken_pts + back_thicken_pts
 
@@ -536,33 +532,46 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         front_faces = []
         for ri in range(leng_row - 1):
             for ci in range(leng_col - 1):
-                front_faces.append([ci + leng_col * ri, (ci + 1) + leng_col * ri, (ci + 1) + leng_col * (ri + 1)])
-                front_faces.append([ci + leng_col * ri, (ci + 1) + leng_col * (ri + 1), ci + leng_col * (ri + 1)])
+                i0 = ci + leng_col * ri
+                i1 = (ci + 1) + leng_col * ri
+                i2 = (ci + 1) + leng_col * (ri + 1)
+                i3 = ci + leng_col * (ri + 1)
+                front_faces.extend(((i0, i1, i2), (i0, i2, i3)))
 
         if thickness == 0:
             return front_faces
 
-        back_faces = [[f[2] + leng_pts, f[1] + leng_pts, f[0] + leng_pts] for f in front_faces]
+        back_faces = [(f[2] + leng_pts, f[1] + leng_pts, f[0] + leng_pts) for f in front_faces]
 
         side_faces1 = []
         for ci in range(leng_col - 1):
-            side_faces1.append([ci, ci + leng_pts, ci + 1])
-            side_faces1.append([ci + leng_pts, ci + leng_pts + 1, ci + 1])
+            i1 = ci + leng_pts
+            i2 = ci + 1
+            i3 = ci + leng_pts + 1
+            side_faces1.extend(((ci, i1, i2), (i1, i3, i2)))
 
         side_faces2 = []
         side_faces4 = []
         rx = leng_col - 1
         for ri in range(leng_row - 1):
-            side_faces2.append([rx + (ri + 1) * leng_col + leng_pts, rx + (ri + 1) * leng_col, rx + ri * leng_col])
-            side_faces2.append([rx + ri * leng_col + leng_pts, rx + (ri + 1) * leng_col + leng_pts, rx + ri * leng_col])
+            i0 = rx + (ri + 1) * leng_col + leng_pts
+            i1 = rx + (ri + 1) * leng_col
+            i2 = rx + ri * leng_col
+            i3 = rx + ri * leng_col + leng_pts
+            side_faces2.extend(((i0, i1, i2), (i3, i0, i2)))
 
-            side_faces4.append([ri * leng_col, (ri + 1) * leng_col, (ri + 1) * leng_col + leng_pts])
-            side_faces4.append([ri * leng_col, (ri + 1) * leng_col + leng_pts, ri * leng_col + leng_pts])
+            i0 = ri * leng_col
+            i1 = (ri + 1) * leng_col
+            i2 = (ri + 1) * leng_col + leng_pts
+            i3 = ri * leng_col + leng_pts
+            side_faces4.extend(((i0, i1, i2), (i0, i2, i3)))
 
         side_faces3 = []
         for ci in range(leng_pts - leng_col, leng_pts - 1):
-            side_faces3.append([ci + 1, ci + leng_pts, ci])
-            side_faces3.append([ci + 1, ci + leng_pts + 1, ci + leng_pts])
+            i0 = ci + 1
+            i1 = ci + leng_pts
+            i2 = ci + leng_pts + 1
+            side_faces3.extend(((i0, i1, ci), (i0, i2, i1)))
 
         return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
 
