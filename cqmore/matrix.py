@@ -71,6 +71,10 @@ def identity() -> numpy.ndarray:
     return numpy.array(_identity)
 
 
+def scaling(v: Union[Point3D, Vector]) -> Matrix3D:
+    return Matrix3D(_scaling(v))
+
+
 def translation(v: Union[Point3D, Vector]) -> Matrix3D:
     return Matrix3D(_translation(v))
 
@@ -89,6 +93,16 @@ def rotationZ(angle: float) -> Matrix3D:
 
 def rotation(direction: Union[Point3D, Vector], angle: float) -> Matrix3D:
     return Matrix3D(_rotation(direction, angle))
+
+
+def _scaling(v: Union[Point3D, Vector]) -> numpy.ndarray:
+    vt = (v.x, v.y, v.z) if isinstance(v, Vector) else v
+    return numpy.array([
+        [vt[0], 0, 0, 0],
+        [0, vt[1], 0, 0],
+        [0, 0, vt[2], 0],
+        [0, 0, 0, 1]
+    ]) 
 
 
 def _translation(v: Union[Point3D, Vector]) -> numpy.ndarray:
