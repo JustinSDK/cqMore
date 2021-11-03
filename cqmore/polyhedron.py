@@ -88,19 +88,24 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
             y = radius * sinPhi * sin(theta)
             z = radius * cos(phi)
             points.append((x, y, z))
-    points.append((0, 0, -radius))
-    points.append((0, 0, radius))
+    points.extend(((0, 0, -radius), (0, 0, radius)))
 
     # ring
     leng_t = 2 * rings
     faces = []
     for p in range(rings - 2):
         for t in range(2 * rings - 1):
-            faces.append((t + leng_t * p, (t + 1) + leng_t * p, (t + 1) + leng_t * (p + 1)))
-            faces.append((t + leng_t * p, (t + 1) + leng_t * (p + 1), t + leng_t * (p + 1)))
+            i0 = t + leng_t * p
+            i1 = (t + 1) + leng_t * p
+            i2 = (t + 1) + leng_t * (p + 1)
+            i3 = t + leng_t * (p + 1)
+            faces.extend(((i0, i1, i2), (i0, i2, i3)))
         t = 2 * rings - 1
-        faces.append((t + leng_t * p, leng_t * p, leng_t * (p + 1)))
-        faces.append((t + leng_t * p, leng_t * (p + 1), t + leng_t * (p + 1)))
+        i0 = t + leng_t * p
+        i1 = leng_t * p
+        i2 = leng_t * (p + 1)
+        i3 = t + leng_t * (p + 1)
+        faces.extend(((i0, i1, i2), (i0, i2, i3)))
     
     # bottom
     leng_points = len(points)
@@ -360,17 +365,17 @@ def _divide_project(vectors, faces, radius, detail):
         for ri in range(rows):
             cols = rows - ri - 1
             for ci in range(rows - ri):
-                faces.append([
+                faces.append((
                     _idx(ci, ri, ri_base),
                     _idx(ci + 1, ri, ri_base),
                     _idx(ci, ri + 1, ri_base)
-                ])
+                ))
                 if ci != cols:
-                    faces.append([
+                    faces.append((
                         _idx(ci + 1, ri, ri_base),
                         _idx(ci + 1, ri + 1, ri_base),
                         _idx(ci, ri + 1, ri_base)
-                    ])
+                    ))
 
         return (vts, faces)
 
