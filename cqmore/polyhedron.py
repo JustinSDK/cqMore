@@ -20,6 +20,8 @@ from ._util import toTuples, toVectors
 from ._typing import MeshGrid, Point3D, FaceIndices, VectorLike
 from cadquery import Vector
 
+import numpy
+
 class Polyhedron(NamedTuple):
     '''
     Define a polyhedron.
@@ -803,44 +805,35 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
 
         """
 
-    def _revolving_faces(s, leng_per_section):
+    def _revolving_faces0(leng_per_section):
         faces = []
         for i in range(leng_per_section):
-            faces.append((
-                leng_per_section * s + i,
-                leng_per_section * s + (i + 1) % leng_per_section,
-                leng_per_section * (s + 1) + i
-            ))
-            faces.append((
-                leng_per_section * s + (i + 1) % leng_per_section,
-                leng_per_section * (s + 1) + (i + 1) % leng_per_section,
-                leng_per_section * (s + 1) + i
-            ))
+            rbi = (i + 1) % leng_per_section
+            lti = leng_per_section + i
+            rti = leng_per_section + rbi
+            faces.extend(((i, rbi, lti), (rbi, rti, lti)))
         return faces
 
     leng_sections = len(profiles)
     leng_per_section = len(profiles[0])
 
-    faces = []
-    
-    for s in range(leng_sections - 1):
-        faces.extend(_revolving_faces(s, leng_per_section))
-    
+    faces0 = _revolving_faces0(leng_per_section)
+    np_faces0 = numpy.array(faces0)
+
+    faces = faces0
+    for s in range(1, leng_sections - 1):
+        faces.extend(map(tuple, (np_faces0 + (s * leng_per_section))))
+
     if closeIdx == -1:
         faces.append(tuple(range(leng_per_section))[::-1])
         faces.append(tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections)))
     else:
+        idx_base = leng_per_section * (leng_sections - 1)
         for i in range(leng_per_section):
-            faces.append((
-                leng_per_section * (leng_sections - 1) + (closeIdx + i) % leng_per_section,
-                leng_per_section * (leng_sections - 1) + (closeIdx + i + 1) % leng_per_section,
-                i
-            ))
-            faces.append((
-                leng_per_section * (leng_sections - 1) + (closeIdx + i + 1) % leng_per_section,
-                (i + 1) % leng_per_section,
-                i
-            ))
+            li0 = idx_base + (closeIdx + i) % leng_per_section
+            li1 = idx_base + (closeIdx + i + 1) % leng_per_section
+            fi1 = (i + 1) % leng_per_section
+            faces.extend(((li0, li1, i), (li1, fi1, i)))
 
     sects = cast(list[Point3D], [p for section in profiles for p in toTuples(section)])
     return Polyhedron(sects, faces)
