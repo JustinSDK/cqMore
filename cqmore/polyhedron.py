@@ -825,8 +825,10 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
         faces.extend(map(tuple, (np_faces0 + (s * leng_per_section))))
 
     if closeIdx == -1:
-        faces.append(tuple(range(leng_per_section))[::-1])
-        faces.append(tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections)))
+        faces.extend((
+            tuple(range(leng_per_section))[::-1],
+            tuple(range(leng_per_section * (leng_sections - 1), leng_per_section * leng_sections))
+        ))
     else:
         idx_base = leng_per_section * (leng_sections - 1)
         for i in range(leng_per_section):
