@@ -40,10 +40,10 @@ The right-most matrix is first multiplied with the point so you should read the 
 `scaling(v)` | Create a scaling matrix.
 `translation(v)` | Create a translation matrix.
 `mirror(v)` | Create a mirror matrix.
-`rotationX(angle)` | Create an rotation matrix around the x-axis.
-`rotationY(angle)` | Create an rotation matrix around the y-axis.
-`rotationZ(angle)` | Create an rotation matrix around the z-axis.
-`rotation(direction, angle)` | Create an rotation matrix around the given direction.
+`rotationX(angle)` | Create a rotation matrix around the x-axis.
+`rotationY(angle)` | Create a rotation matrix around the y-axis.
+`rotationZ(angle)` | Create a rotation matrix around the z-axis.
+`rotation(direction, angle)` | Create a rotation matrix around the given direction.
 
 ----
 
