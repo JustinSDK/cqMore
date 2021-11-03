@@ -78,6 +78,10 @@ def translation(v: Union[Point3D, Vector]) -> Matrix3D:
     return Matrix3D(_translation(v))
 
 
+def mirror(v: Union[Point3D, Vector]) -> Matrix3D:
+    return Matrix3D(_mirror(v))
+
+
 def rotationX(angle: float) -> Matrix3D:
     return Matrix3D(_rotationX(angle))
 
@@ -110,6 +114,23 @@ def _translation(v: Union[Point3D, Vector]) -> numpy.ndarray:
         [1, 0, 0, vt[0]],
         [0, 1, 0, vt[1]],
         [0, 0, 1, vt[2]],
+        [0, 0, 0, 1]
+    ]) 
+
+
+def _mirror(v: Union[Point3D, Vector]) -> numpy.ndarray:
+    vt = (v if isinstance(v, Vector) else Vector(*v)).normalized()
+    txx = -2* vt.x * vt.x
+    txy = -2* vt.x * vt.y
+    txz = -2* vt.x * vt.z
+    tyy = -2* vt.y * vt.y
+    tyz = -2* vt.y * vt.z
+    tzz = -2* vt.z * vt.z
+
+    return numpy.array([
+        [1 + txx, txy, txz, 0],
+        [txy, 1 + tyy, tyz, 0],
+        [txz, tyz, 1 + tzz, 0],
         [0, 0, 0, 1]
     ]) 
 
@@ -178,3 +199,4 @@ def _rotation(direction: Union[Point3D, Vector], angle: float) -> numpy.ndarray:
         [zx - wy, zy + wx, 1 - xx - yy, 0],
         [0, 0, 0, 1]
     ]) 
+
