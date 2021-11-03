@@ -40,7 +40,6 @@ class Matrix3D:
             self.wrapped = numpy.array(m)
 
 
-    # Post-Multiplication (Right-Multiplication)
     def __matmul__(self, that: 'Matrix3D') -> 'Matrix3D':
         return Matrix3D(self.wrapped @ that.wrapped)
 
