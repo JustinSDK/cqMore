@@ -435,19 +435,17 @@ def star(outerRadius: float = 1, innerRadius: float =  0.381966, height: float =
         a = thetaStep * i + right
         outerPoint = (outerRadius * cos(a), outerRadius * sin(a), 0)
         innerPoint = (innerRadius * cos(a + half_thetaStep), innerRadius * sin(a + half_thetaStep), 0)
-        points.append(outerPoint)
-        points.append(innerPoint)
+        points.extend((outerPoint, innerPoint)) 
     
     half_height = height / 2
-    points.append((0, 0, half_height))
-    points.append((0, 0, -half_height))
+    points.extend(((0, 0, half_height), (0, 0, -half_height)))
 
     leng_star = n * 2
     
     faces = []
     for i in range(leng_star):
-        faces.append((i, (i + 1) % leng_star, leng_star))
-        faces.append((leng_star + 1, (i + 1) % leng_star, i))
+        j = (i + 1) % leng_star
+        faces.extend(((i, j, leng_star), (leng_star + 1, j, i)))
 
     return Polyhedron(points, faces)
 
@@ -534,51 +532,51 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
         return front_thicken_pts + back_thicken_pts
 
     def _all_faces():
-        front_faces = []
+        faces = []
         for ri in range(leng_row - 1):
             for ci in range(leng_col - 1):
                 i0 = ci + leng_col * ri
                 i1 = (ci + 1) + leng_col * ri
                 i2 = (ci + 1) + leng_col * (ri + 1)
                 i3 = ci + leng_col * (ri + 1)
-                front_faces.extend(((i0, i1, i2), (i0, i2, i3)))
+                faces.extend(((i0, i1, i2), (i0, i2, i3)))
 
         if thickness == 0:
-            return front_faces
+            return faces
 
-        back_faces = [(f[2] + leng_pts, f[1] + leng_pts, f[0] + leng_pts) for f in front_faces]
+        # fack faces
+        faces.extend(tuple((f[2] + leng_pts, f[1] + leng_pts, f[0] + leng_pts) for f in faces))
 
-        side_faces1 = []
+        # side faces #1
         for ci in range(leng_col - 1):
             i1 = ci + leng_pts
             i2 = ci + 1
             i3 = ci + leng_pts + 1
-            side_faces1.extend(((ci, i1, i2), (i1, i3, i2)))
+            faces.extend(((ci, i1, i2), (i1, i3, i2)))
 
-        side_faces2 = []
-        side_faces4 = []
+        # side faces #2 #4
         rx = leng_col - 1
         for ri in range(leng_row - 1):
             i0 = rx + (ri + 1) * leng_col + leng_pts
             i1 = rx + (ri + 1) * leng_col
             i2 = rx + ri * leng_col
             i3 = rx + ri * leng_col + leng_pts
-            side_faces2.extend(((i0, i1, i2), (i3, i0, i2)))
+            faces.extend(((i0, i1, i2), (i3, i0, i2)))
 
             i0 = ri * leng_col
             i1 = (ri + 1) * leng_col
             i2 = (ri + 1) * leng_col + leng_pts
             i3 = ri * leng_col + leng_pts
-            side_faces4.extend(((i0, i1, i2), (i0, i2, i3)))
+            faces.extend(((i0, i1, i2), (i0, i2, i3)))
 
-        side_faces3 = []
+        # side faces #3
         for ci in range(leng_pts - leng_col, leng_pts - 1):
             i0 = ci + 1
             i1 = ci + leng_pts
             i2 = ci + leng_pts + 1
-            side_faces3.extend(((i0, i1, ci), (i0, i2, i1)))
+            faces.extend(((i0, i1, ci), (i0, i2, i1)))
 
-        return front_faces + back_faces + side_faces1 + side_faces2 + side_faces3 + side_faces4
+        return faces
 
     return Polyhedron(_all_pts(), _all_faces())
 
