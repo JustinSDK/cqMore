@@ -1,3 +1,28 @@
+"""
+Provide the `Matrix3D` class and functions for performing matrix and vector operations. 
+Here's an example to build a translation matrix for translating a point.
+
+    from cqmore.matrix import translation
+
+    point = (10, 10, 10)
+    m = translation((10, 0, 0))    # return a Matrix3D instance
+    new_point = m.transform(point) # (20, 10, 10)
+
+`Matrix3D` supports matrix multiplication. You can combine multiple transformations in 
+a single matrix. Say you have a point (10, 0, 0) and you want to translate it by (5, 0, 0)
+and then rotate it around the z-axis by 45 degrees. You can do it like:
+
+    from cqmore.matrix import translation, rotationZ
+
+    point = (10, 0, 0)
+    m = rotationZ(45) @ translation((5, 0, 0))
+    new_point = m.transform(point) 
+
+The right-most matrix is first multiplied with the point so you should read the 
+multiplications from right to left. 
+
+"""
+
 from typing import Iterable, Union, cast
 from cadquery import Vector
 import numpy
