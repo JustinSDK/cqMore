@@ -49,14 +49,14 @@ class Matrix3D:
         return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
 
-    def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> list[Point3D]:
+    def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> tuple[Point3D]:
         it = iter(points)
         if isinstance(next(it), Vector):
-            r = [tuple((self.wrapped @ (v.x, v.y, v.z, 1))[:-1]) for v in cast(Iterable[Vector], points)]
+            r = (tuple((self.wrapped @ (v.x, v.y, v.z, 1))[:-1]) for v in cast(Iterable[Vector], points))
         else:
-            r = [tuple((self.wrapped @ (p + (1,)))[:-1]) for p in cast(Iterable[Point3D], points)]
+            r = (tuple((self.wrapped @ (p + (1,)))[:-1]) for p in cast(Iterable[Point3D], points))
         
-        return cast(list[Point3D], r)
+        return cast(tuple[Point3D], tuple(r))
         
 
 _identity = [
