@@ -271,13 +271,15 @@ Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
 
 - `e`: the east-west parameter.
 - `n`: the north-south parameter.
+- `widthSegments = 3`: number of horizontal segments.
+- `heightSegments = 2`: number of vertical segments.
 
 ## Examples 
 
     from cqmore import Workplane
     from cqmore.polyhedron import superellipsoid
 
-    r = Workplane().polyhedron(*superellipsoid(2.5, .25))
+    r = Workplane().polyhedron(*superellipsoid(2.5, .25, widthSegments = 24, heightSegments = 12))
 
 ![superellipsoid](images/polyhedron_superellipsoid.JPG)
 

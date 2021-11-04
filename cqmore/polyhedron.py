@@ -723,7 +723,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
     return Polyhedron(convex_vertices, convex_faces)
 
 
-def superellipsoid(e: float, n: float, widthSegments: int = 24, heightSegments: int = 12) -> Polyhedron:
+def superellipsoid(e: float, n: float, widthSegments: int = 3, heightSegments: int = 2) -> Polyhedron:
     """
     Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
 
@@ -731,13 +731,15 @@ def superellipsoid(e: float, n: float, widthSegments: int = 24, heightSegments: 
 
     - `e`: the east-west parameter.
     - `n`: the north-south parameter.
+    - `widthSegments`: number of horizontal segments.
+    - `heightSegments`: number of vertical segments.
 
     ## Examples 
 
         from cqmore import Workplane
         from cqmore.polyhedron import superellipsoid
 
-        r = Workplane().polyhedron(*superellipsoid(2.5, .25))
+        r = Workplane().polyhedron(*superellipsoid(2.5, .25, widthSegments = 24, heightSegments = 12))
 
     """
 
