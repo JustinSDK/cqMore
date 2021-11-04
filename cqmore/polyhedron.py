@@ -46,10 +46,10 @@ class Polyhedron(NamedTuple):
 
         tetrahedron = Polyhedron(points, faces)
         tetrahedrons = (Workplane()
-                        .rect(15, 15, forConstruction = True)
-                        .vertices()
-                        .polyhedron(*tetrahedron)
-                    )   
+                           .rect(15, 15, forConstruction = True)
+                           .vertices()
+                           .polyhedron(*tetrahedron)
+                       )   
 
     '''
 
@@ -231,9 +231,9 @@ def octahedron(radius: float, detail: int = 0) -> Polyhedron:
         Vector(0, -1, 0), Vector(0, 0, 1), Vector(0, 0, -1)
     )
     faces = (
-        (0, 2, 4), (0, 4, 3),	(0, 3, 5),
-		(0, 5, 2), (1, 2, 5),	(1, 5, 3),
-		(1, 3, 4), (1, 4, 2)
+        (0, 2, 4), (0, 4, 3),    (0, 3, 5),
+        (0, 5, 2), (1, 2, 5),    (1, 5, 3),
+        (1, 3, 4), (1, 4, 2)
     )
     return _divide_project(vectors, faces, radius, detail)
 
@@ -266,23 +266,23 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
     t = (1 + 5 ** 0.5) / 2
     r = 1 / t
     vectors = (
-			# (±1, ±1, ±1)
-			Vector(-1, -1, -1), Vector(-1, -1, 1),
-			Vector(-1, 1, -1), Vector(-1, 1, 1),
-			Vector(1, -1, -1), Vector(1, -1, 1),
-			Vector(1, 1, -1), Vector(1, 1, 1),
+        # (±1, ±1, ±1)
+        Vector(-1, -1, -1), Vector(-1, -1, 1),
+        Vector(-1, 1, -1), Vector(-1, 1, 1),
+        Vector(1, -1, -1), Vector(1, -1, 1),
+        Vector(1, 1, -1), Vector(1, 1, 1),
 
-			# (0, ±1/φ, ±φ)
-			Vector(0, -r, -t), Vector(0, -r, t),
-			Vector(0, r, -t), Vector(0, r, t),
+        # (0, ±1/φ, ±φ)
+        Vector(0, -r, -t), Vector(0, -r, t),
+        Vector(0, r, -t), Vector(0, r, t),
 
-			# (±1/φ, ±φ, 0)
-			Vector(-r, -t, 0), Vector(-r, t, 0),
-			Vector(r, -t, 0), Vector(r, t, 0),
+        # (±1/φ, ±φ, 0)
+        Vector(-r, -t, 0), Vector(-r, t, 0),
+        Vector(r, -t, 0), Vector(r, t, 0),
 
-			# (±φ, 0, ±1/φ)
-			Vector(-t, 0, -r), Vector(t, 0, -r),
-			Vector(-t, 0, r), Vector(t, 0, r)
+        # (±φ, 0, ±1/φ)
+        Vector(-t, 0, -r), Vector(t, 0, -r),
+        Vector(-t, 0, r), Vector(t, 0, r)
     )
     faces = (
         (3, 11, 7), (3, 7, 15), (3, 15, 13),
@@ -334,8 +334,8 @@ def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
     )
     faces = (
         (0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11),
-        (1, 5, 9), (5, 11, 4), (11, 10, 2),	(10, 7, 6),	(7, 1, 8),
-        (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),	(3, 8, 9),
+        (1, 5, 9), (5, 11, 4), (11, 10, 2),    (10, 7, 6),    (7, 1, 8),
+        (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),    (3, 8, 9),
         (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)
     )
     return _divide_project(vectors, faces, radius, detail)
