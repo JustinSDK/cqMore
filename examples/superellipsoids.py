@@ -12,6 +12,6 @@ for ei in range(1, cols):
         n = ni * step
         superellipsoids.add(
             Workplane()
-                .polyhedron(*superellipsoid(e, n))
+                .polyhedron(*superellipsoid(e, n, widthSegments = 24, heightSegments = 12))
                 .translate((ei * 2.5, ni * 2.5, 0))
         )
