@@ -485,7 +485,19 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
     """
 
-    vectors = tuple(toVectors(tuple(points[ci][ri] for ci in range(len(points)))) for ri in range(len(points[0])))
+    # transpose and creater vectors
+    if isinstance(points[0][0], Vector):
+        vectors = cast(tuple[tuple[Vector]],
+            tuple(
+                tuple(points[ci][ri] for ci in range(len(points))) for ri in range(len(points[0]))
+            )
+        )
+    else:
+        vectors = cast(tuple[tuple[Vector]],
+            tuple(
+                tuple(Vector(*points[ci][ri]) for ci in range(len(points))) for ri in range(len(points[0]))
+            )
+        )
 
     leng_row = len(vectors)
     leng_col = len(vectors[0])
