@@ -149,12 +149,12 @@ def tetrahedron(radius: float, detail: int = 0) -> Polyhedron:
 
     '''
 
-    vectors = [
+    vectors = (
         Vector(1, 1, 1), Vector(-1, -1, 1), Vector(-1, 1, -1), Vector(1, -1, -1)
-    ]
-    faces = [
+    )
+    faces = (
         (2, 1, 0), (0, 3, 2), (1, 3, 0), (2, 3, 1)
-    ]
+    )
     return _divide_project(vectors, faces, radius, detail)
 
 
@@ -184,18 +184,18 @@ def hexahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
 
     t = 1 / (3 ** 0.5)
-    vectors = [
+    vectors = (
         Vector(t, t, t), Vector(-t, t, t), Vector(-t, -t, t), Vector(t, -t, t),
         Vector(t, t, -t), Vector(-t, t, -t), Vector(-t, -t, -t), Vector(t, -t, -t)
-    ]
-    faces = [
+    )
+    faces = (
         (3, 7, 0), (7, 4, 0), 
         (0, 4, 1), (4, 5, 1),
         (5, 6, 2), (1, 5, 2),
         (6, 7, 3), (2, 6, 3),
         (2, 3, 0), (1, 2, 0),
         (7, 6, 5), (4, 7, 5)
-    ]
+    )
     return _divide_project(vectors, faces, radius, detail)
 
 
@@ -224,15 +224,15 @@ def octahedron(radius: float, detail: int = 0) -> Polyhedron:
 
     '''
 
-    vectors = [
+    vectors = (
         Vector(1, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 
         Vector(0, -1, 0), Vector(0, 0, 1), Vector(0, 0, -1)
-    ]
-    faces = [
+    )
+    faces = (
         (0, 2, 4), (0, 4, 3),	(0, 3, 5),
 		(0, 5, 2), (1, 2, 5),	(1, 5, 3),
 		(1, 3, 4), (1, 4, 2)
-    ]
+    )
     return _divide_project(vectors, faces, radius, detail)
 
 
@@ -263,7 +263,7 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
 
     t = (1 + 5 ** 0.5) / 2
     r = 1 / t
-    vectors = [
+    vectors = (
 			# (±1, ±1, ±1)
 			Vector(-1, -1, -1), Vector(-1, -1, 1),
 			Vector(-1, 1, -1), Vector(-1, 1, 1),
@@ -281,8 +281,8 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
 			# (±φ, 0, ±1/φ)
 			Vector(-t, 0, -r), Vector(t, 0, -r),
 			Vector(-t, 0, r), Vector(t, 0, r)
-    ]
-    faces = [
+    )
+    faces = (
         (3, 11, 7), (3, 7, 15), (3, 15, 13),
         (7, 19, 17), (7, 17, 6), (7, 6, 15),
         (17, 4, 8), (17, 8, 10), (17, 10, 6),
@@ -295,7 +295,7 @@ def dodecahedron(radius: float, detail: int = 0) -> Polyhedron:
         (11, 9, 5), (11, 5, 19), (11, 19, 7),
         (19, 5, 14), (19, 14, 4), (19, 4, 17),
         (1, 12, 14), (1, 14, 5), (1, 5, 9)
-    ]
+    )
     return _divide_project(vectors, faces, radius, detail)
 
 
@@ -325,17 +325,17 @@ def icosahedron(radius: float, detail: int = 0) -> Polyhedron:
     '''
 
     t = (1 + 5 ** 0.5) / 2
-    vectors = [
+    vectors = (
         Vector(-1, t, 0), Vector(1, t, 0), Vector(- 1, -t, 0), Vector(1, -t, 0),
         Vector(0, -1, t), Vector(0, 1, t), Vector(0, -1, -t),  Vector(0, 1, -t),
         Vector(t, 0, -1), Vector(t, 0, 1), Vector(-t, 0, -1),  Vector(-t, 0, 1)
-    ]
-    faces = [
+    )
+    faces = (
         (0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11),
         (1, 5, 9), (5, 11, 4), (11, 10, 2),	(10, 7, 6),	(7, 1, 8),
         (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),	(3, 8, 9),
         (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)
-    ]
+    )
     return _divide_project(vectors, faces, radius, detail)
 
 
@@ -349,11 +349,11 @@ def _divide_project(vectors, faces, radius, detail):
         vr = vectors[2] - vectors[0]
         dc = vc / rows
         dr = vr / rows
-        vts = [
+        vts = tuple(
             vectors[0] + ci * dc + ri * dr
             for ri in range(0, rows + 1)
                 for ci in range(0, rows - ri + 1)
-        ]
+        )
 
         acc = 0
         ri_base = []
@@ -381,7 +381,7 @@ def _divide_project(vectors, faces, radius, detail):
 
     if detail == 0:
         return Polyhedron(
-            [(vt / vt.Length * radius).toTuple() for vt in vectors],
+            tuple((vt / vt.Length * radius).toTuple() for vt in vectors),
             faces
         )
 
@@ -391,18 +391,18 @@ def _divide_project(vectors, faces, radius, detail):
             _divide([vectors[i] for i in face], detail)
         )
 
-    flatten_points = [
+    flatten_points = tuple(
         (vt / vt.Length * radius).toTuple()
         for vts, _ in subdivided_all
             for vt in vts
-    ]
+    )
     
     pts_number_per_tri = len(subdivided_all[0][0])
-    flatten_faces = [
+    flatten_faces = tuple(
         (face[0] + i * pts_number_per_tri, face[1] + i * pts_number_per_tri, face[2] + i * pts_number_per_tri)
         for i in range(len(subdivided_all))
             for face in subdivided_all[i][1]
-    ]
+    )
 
     return Polyhedron(flatten_points, flatten_faces)
     
@@ -483,7 +483,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
     """
 
-    vectors = [toVectors([points[ci][ri] for ci in range(len(points))]) for ri in range(len(points[0]))]
+    vectors = tuple(toVectors(tuple(points[ci][ri] for ci in range(len(points)))) for ri in range(len(points[0])))
 
     leng_row = len(vectors)
     leng_col = len(vectors[0])
@@ -508,7 +508,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
     def _all_pts():
         if thickness == 0:
-            return [(vt.x, vt.y, vt.z) for row in vectors for vt in row]
+            return tuple((vt.x, vt.y, vt.z) for row in vectors for vt in row)
 
         vt_normal_lt = [[[] for _ in range(leng_col)] for _ in range(leng_row)]
         for ri in range(leng_row - 1):
@@ -533,13 +533,16 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
 
     def _all_faces():
         faces = []
-        for ri in range(leng_row - 1):
-            for ci in range(leng_col - 1):
-                i0 = ci + leng_col * ri
-                i1 = (ci + 1) + leng_col * ri
-                i2 = (ci + 1) + leng_col * (ri + 1)
-                i3 = ci + leng_col * (ri + 1)
-                faces.extend(((i0, i1, i2), (i0, i2, i3)))
+        for ci in range(leng_col - 1):
+            i0 = ci
+            i1 = (ci + 1)
+            i2 = (ci + 1) + leng_col 
+            i3 = ci + leng_col
+            faces.extend(((i0, i1, i2), (i0, i2, i3)))
+
+        row0 = numpy.array(faces)
+        for ri in range(1, leng_row - 1):
+            faces.extend(map(tuple, (row0 + ri * leng_col)))
 
         if thickness == 0:
             return faces
@@ -647,19 +650,19 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
         return (
             vtIndices,
             # faces 
-            [
+            (
                 (v1, v0, v2),
                 (v0, v1, v3),
                 (v1, v2, v3),
                 (v2, v0, v3)
-            ] 
+            )
             if n.dot(e) > 0 else 
-            [
+            (
                 (v0, v1, v2),
                 (v1, v0, v3),
                 (v2, v1, v3),
                 (v0, v2, v3)
-            ]
+            )
         )
 
     def _faceType(vectors, v, faces):
@@ -690,7 +693,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
         
         return faces
 
-    vectors = [Vector(*p) for p in sorted(toTuples(points))]
+    vectors = tuple(Vector(*p) for p in sorted(toTuples(points)))
 
     leng_vectors = len(vectors)
     edges = [[0] * leng_vectors for _ in range(leng_vectors)]
@@ -698,22 +701,22 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
     vtIndices, faces = _fstTetrahedron(vectors)
     for i in range(leng_vectors):
         if not (i in vtIndices):
-            types = [_faceType(vectors, vectors[i], face) for face in faces]
+            types = tuple(_faceType(vectors, vectors[i], face) for face in faces)
             for j in range(len(faces)):
                 edges[faces[j][0]][faces[j][1]] = types[j]
                 edges[faces[j][1]][faces[j][2]] = types[j]
                 edges[faces[j][2]][faces[j][0]] = types[j]
             faces = _nextFaces(i, faces, types, edges)
 
-    pts = [v.toTuple() for v in vectors]
+    pts = tuple(v.toTuple() for v in vectors)
     convex_vtIndices = {i for face in faces for i in face}
-    convex_vertices = [pts[i] for i in convex_vtIndices]
+    convex_vertices = tuple(pts[i] for i in convex_vtIndices)
 
     v_i_lookup = {v: i for i, v in enumerate(convex_vertices)}
-    convex_faces = [
+    convex_faces = tuple(
         tuple(v_i_lookup[pts[i]] for i in face)
         for face in faces
-    ]
+    )
 
     return Polyhedron(convex_vertices, convex_faces)
 
