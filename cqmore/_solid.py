@@ -1,6 +1,6 @@
 from typing import Iterable, Union, cast
 
-from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound
+from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound, Vector
 
 from .polyhedron import hull
 
@@ -51,8 +51,11 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
     return cast(Union[Solid, Compound], wp.val())
 
 
-def splineApproxSurface(points: MeshGrid, thickness: float) -> Union[Solid, Face]:    
-    face = Face.makeSplineApprox([toVectors(col) for col in points])
+def splineApproxSurface(points: MeshGrid, thickness: float) -> Union[Solid, Face]:   
+    if isinstance(points[0][0], Vector):
+        face = Face.makeSplineApprox(cast(list[list[Vector]], points))
+    else:
+        face = Face.makeSplineApprox([[Vector(*p) for p in col] for col in points])
 
     # THICKEN SURFACE
     # abs() because negative values are allowed to set direction of thickening

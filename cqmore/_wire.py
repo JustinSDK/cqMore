@@ -29,8 +29,7 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
 
 def makePolygon(points: Iterable[VectorLike], forConstruction: bool = False) -> Wire:
     vts = toVectors(points)
-    vts.append(vts[0])
-    return Wire.makePolygon(vts, forConstruction)
+    return Wire.makePolygon(vts + (vts[0], ), forConstruction)
 
 
 def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forConstruction: bool = False) -> Wire:
