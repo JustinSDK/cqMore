@@ -19,7 +19,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 
  Signature | Description
 --|--
-[`uvSphere(radius,[rings])`](polyhedron.md#uvsphere) | Create a UV sphere.
+[`uvSphere(radius,[heightSegments])`](polyhedron.md#uvsphere) | Create a UV sphere.
 [`tetrahedron(radius,[detail])`](polyhedron.md#tetrahedron) | Create a tetrahedron.
 [`hexahedron(radius,[detail])`](polyhedron.md#hexahedron) | Create a hexahedron.
 [`octahedron(radius,[detail])`](polyhedron.md#octahedron) | Create a octahedron.
@@ -71,7 +71,8 @@ Create a UV sphere.
 ## Parameters
 
 - `radius`: sphere radius. 
-- `rings = 2`: number of horizontal segments.
+- `widthSegments = 3`: number of horizontal segments.
+- `heightSegments = 2`: number of vertical segments.
 
 ## Examples 
 
@@ -79,7 +80,7 @@ Create a UV sphere.
     from cqmore import Workplane
 
     sphere = (Workplane()
-                .polyhedron(*uvSphere(radius = 10, rings = 5))
+                .polyhedron(*uvSphere(radius = 10, widthSegments = 10, heightSegments = 5))
              )
 
 ![uvSphere](images/polyhedron_uvSphere.JPG)

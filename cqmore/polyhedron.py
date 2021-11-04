@@ -57,14 +57,15 @@ class Polyhedron(NamedTuple):
     faces: Iterable[FaceIndices]
 
 
-def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
+def uvSphere(radius: float, widthSegments: int = 3, heightSegments: int = 2) -> Polyhedron:
     '''
     Create a UV sphere.
 
     ## Parameters
 
     - `radius`: sphere radius.
-    - `rings`: number of horizontal segments.
+    - `widthSegments`: number of horizontal segments.
+    - `heightSegments`: number of vertical segments.
 
     ## Examples 
 
@@ -72,17 +73,18 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
         from cqmore import Workplane
 
         sphere = (Workplane()
-                    .polyhedron(*uvSphere(radius = 10, rings = 5))
-                )
+                    .polyhedron(*uvSphere(radius = 10, widthSegments = 10, heightSegments = 5))
+                 )
 
     '''
 
-    angleStep = 180.0 / rings
+    thetaStep = 360.0 / widthSegments
+    phiStep = 180.0 / heightSegments
     points = []
-    for p in range(rings - 1, 0, -1):
-        for t in range(2 * rings):
-            phi = radians(p * angleStep)
-            theta = radians(t * angleStep)
+    for p in range(heightSegments - 1, 0, -1):
+        for t in range(widthSegments):
+            phi = radians(p * phiStep)
+            theta = radians(t * thetaStep)
             sinPhi = sin(phi)
             x = radius * sinPhi * cos(theta)
             y = radius * sinPhi * sin(theta)
@@ -91,35 +93,35 @@ def uvSphere(radius: float, rings: int = 2) -> Polyhedron:
     points.extend(((0, 0, -radius), (0, 0, radius)))
 
     # ring
-    leng_t = 2 * rings
     faces = []
-    for p in range(rings - 2):
-        for t in range(2 * rings - 1):
-            i0 = t + leng_t * p
-            i1 = (t + 1) + leng_t * p
-            i2 = (t + 1) + leng_t * (p + 1)
-            i3 = t + leng_t * (p + 1)
+    p_stop = heightSegments - 2
+    t_stop = widthSegments - 1
+    for p in range(p_stop):
+        for t in range(t_stop):
+            i0 = t + widthSegments * p
+            i1 = (t + 1) + widthSegments * p
+            i2 = (t + 1) + widthSegments * (p + 1)
+            i3 = t + widthSegments * (p + 1)
             faces.extend(((i0, i1, i2), (i0, i2, i3)))
-        t = 2 * rings - 1
-        i0 = t + leng_t * p
-        i1 = leng_t * p
-        i2 = leng_t * (p + 1)
-        i3 = t + leng_t * (p + 1)
+        i0 = t_stop + widthSegments * p
+        i1 = widthSegments * p
+        i2 = widthSegments * (p + 1)
+        i3 = t_stop + widthSegments * (p + 1)
         faces.extend(((i0, i1, i2), (i0, i2, i3)))
     
     # bottom
     leng_points = len(points)
     bi = leng_points - 2
-    for t in range(2 * rings - 1):
+    for t in range(t_stop):
         faces.append((bi, t + 1, t))
-    faces.append((bi, 0, 2 * rings - 1))
+    faces.append((bi, 0, t_stop))
 
     # top
     ti = leng_points - 1
-    li = (rings - 2) * leng_t
-    for t in range(2 * rings - 1):
+    li = p_stop * widthSegments
+    for t in range(t_stop):
         faces.append((ti, li + t, li + t + 1))
-    faces.append((ti, li + (2 * rings - 1), li))    
+    faces.append((ti, li + t_stop, li))    
 
     return Polyhedron(points, faces)
 
