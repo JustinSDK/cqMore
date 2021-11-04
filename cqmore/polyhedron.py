@@ -852,5 +852,5 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
             fi1 = (i + 1) % leng_per_section
             faces.extend(((li0, li1, i), (li1, fi1, i)))
 
-    sects = cast(list[Point3D], [p for section in profiles for p in toTuples(section)])
-    return Polyhedron(sects, faces)
+    points = tuple(p for section in profiles for p in toTuples(section))
+    return Polyhedron(cast(Iterable[Point3D], points), faces)
