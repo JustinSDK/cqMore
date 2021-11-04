@@ -22,7 +22,7 @@ def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -
                     Edge.makeLine(*vts[[-1 + i, i]]) for i in range(vts.size)
                 )
             )
-            for vts in (vectors[face] for face in numpy.array(faces))
+            for vts in (vectors[list(face)] for face in faces)
         )
     )
     
