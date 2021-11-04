@@ -723,7 +723,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
     return Polyhedron(convex_vertices, convex_faces)
 
 
-def superellipsoid(e: float, n: float, widthSegments = 24, heightSegments = None) -> Polyhedron:
+def superellipsoid(e: float, n: float, widthSegments: int = 24, heightSegments: int = 12) -> Polyhedron:
     """
     Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
 
@@ -761,9 +761,9 @@ def superellipsoid(e: float, n: float, widthSegments = 24, heightSegments = None
     b = 1
     c = 1
 
-    real_nPhi = (heightSegments if heightSegments else widthSegments // 2) + 2
+    real_nPhi = heightSegments + 2
     thetaStep = tau / widthSegments
-    phiStep = tau / (real_nPhi * 2)
+    phiStep = pi / real_nPhi
     sections = []
     for p in range(1, real_nPhi):
         phi = -pi / 2 + p * phiStep
