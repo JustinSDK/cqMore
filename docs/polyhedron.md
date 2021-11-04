@@ -6,7 +6,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
     from cqmore import Workplane
 
     sphere = (Workplane()
-                .polyhedron(*uvSphere(radius = 10, rings = 5))
+                .polyhedron(*uvSphere(radius = 10, widthSegments = 10, heightSegments = 5))
              )
 
 ## Classes
