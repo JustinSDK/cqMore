@@ -12,7 +12,7 @@ to use them.
 
 """
 
-from math import cos, radians, sin, pi, tau
+from math import cos, sin, pi, tau
 
 from typing import Iterable, NamedTuple, Union, cast
 
@@ -78,13 +78,13 @@ def uvSphere(radius: float, widthSegments: int = 3, heightSegments: int = 2) -> 
 
     '''
 
-    thetaStep = 360.0 / widthSegments
-    phiStep = 180.0 / heightSegments
+    thetaStep = tau / widthSegments
+    phiStep = pi / heightSegments
     points = []
     for p in range(heightSegments - 1, 0, -1):
         for t in range(widthSegments):
-            phi = radians(p * phiStep)
-            theta = radians(t * thetaStep)
+            phi = p * phiStep
+            theta = t * thetaStep
             sinPhi = sin(phi)
             x = radius * sinPhi * cos(theta)
             y = radius * sinPhi * sin(theta)
