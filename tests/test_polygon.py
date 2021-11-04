@@ -7,7 +7,7 @@ from cqmore.polygon import regularPolygon, hull2D, star
 class TestPolygon(unittest.TestCase):
     def test_regularPolygon(self):
         polygon = regularPolygon(nSides = 6, radius = 10)
-        self.assertEqual(6, len(polygon))
+        self.assertEqual(6, len(tuple(polygon)))
 
         polygon = regularPolygon(
             nSides = 6, 
@@ -15,16 +15,16 @@ class TestPolygon(unittest.TestCase):
             thetaStart = 45, 
             thetaEnd = 270
         )
-        self.assertEqual(8, len(polygon))
+        self.assertEqual(8, len(tuple(polygon)))
 
 
     def test_star(self):
         polygon = star(outerRadius = 10, innerRadius = 5, n = 8)
-        self.assertEqual(16, len(polygon))
+        self.assertEqual(16, len(tuple(polygon)))
 
 
     def test_hull2D(self):
-        points = [
+        points = (
             (0.855355763576732, 0.16864474737612778), 
             (0.7653639827409133, 0.21243642222244463), 
             (0.9956528164357294, 0.6119951986040002), 
@@ -34,9 +34,9 @@ class TestPolygon(unittest.TestCase):
             (0.9398877210188867, 0.2413165664583884), 
             (0.375900956434601, 0.09820967766941846), 
             (0.8532633331060003, 0.5955415267257996)
-        ]
+        )
 
-        self.assertEqual(6, len(hull2D(points)))
+        self.assertEqual(6, len(tuple(hull2D(points))))
 
 
 if __name__ == '__main__':

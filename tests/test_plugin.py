@@ -8,12 +8,12 @@ from cqmore import Workplane
 
 class TestWorkplane2D(unittest.TestCase):
     def test_makePolygon(self):
-        points = [
+        points = (
             (0, 0, 0), (10, 0, 0), (0, 10, 0), (-10, 0, 0)
-        ]
+        )
 
         wire = Wire.makePolygon((
-                 Vector(*p) for p in points + [points[0]]
+                 Vector(*p) for p in points + (points[0], )
             ), 
             False
         )
@@ -52,7 +52,7 @@ class TestWorkplane2D(unittest.TestCase):
         r2 = Workplane().center(5, 5).rect(10, 10)
         
         expected = cast(Wire, Workplane().polyline(
-            [(-5, -5), (5, -5), (5, 0), (10, 0), (10, 10), (0, 10), (0, 5), (-5, 5)]).close().val()
+            ((-5, -5), (5, -5), (5, 0), (10, 0), (10, 10), (0, 10), (0, 5), (-5, 5))).close().val()
         )
         actual = cast(Wire, r1.union2D(r2).val())
         self.assertWireEqual(expected, actual)       
@@ -67,7 +67,7 @@ class TestWorkplane2D(unittest.TestCase):
         r2 = Workplane().center(5, 5).rect(10, 10)
         
         expected = cast(Wire, Workplane().polyline(
-            [(-5, -5), (5, -5), (5, 0), (0, 0), (0, 5), (-5, 5)]).close().val()
+            ((-5, -5), (5, -5), (5, 0), (0, 0), (0, 5), (-5, 5))).close().val()
         )
         actual = cast(Wire, r1.cut2D(r2).val())
         self.assertWireEqual(expected, actual)     
@@ -78,7 +78,7 @@ class TestWorkplane2D(unittest.TestCase):
 
 
     def test_hull2D(self):
-        points = [
+        points = (
             (0.855355763576732, 0.16864474737612778), 
             (0.7653639827409133, 0.21243642222244463), 
             (0.9956528164357294, 0.6119951986040002), 
@@ -88,14 +88,14 @@ class TestWorkplane2D(unittest.TestCase):
             (0.9398877210188867, 0.2413165664583884), 
             (0.375900956434601, 0.09820967766941846), 
             (0.8532633331060003, 0.5955415267257996)
-        ]
+        )
 
         pts = Workplane().hull2D(points, forConstruction = True).vertices().vals()
         self.assertEqual(6, len(pts))
 
 
     def test_polylineJoin2D(self):
-        points = [(0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0)]
+        points = ((0, 0), (10, 10), (0, 15), (-10, 10), (-10, 0))
         polyline = Workplane().polylineJoin2D(points, Workplane().polygon(6, 1))
         self.assertEqual(18, len(polyline.vertices().vals()))
 

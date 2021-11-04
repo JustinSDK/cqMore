@@ -12,40 +12,40 @@ class TestPolyhedron(unittest.TestCase):
         sphere = uvSphere(10, 3)
         self.assertListEqual(
             [(0, 1, 7), (0, 7, 6), (1, 2, 8), (1, 8, 7), (2, 3, 9), (2, 9, 8), (3, 4, 10), (3, 10, 9), (4, 5, 11), (4, 11, 10), (5, 0, 6), (5, 6, 11), (12, 1, 0), (12, 2, 1), (12, 3, 2), (12, 4, 3), (12, 5, 4), (12, 0, 5), (13, 6, 7), (13, 7, 8), (13, 8, 9), (13, 9, 10), (13, 10, 11), (13, 11, 6)],
-            cast(list[FaceIndices], sphere.faces)
+            list(sphere.faces)
         )
 
 
     def test_tetrahedron(self):
         polyhedron = tetrahedron(1, 1)
-        self.assertEqual(4 * 4, len(cast(list, polyhedron.faces)))
+        self.assertEqual(4 * 4, len(list(polyhedron.faces)))
 
 
     def test_hexahedron(self):
         polyhedron = hexahedron(1, 1)
-        self.assertEqual(6 * 2 * 4, len(cast(list, polyhedron.faces)))
+        self.assertEqual(6 * 2 * 4, len(list(polyhedron.faces)))
 
 
     def test_octahedron(self):
         polyhedron = octahedron(1, 1)
-        self.assertEqual(8 * 4, len(cast(list, polyhedron.faces)))
+        self.assertEqual(8 * 4, len(list(polyhedron.faces)))
 
 
     def test_dodecahedron(self):
         polyhedron = dodecahedron(1, 1)
-        self.assertEqual(12 * 3 * 4, len(cast(list, polyhedron.faces)))
+        self.assertEqual(12 * 3 * 4, len(list(polyhedron.faces)))
 
 
     def test_icosahedron(self):
         polyhedron = icosahedron(1, 1)
-        self.assertEqual(20 * 4, len(cast(list, polyhedron.faces)))
+        self.assertEqual(20 * 4, len(list(polyhedron.faces)))
 
     
     def test_star(self):
         polyhedron = star()
 
-        self.assertEqual(12, len(cast(list, polyhedron.points)))
-        self.assertEqual(20, len(cast(list, polyhedron.faces)))
+        self.assertEqual(12, len(list(polyhedron.points)))
+        self.assertEqual(20, len(list(polyhedron.faces)))
 
 
     def test_gridSurface(self):
@@ -57,15 +57,15 @@ class TestPolyhedron(unittest.TestCase):
 
         sf = gridSurface(points, 1)
 
-        self.assertEqual(18, len(cast(list, sf.points)))
-        self.assertEqual(32, len(cast(list, sf.faces)))
+        self.assertEqual(18, len(list(sf.points)))
+        self.assertEqual(32, len(list(sf.faces)))
 
 
     def test_superellipsoid(self):
         p = superellipsoid(2.5, .25)
 
-        self.assertEqual(312, len(cast(list, p.points)))
-        self.assertEqual(578, len(cast(list, p.faces)))
+        self.assertEqual(312, len(list(p.points)))
+        self.assertEqual(578, len(list(p.faces)))
 
 
     def test_hull(self):
@@ -81,8 +81,8 @@ class TestPolyhedron(unittest.TestCase):
 
         convex_hull = hull(points)
 
-        self.assertEqual(10, len(cast(list, convex_hull.faces)))
-        self.assertEqual(7, len(cast(list, convex_hull.points)))
+        self.assertEqual(10, len(list(convex_hull.faces)))
+        self.assertEqual(7, len(list(convex_hull.points)))
 
 
     def test_sweep(self):
@@ -94,8 +94,8 @@ class TestPolyhedron(unittest.TestCase):
 
         p = sweep(profiles)
 
-        self.assertEqual(18, len(cast(list, p.faces)))
-        self.assertEqual(12, len(cast(list, p.points)))
+        self.assertEqual(18, len(list(p.faces)))
+        self.assertEqual(12, len(list(p.points)))
 
 if __name__ == '__main__':
     unittest.main()
