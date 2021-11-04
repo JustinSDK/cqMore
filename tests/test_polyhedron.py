@@ -62,7 +62,7 @@ class TestPolyhedron(unittest.TestCase):
 
 
     def test_superellipsoid(self):
-        p = superellipsoid(2.5, .25)
+        p = superellipsoid(2.5, .25, widthSegments = 24, heightSegments = 12)
 
         self.assertEqual(312, len(list(p.points)))
         self.assertEqual(578, len(list(p.faces)))
