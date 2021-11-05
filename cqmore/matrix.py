@@ -138,10 +138,43 @@ _identity = [
 ]
 
 def identity() -> Matrix3D:
+    '''
+    Create an identity matrix.
+
+    ## Examples 
+
+        from cqmore.matrix import identity
+
+        m = identity()
+
+    '''
+
     return Matrix3D(numpy.array(_identity))
 
 
 def scaling(v: Union[Point3D, Vector]) -> Matrix3D:
+    '''
+    Create a scaling matrix.
+
+    ## Parameters
+
+    - `v`: scaling vector.
+
+    ## Examples 
+
+        from cqmore.matrix import scaling
+        from cqmore.polyhedron import uvSphere
+        from cqmore import Workplane
+
+        sphere = uvSphere(1, widthSegments = 12, heightSegments = 6)
+
+        m = scaling((2, 1, 1)) 
+        scaled_points = m.transformAll(sphere.points)
+
+        r = Workplane().polyhedron(scaled_points, sphere.faces)
+
+    '''
+
     return Matrix3D(_scaling(v))
 
 

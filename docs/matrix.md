@@ -36,8 +36,8 @@ The right-most matrix is first multiplied with the point so you should read the 
 
  Signature | Description
 --|--
-`identity()` | Create an identity matrix.
-`scaling(v)` | Create a scaling matrix.
+[`identity()`](matrix.md#identity) | Create an identity matrix.
+[`scaling(v)`](matrix.md#scaling) | Create a scaling matrix.
 `translation(v)` | Create a translation matrix.
 `mirror(v)` | Create a mirror matrix.
 `rotationX(angle)` | Create a rotation matrix around the x-axis.
@@ -115,5 +115,35 @@ Use the current matrix to transform a list of points.
     # ((15, 25, 35), (5, 5, 5), (-5, -15, -25))
     translated = translation.transformAll(points) 
 
+# `identity`
 
+Create an identity matrix.
 
+## Examples 
+
+    from cqmore.matrix import identity
+
+    m = identity()
+
+# `scaling`
+
+Create a scaling matrix.
+
+## Parameters
+
+- `v`: scaling vector.
+
+## Examples 
+
+    from cqmore.matrix import scaling
+    from cqmore.polyhedron import uvSphere
+    from cqmore import Workplane
+
+    sphere = uvSphere(1, widthSegments = 12, heightSegments = 6)
+
+    m = scaling((2, 1, 1)) 
+    scaled_points = m.transformAll(sphere.points)
+
+    r = Workplane().polyhedron(scaled_points, sphere.faces)
+
+![scaling](images/matrix_scaling.JPG)
