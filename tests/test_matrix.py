@@ -2,7 +2,8 @@ import unittest
 import sys
 sys.path.append('..')
 
-from cqmore.matrix import Matrix3D
+from cqmore.matrix import Matrix3D, identity, scaling
+from cqmore.polyhedron import uvSphere
 
 class TestMatrix(unittest.TestCase):
     def test_Matrix3D(self):
@@ -41,6 +42,25 @@ class TestMatrix(unittest.TestCase):
         translated = translation.transformAll(points) 
         self.assertTupleEqual(((15, 25, 35), (5, 5, 5), (-5, -15, -25)), translated)
 
+
+    def test_identity(self):
+        m = identity()
+        self.assertListEqual([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ], m.wrapped.tolist())
+
+
+    def test_scaling(self):
+        sphere = uvSphere(1)
+        m = scaling((2, 1, 1)) 
+        scaled_points = m.transformAll(sphere.points)
+        
+        expected = ((2.0, 0.0, 6.123233995736766e-17), (-0.9999999999999996, 0.8660254037844387, 6.123233995736766e-17), (-1.0000000000000009, -0.8660254037844385, 6.123233995736766e-17), (0, 0, -1), (0, 0, 1))
+        self.assertTupleEqual(expected, scaled_points)
+        
 
 if __name__ == '__main__':
     unittest.main()
