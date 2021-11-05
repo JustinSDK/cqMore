@@ -137,8 +137,8 @@ _identity = [
     [0, 0, 0, 1]
 ]
 
-def identity() -> numpy.ndarray:
-    return numpy.array(_identity)
+def identity() -> Matrix3D:
+    return Matrix3D(numpy.array(_identity))
 
 
 def scaling(v: Union[Point3D, Vector]) -> Matrix3D:
