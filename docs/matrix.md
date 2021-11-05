@@ -22,14 +22,14 @@ The right-most matrix is first multiplied with the point so you should read the 
 
  Signature | Description
 --|--
-`Matrix3D(m)` | Define a 4x4 matrix for 3D transformation.
+[`Matrix3D(m)`](matrix.md#matrix3d) | Create a matrix from an array-like object.
 
 ## `Matrix3D` Operations
 
  Signature | Description
 --|--
-`transform(point)` | Transform a point.
-`transformAll(points)` | Transform a list of points.
+[`transform(point)`](matrix.md#transform) | Use the current matrix to transform a point.
+[`transformAll(points)`](matrix.md#transformall) | Use the current matrix to transform a list of points.
 
 
 ## Functions
@@ -47,4 +47,73 @@ The right-most matrix is first multiplied with the point so you should read the 
 
 ----
 
-## Under construction
+# `Matrix3D`
+
+Create a matrix from an array-like object.
+
+## Parameters
+
+- `m`: an array-like object.
+
+## Examples 
+
+    from cqmore.matrix import Matrix3D
+
+    v = (5, 5, 5)
+
+    # Create a translation matrix
+    translation = Matrix3D([
+        [1, 0, 0, v[0]],
+        [0, 1, 0, v[1]],
+        [0, 0, 1, v[2]],
+        [0, 0, 0, 1]
+    ])
+
+# `transform`
+
+Use the current matrix to transform a point.
+
+## Parameters
+
+- `point`: the point to transform.
+
+## Examples 
+
+    from cqmore.matrix import Matrix3D
+
+    translation = Matrix3D([
+        [1, 0, 0, 5],
+        [0, 1, 0, 5],
+        [0, 0, 1, 5],
+        [0, 0, 0, 1]
+    ])
+
+    point = (10, 20, 30)
+    translated = translation.transform(point) # (15, 25, 35)
+
+# `transformAll`
+
+Use the current matrix to transform a list of points.
+
+## Parameters
+
+- `points`: a list of points to transform.
+
+## Examples 
+
+    from cqmore.matrix import Matrix3D
+
+    translation = Matrix3D([
+        [1, 0, 0, 5],
+        [0, 1, 0, 5],
+        [0, 0, 1, 5],
+        [0, 0, 0, 1]
+    ])
+
+    points = [(10, 20, 30), (0, 0, 0), (-10, -20, -30)]
+
+    # ((15, 25, 35), (5, 5, 5), (-5, -15, -25))
+    translated = translation.transformAll(points) 
+
+
+

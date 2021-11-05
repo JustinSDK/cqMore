@@ -34,6 +34,29 @@ from ._typing import Point3D
 
 class Matrix3D:
     def __init__(self, m: Iterable[Iterable[float]]):
+        '''
+        Create a matrix from an array-like object.
+
+        ## Parameters
+
+        - `m`: an array-like object.
+
+        ## Examples 
+
+            from cqmore.matrix import Matrix3D
+
+            v = (5, 5, 5)
+
+            # Create a translation matrix
+            translation = Matrix3D([
+                [1, 0, 0, v[0]],
+                [0, 1, 0, v[1]],
+                [0, 0, 1, v[2]],
+                [0, 0, 0, 1]
+            ])
+
+        '''
+
         if isinstance(m, numpy.ndarray):
             self.wrapped = m
         else:
@@ -45,11 +68,59 @@ class Matrix3D:
 
 
     def transform(self, point: Union[Point3D, Vector]) -> Point3D:
+        '''
+        Use the current matrix to transform a point.
+
+        ## Parameters
+
+        - `point`: the point to transform.
+
+        ## Examples 
+
+            from cqmore.matrix import Matrix3D
+
+            translation = Matrix3D([
+                [1, 0, 0, 5],
+                [0, 1, 0, 5],
+                [0, 0, 1, 5],
+                [0, 0, 0, 1]
+            ])
+
+            point = (10, 20, 30)
+            translated = translation.transform(point) # (15, 25, 35)
+
+        '''
+
         vt = (point.x, point.y, point.z, 1) if isinstance(point, Vector) else point + (1,)
         return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
 
 
     def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> tuple[Point3D]:
+        '''
+        Use the current matrix to transform a list of points.
+
+        ## Parameters
+
+        - `points`: a list of points to transform.
+
+        ## Examples 
+
+            from cqmore.matrix import Matrix3D
+
+            translation = Matrix3D([
+                [1, 0, 0, 5],
+                [0, 1, 0, 5],
+                [0, 0, 1, 5],
+                [0, 0, 0, 1]
+            ])
+
+            points = [(10, 20, 30), (0, 0, 0), (-10, -20, -30)]
+
+            # ((15, 25, 35), (5, 5, 5), (-5, -15, -25))
+            translated = translation.transformAll(points) 
+
+        '''
+
         it = iter(points)
         if isinstance(next(it), Vector):
             r = (tuple((self.wrapped @ (v.x, v.y, v.z, 1))[:-1]) for v in cast(Iterable[Vector], points))
