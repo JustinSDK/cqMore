@@ -1,7 +1,4 @@
 import unittest
-import sys
-sys.path.append('..')
-
 from cqmore.polyhedron import gridSurface, star, superellipsoid, sweep, uvSphere, hull
 from cqmore.polyhedron import tetrahedron, hexahedron, octahedron, dodecahedron, icosahedron
 from cqmore._typing import FaceIndices

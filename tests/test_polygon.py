@@ -1,7 +1,4 @@
 import unittest
-import sys
-sys.path.append('..')
-
 from cqmore.polygon import regularPolygon, hull2D, star
 
 class TestPolygon(unittest.TestCase):

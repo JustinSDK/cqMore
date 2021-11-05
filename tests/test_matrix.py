@@ -1,7 +1,4 @@
 import unittest
-import sys
-sys.path.append('..')
-
 from cqmore.matrix import Matrix3D, identity, scaling
 from cqmore.polyhedron import uvSphere
 

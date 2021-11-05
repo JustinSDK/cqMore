@@ -1,8 +1,5 @@
 import unittest
 from typing import cast
-import sys
-sys.path.append('..')
-
 from cadquery import Vector, Vertex, Wire
 from cqmore import Workplane
 

@@ -1,7 +1,4 @@
 import unittest
-import sys
-sys.path.append('..')
-
 from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superformula, torusKnot, logarithmicSpiral
 
 class TestCurve(unittest.TestCase):
