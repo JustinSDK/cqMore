@@ -27,15 +27,14 @@ convexs = Workplane()
 convex = Workplane()
 for region_i in voronoi.point_region:
     region = voronoi.regions[region_i]
-    if not (-1 in region):
-        region_vts = [Vector(*voronoi.vertices[i]) for i in region if i != -1]
-        geom_center = sum(region_vts, Vector()) / len(region_vts)
-        m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
-        convexs.add(
-            convex.polyhedron(
-                *hull3D(m.transformAll([v.toTuple() for v in region_vts]))
-            )
+    region_vts = [Vector(*voronoi.vertices[i]) for i in region if i != -1]
+    geom_center = sum(region_vts, Vector()) / len(region_vts)
+    m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
+    convexs.add(
+        convex.polyhedron(
+            *hull3D(m.transformAll([v.toTuple() for v in region_vts]))
         )
+    )
 
 half_thickness = thickness / 2
 offset = (width, width, width)
