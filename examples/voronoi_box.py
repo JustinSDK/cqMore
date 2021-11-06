@@ -17,8 +17,8 @@ def hull3D(points):
     return Polyhedron(vertices, faces)
 
 n = 50
-width = 50
-thickness = 2
+width = 60
+thickness = 3
 
 points = numpy.random.rand(n, 3) * width * 2
 voronoi = spatial.Voronoi(points)
@@ -37,15 +37,24 @@ for region_i in voronoi.point_region:
     )
 
 half_thickness = thickness / 2
-offset = (width, width, width)
-voronoi_frame = (Workplane()
-        .box(width, width, width)
+voronoi_frame = (
+    Workplane()
+        .box(width - half_thickness, width - half_thickness, width - half_thickness)
         .faces('+Z')
-        .shell(thickness * 0.75)
-        .translate(offset)
+        .shell(thickness)
+        .translate((width, width, width))
         .cut(convexs)
-    )
+)
 
-inner_width = width - half_thickness
-box = Workplane().box(inner_width, inner_width, inner_width).faces('+Z').shell(half_thickness).translate(offset)
-show_object(voronoi_frame.union(box).translate((-width, -width, -width))) # type: ignore
+inner_width = width
+box = (Workplane()
+          .box(inner_width, inner_width, inner_width - thickness / 4)
+          .faces('+Z')
+          .shell(half_thickness)
+          .translate((width, width, width - thickness / 8))
+      )
+
+show_object( # type: ignore
+    voronoi_frame.union(box)
+                 .translate((-width, -width, -width))
+) 
