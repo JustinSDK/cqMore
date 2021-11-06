@@ -4,19 +4,7 @@ import numpy
 from scipy import spatial
 from cadquery import Vector
 from cqmore import Workplane
-from cqmore.polyhedron import Polyhedron
 from cqmore.matrix import translation, scaling
-
-def hull3D(points):
-    hull = spatial.ConvexHull(points)
-    vertices = [points[i] for i in hull.vertices]
-    v_i_lookup = {v: i for i, v in enumerate(vertices)}
-    faces = [
-        tuple(v_i_lookup[points[i]] for i in face)
-        for face in hull.simplices
-    ]
-
-    return Polyhedron(vertices, faces)
 
 n = 50
 width = 60
@@ -32,9 +20,11 @@ for region_i in voronoi.point_region:
     region_vts = [Vector(*voronoi.vertices[i]) for i in region if i != -1]
     geom_center = sum(region_vts, Vector()) / len(region_vts)
     m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
+    transformed = m.transformAll([v.toTuple() for v in region_vts])
     convexs.add(
-        convex.polyhedron(
-            *hull3D(m.transformAll([v.toTuple() for v in region_vts]))
+        convex.hull(
+            # round for avoiding floating-point error
+            tuple((round(p[0], 2), round(p[1], 2), round(p[2], 2)) for p in transformed)
         )
     )
 
