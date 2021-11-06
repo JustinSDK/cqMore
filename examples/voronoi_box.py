@@ -46,6 +46,6 @@ voronoi_frame = (Workplane()
         .cut(convexs)
     )
 
-inner_width = width + half_thickness
-box = Workplane().box(inner_width, inner_width, inner_width).faces('+Z').shell(-half_thickness).translate(offset)
+inner_width = width - half_thickness
+box = Workplane().box(inner_width, inner_width, inner_width).faces('+Z').shell(half_thickness).translate(offset)
 show_object(voronoi_frame.union(box).translate((-width, -width, -width))) # type: ignore
