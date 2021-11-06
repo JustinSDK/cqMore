@@ -1,3 +1,5 @@
+# Scipy 1.6 or later is required.
+
 import numpy
 from scipy import spatial
 from cadquery import Vector

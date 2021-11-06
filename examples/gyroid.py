@@ -1,3 +1,5 @@
+# scikit-image 0.18 or later is required.
+
 import numpy as np
 from skimage import measure
 from math import sin, cos, radians
