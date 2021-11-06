@@ -16,7 +16,7 @@ To install cqMore directly from GitHub, run the following `pip` command:
 
 ## Dependencies
 
-This plugin has no dependencies other than the cadquery library. The [examples](examples) list their own dependencies in the first comment.
+This plugin has no dependencies other than the cadquery library. The [examples](examples) list their own dependencies in the first comment, if any.
 
 ## Usage
 
