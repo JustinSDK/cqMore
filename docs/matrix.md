@@ -39,7 +39,7 @@ The right-most matrix is first multiplied with the point so you should read the 
 [`identity()`](matrix.md#identity) | Create an identity matrix.
 [`scaling(v)`](matrix.md#scaling) | Create a scaling matrix.
 [`translation(v)`](matrix.md#translation) | Create a translation matrix.
-`mirror(v)` | Create a mirror matrix.
+[`mirror(v)`](matrix.md#mirror) | Create a mirror matrix.
 `rotationX(angle)` | Create a rotation matrix around the x-axis.
 `rotationY(angle)` | Create a rotation matrix around the y-axis.
 `rotationZ(angle)` | Create a rotation matrix around the z-axis.
@@ -172,3 +172,27 @@ Create a translation matrix.
     r2 = Workplane().polyhedron(transformed_pts, sphere.faces)
 
 ![translation](images/matrix_translation.JPG)
+
+# `mirror`
+
+Create a mirror matrix.
+
+## Parameters
+
+- `v`: mirror vector.
+
+## Examples 
+
+    from cqmore.matrix import mirror, translation
+    from cqmore.polyhedron import tetrahedron
+    from cqmore import Workplane
+
+    t = tetrahedron(1)
+
+    pts = translation((1, 0, 0)).transformAll(t.points)
+    r1 = Workplane().polyhedron(pts, t.faces)
+
+    mirrored_pts = mirror((1, 0, 0)).transformAll(pts)
+    r2 = Workplane().polyhedron(mirrored_pts, t.faces)
+
+![mirror](images/matrix_mirror.JPG)

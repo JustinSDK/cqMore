@@ -207,6 +207,29 @@ def translation(v: Union[Point3D, Vector]) -> Matrix3D:
 
 
 def mirror(v: Union[Point3D, Vector]) -> Matrix3D:
+    '''
+    Create a mirror matrix.
+
+    ## Parameters
+
+    - `v`: mirror vector.
+
+    ## Examples 
+
+        from cqmore.matrix import mirror, translation
+        from cqmore.polyhedron import tetrahedron
+        from cqmore import Workplane
+
+        t = tetrahedron(1)
+
+        pts = translation((1, 0, 0)).transformAll(t.points)
+        r1 = Workplane().polyhedron(pts, t.faces)
+
+        mirrored_pts = mirror((1, 0, 0)).transformAll(pts)
+        r2 = Workplane().polyhedron(mirrored_pts, t.faces)
+
+    '''
+
     return Matrix3D(_mirror(v))
 
 
