@@ -38,7 +38,7 @@ The right-most matrix is first multiplied with the point so you should read the 
 --|--
 [`identity()`](matrix.md#identity) | Create an identity matrix.
 [`scaling(v)`](matrix.md#scaling) | Create a scaling matrix.
-`translation(v)` | Create a translation matrix.
+[`translation(v)`](matrix.md#translation) | Create a translation matrix.
 `mirror(v)` | Create a mirror matrix.
 `rotationX(angle)` | Create a rotation matrix around the x-axis.
 `rotationY(angle)` | Create a rotation matrix around the y-axis.
@@ -147,3 +147,28 @@ Create a scaling matrix.
     r = Workplane().polyhedron(scaled_points, sphere.faces)
 
 ![scaling](images/matrix_scaling.JPG)
+
+# `translation`
+
+Create a translation matrix.
+
+## Parameters
+
+- `v`: translation vector.
+
+## Examples 
+
+    from cqmore.matrix import scaling, translation
+    from cqmore.polyhedron import uvSphere
+    from cqmore import Workplane
+
+    sphere = uvSphere(1, widthSegments = 12, heightSegments = 6)
+
+    r1 = Workplane().polyhedron(*sphere)
+    s = scaling((2, 2, 2)) 
+    t = translation((3, 0, 0))
+
+    transformed_pts = (t @ s).transformAll(sphere.points)
+    r2 = Workplane().polyhedron(transformed_pts, sphere.faces)
+
+![translation](images/matrix_translation.JPG)

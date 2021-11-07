@@ -179,6 +179,30 @@ def scaling(v: Union[Point3D, Vector]) -> Matrix3D:
 
 
 def translation(v: Union[Point3D, Vector]) -> Matrix3D:
+    '''
+    Create a translation matrix.
+
+    ## Parameters
+
+    - `v`: translation vector.
+
+    ## Examples 
+
+        from cqmore.matrix import scaling, translation
+        from cqmore.polyhedron import uvSphere
+        from cqmore import Workplane
+
+        sphere = uvSphere(1, widthSegments = 12, heightSegments = 6)
+
+        r1 = Workplane().polyhedron(*sphere)
+        s = scaling((2, 2, 2)) 
+        t = translation((3, 0, 0))
+
+        transformed_pts = (t @ s).transformAll(sphere.points)
+        r2 = Workplane().polyhedron(transformed_pts, sphere.faces)
+
+    '''
+
     return Matrix3D(_translation(v))
 
 
