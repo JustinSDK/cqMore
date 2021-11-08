@@ -1,5 +1,5 @@
 import unittest
-from cqmore.matrix import Matrix3D, identity, mirror, scaling, translation
+from cqmore.matrix import Matrix3D, identity, mirror, rotation, rotationX, rotationY, rotationZ, scaling, translation
 from cqmore.polyhedron import tetrahedron, uvSphere
 
 class TestMatrix(unittest.TestCase):
@@ -76,6 +76,38 @@ class TestMatrix(unittest.TestCase):
 
         expected = ((-0.5773502691896258, 0.5773502691896258, 0.5773502691896258), (0.5773502691896258, -0.5773502691896258, 0.5773502691896258), (0.5773502691896258, 0.5773502691896258, -0.5773502691896258), (-0.5773502691896258, -0.5773502691896258, -0.5773502691896258))
         self.assertTupleEqual(expected, mirrored)
+
+
+    def test_rotationX(self):
+        t = tetrahedron(1)
+        rotated = rotationX(90).transformAll(t.points)
+
+        expected = ((0.5773502691896258, -0.5773502691896258, 0.5773502691896258), (-0.5773502691896258, -0.5773502691896258, -0.5773502691896258), (-0.5773502691896258, 0.5773502691896258, 0.5773502691896258), (0.5773502691896258, 0.5773502691896258, -0.5773502691896258))
+        self.assertTupleEqual(expected, rotated)
+
+
+    def test_rotationY(self):
+        t = tetrahedron(1)
+        rotated = rotationY(90).transformAll(t.points)
+
+        expected = ((0.5773502691896258, 0.5773502691896258, -0.5773502691896258), (0.5773502691896258, -0.5773502691896258, 0.5773502691896258), (-0.5773502691896258, 0.5773502691896258, 0.5773502691896258), (-0.5773502691896258, -0.5773502691896258, -0.5773502691896258))
+        self.assertTupleEqual(expected, rotated)
+
+
+    def test_rotationZ(self):
+        t = tetrahedron(1)
+        rotated = rotationZ(90).transformAll(t.points)
+
+        expected = ((-0.5773502691896258, 0.5773502691896258, 0.5773502691896258), (0.5773502691896258, -0.5773502691896258, 0.5773502691896258), (-0.5773502691896258, -0.5773502691896258, -0.5773502691896258), (0.5773502691896258, 0.5773502691896258, -0.5773502691896258))
+        self.assertTupleEqual(expected, rotated)
+
+
+    def test_rotation(self):
+        t = tetrahedron(1)
+        rotated = rotation((10, 10, 10), 90).transformAll(t.points)
+
+        expected = ((0.5773502691896258, 0.5773502691896258, 0.5773502691896258), (0.47421657693679153, -0.8591167563965422, -0.19245008972987518), (-0.8591167563965422, -0.1924500897298752, 0.47421657693679153), (-0.1924500897298752, 0.47421657693679153, -0.8591167563965422))
+        self.assertTupleEqual(expected, rotated)
 
 
 if __name__ == '__main__':
