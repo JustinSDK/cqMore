@@ -1,6 +1,6 @@
 # cqMore RC1
 
-cqMore is a [CadQuery](https://github.com/CadQuery/cadquery) plugin based on CadQuery 2.1 and Python 3.9.
+cqMore aims to add more fundamental API to CadQuery. It's based on CadQuery 2.1 and Python 3.9.
 
 ![cqMore](images/superellipsoids.JPG)
 
