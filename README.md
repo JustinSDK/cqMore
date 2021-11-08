@@ -1,4 +1,4 @@
-# cqMore (milestone 3)
+# cqMore RC1
 
 cqMore is a [CadQuery](https://github.com/CadQuery/cadquery) plugin based on CadQuery 2.1 and Python 3.9.
 
