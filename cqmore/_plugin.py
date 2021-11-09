@@ -1,4 +1,4 @@
-from typing import Iterable, Union, overload
+from typing import Iterable, Optional, Union, overload
 
 import cadquery
 from cadquery import Wire, Shape, Compound, Solid, Location, Vector
@@ -120,19 +120,7 @@ class Workplane(cadquery.Workplane):
         return bool2D(self, toCut, 'cut')
 
 
-    @overload
-    def hull2D(self: T) -> T:
-        ...
-
-    @overload
-    def hull2D(self: T, points: Iterable[VectorLike]) -> T:
-        ...
-
-    @overload
-    def hull2D(self: T, points: Iterable[VectorLike], forConstruction: bool) -> T:
-        ...
-
-    def hull2D(self: T, points = None, forConstruction = False) -> T:
+    def hull2D(self: T, points: Optional[Iterable[VectorLike]] = None, forConstruction: bool = False) -> T:
         """
         Create a convex hull through the provided points.
 
@@ -255,15 +243,7 @@ class Workplane(cadquery.Workplane):
         ...
 
     @overload
-    def hull(self: T, points: Iterable[VectorLike]) -> T:
-        ...
-
-    @overload
-    def hull(self: T, points: Iterable[VectorLike], combine: bool) -> T:
-        ...
-
-    @overload
-    def hull(self: T, points: Iterable[VectorLike], combine: bool, clean: bool) -> T:
+    def hull(self: T, points: Iterable[VectorLike], combine: bool = True, clean: bool = True) -> T:
         ...
 
     def hull(self: T, points = None, combine = True, clean = True) -> T:
