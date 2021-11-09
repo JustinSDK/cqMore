@@ -1,16 +1,18 @@
 from typing import Iterable, Union, cast
 
-from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound, Vector
-
-from .polyhedron import hull
-
-from ._typing import T, FaceIndices, VectorLike, MeshGrid
-from ._util import toTuples, toVectors
-
 from OCP.BRepOffset import BRepOffset_MakeOffset, BRepOffset_Skin # type: ignore
 from OCP.GeomAbs import GeomAbs_Intersection # type: ignore
 
+from cadquery import Workplane, Shape, Edge, Face, Shell, Solid, Wire, Compound, Vector
+from cadquery.cq import T, VectorLike
+
+from ._typing import FaceIndices, MeshGrid
+from ._util import toTuples, toVectors
+
+from .polyhedron import hull
+
 import numpy
+
 
 def makePolyhedron(points: Iterable[VectorLike], faces: Iterable[FaceIndices]) -> Solid:
     vectors = numpy.array(toVectors(points))

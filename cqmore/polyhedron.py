@@ -16,11 +16,14 @@ from math import cos, sin, pi, tau
 
 from typing import Iterable, NamedTuple, Union, cast
 
-from ._util import toTuples, toVectors
-from ._typing import MeshGrid, Point3D, FaceIndices, VectorLike
 from cadquery import Vector
+from cadquery.cq import T, VectorLike
+
+from ._util import toTuples
+from ._typing import MeshGrid, Point3D, FaceIndices
 
 import numpy
+
 
 class Polyhedron(NamedTuple):
     '''

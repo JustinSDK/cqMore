@@ -1,10 +1,11 @@
 from typing import Iterable, Union, cast
 
 from cadquery import DirectionSelector, Wire, Workplane
+from cadquery.cq import T, VectorLike
 
-from ._typing import T, VectorLike
-from .polygon import hull2D
 from ._util import toTuples, toVectors
+
+from .polygon import hull2D
 
 
 def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:

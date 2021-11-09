@@ -24,12 +24,13 @@ multiplications from right to left.
 """
 
 from typing import Iterable, Union, cast
-from cadquery import Vector
-import numpy
 
-from math import cos, sin, radians
+from cadquery import Vector
 
 from ._typing import Point3D
+
+from math import cos, sin, radians
+import numpy
 
 
 class Matrix3D:

@@ -8,6 +8,7 @@ from typing import Any, Callable, Union
 
 from ._typing import Point2D, Point3D
 
+
 def circle(t: float, radius: float) -> Point2D:
     '''
     The parametric equation of a circle.
