@@ -250,7 +250,23 @@ class Workplane(cadquery.Workplane):
         return _solid_each_combine_clean(self, makePolyhedron(points, faces), combine, clean)
 
 
-    def hull(self: T, points: Iterable[VectorLike] = None, combine: bool = True, clean: bool = True) -> T:
+    @overload
+    def hull(self: T) -> T:
+        ...
+
+    @overload
+    def hull(self: T, points: Iterable[VectorLike]) -> T:
+        ...
+
+    @overload
+    def hull(self: T, points: Iterable[VectorLike], combine: bool) -> T:
+        ...
+
+    @overload
+    def hull(self: T, points: Iterable[VectorLike], combine: bool, clean: bool) -> T:
+        ...
+
+    def hull(self: T, points = None, combine = True, clean = True) -> T:
         """
         Create a convex hull through the provided points. 
 
