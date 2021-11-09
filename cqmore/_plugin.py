@@ -120,16 +120,15 @@ class Workplane(cadquery.Workplane):
 
         return bool2D(self, toCut, 'cut')
 
-
     @overload
     def hull2D(self: T) -> T:
         ...
 
     @overload
-    def hull2D(self: T, points: Optional[Iterable[VectorLike]], forConstruction: bool = ...) -> T:
+    def hull2D(self: T, points: Iterable[VectorLike], forConstruction: bool = ...) -> T:
         ...
 
-    def hull2D(self: T, points: Optional[Iterable[VectorLike]] = None, forConstruction: bool = False) -> T:
+    def hull2D(self: T, points = None, forConstruction = False) -> T:
         """
         Create a convex hull through the provided points.
 
