@@ -1,7 +1,7 @@
-from typing import Iterable, Optional, Union, overload
+from typing import Iterable, Union, overload
 
 import cadquery
-from cadquery import Wire, Shape, Compound, Solid, Location, Vector
+from cadquery import Wire, Shape, Compound, Solid
 from cadquery.cq import T, VectorLike
 
 from ._typing import FaceIndices, MeshGrid
