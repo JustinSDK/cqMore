@@ -6,8 +6,8 @@ from cadquery import Vector
 from cqmore import Workplane
 from cqmore.matrix import translation, scaling
 
-def voronoi_box(n, width, thickness):
-    points = numpy.random.rand(n, 3) * width * 2
+def voronoi_box(n, length, width, height, thickness):
+    points = numpy.random.rand(n, 3) * max(length, width, height) * 2
     voronoi = spatial.Voronoi(points)
     m_scaling = scaling((0.9, 0.9, 0.9))
     convexs = Workplane()
@@ -28,25 +28,26 @@ def voronoi_box(n, width, thickness):
     half_thickness = thickness / 2
     voronoi_frame = (
         Workplane()
-            .box(width - half_thickness, width - half_thickness, width - half_thickness)
+            .box(length - half_thickness, width - half_thickness, height - half_thickness)
             .faces('+Z')
             .shell(thickness)
             .translate((width, width, width))
             .cut(convexs)
     )
 
-    inner_width = width
     box = (Workplane()
-            .box(inner_width, inner_width, inner_width - thickness / 4)
+            .box(length, width, height - thickness / 4)
             .faces('+Z')
             .shell(half_thickness)
             .translate((width, width, width - thickness / 8))
         )
     
-    return voronoi_frame.union(box).translate((-width, -width, -width))
+    return voronoi_frame.union(box).translate((-length, -width, -height))
 
 n = 50
+length = 60
 width = 60
+height = 60
 thickness = 3
 
-box = voronoi_box(n, width, thickness)
+box = voronoi_box(n, length, width, height, thickness)
