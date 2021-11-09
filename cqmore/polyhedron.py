@@ -604,8 +604,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
 
     ## Parameters
 
-    - `points`: a list of 3D points. If it's `None`, attempt to hull all of the items on the stack 
-                to create a convex hull.
+    - `points`: a list of 3D points. 
 
     ## Examples 
 
