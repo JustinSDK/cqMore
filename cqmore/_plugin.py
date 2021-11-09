@@ -125,7 +125,7 @@ class Workplane(cadquery.Workplane):
         ...
 
     @overload
-    def hull2D(self: T, points: Iterable[VectorLike], forConstruction: bool = ...) -> T:
+    def hull2D(self: T, points: Iterable[VectorLike] = ..., forConstruction: bool = ...) -> T:
         ...
 
     def hull2D(self: T, points = None, forConstruction = False) -> T:
@@ -251,7 +251,7 @@ class Workplane(cadquery.Workplane):
         ...
 
     @overload
-    def hull(self: T, points: Iterable[VectorLike], combine: bool = ..., clean: bool = ...) -> T:
+    def hull(self: T, points: Iterable[VectorLike] = ..., combine: bool = ..., clean: bool = ...) -> T:
         ...
 
     def hull(self: T, points = None, combine = True, clean = True) -> T:
