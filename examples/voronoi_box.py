@@ -21,7 +21,7 @@ def voronoi_box(n, length, width, height, thickness):
         region_vts = [Vector(*vertices[i]) for i in region if i != -1]
         geom_center = sum(region_vts, Vector()) / len(region_vts)
         m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
-        transformed = m.transformAll([v.toTuple() for v in region_vts])
+        transformed = m.transformAll(v.toTuple() for v in region_vts)
         convexs.add(convex.hull(transformed))
 
     half_thickness = thickness / 2
