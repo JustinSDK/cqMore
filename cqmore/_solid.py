@@ -48,9 +48,9 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
 
     wp = workplanes[0]
     for i in range(1, len(workplanes)):
-        wp = wp.union(workplanes[i])
+        wp = wp.add(workplanes[i])
 
-    return cast(Union[Solid, Compound], wp.val())
+    return cast(Union[Solid, Compound], wp.combine().val())
 
 
 def splineApproxSurface(points: MeshGrid, thickness: float) -> Union[Solid, Face]:   

@@ -51,8 +51,8 @@ def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forCons
 
     wp = workplanes[0].extrude(1)
     for i in range(1, len(workplanes)):
-        wp = wp.union(workplanes[i].extrude(1))
+        wp = wp.add(workplanes[i].extrude(1))
 
-    wire = cast(Wire, wp.faces('<Z').wires().val())
+    wire = cast(Wire, wp.combine().faces('<Z').wires().val())
     wire.forConstruction = forConstruction
     return wire
