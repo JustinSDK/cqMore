@@ -30,20 +30,20 @@ def voronoi_box(n, length, width, height, thickness):
             .box(length - half_thickness, width - half_thickness, height - half_thickness)
             .faces('+Z')
             .shell(thickness)
-            .translate((width, width, width))
+            .translate((length, width, height))
             .cut(convexs)
+            .translate((-length, -width, -height + thickness / 8))
     )
 
     box = (Workplane()
-            .box(length, width, height - thickness / 4)
-            .faces('+Z')
-            .shell(half_thickness)
-            .translate((width, width, width - thickness / 8))
-        )
+              .box(length, width, height - thickness / 4)
+              .faces('+Z')
+              .shell(half_thickness)
+          )
     
-    return voronoi_frame.union(box).translate((-length, -width, -height))
+    return voronoi_frame.union(box)
 
-n = 50
+n = 30
 length = 60
 width = 60
 height = 60
