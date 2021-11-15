@@ -49,61 +49,69 @@ class Turtle:
         t.zAxis = self.zAxis
         return t
 
+def turtle_tree(leng, leng_scale1, leng_scale2, limit, turnAngle, rollAngle, line_diameter):
+    _LINE_WORKPLANE = Workplane()
+    _LINE_JOIN = _LINE_WORKPLANE.polyhedron(*tetrahedron(line_diameter / 2))
+    def line(p1, p2):
+        return _LINE_WORKPLANE.polylineJoin([p1, p2], _LINE_JOIN)
 
-def turtle_tree(workplane, turtle, leng, leng_scale1, leng_scale2, limit, turnAngle, rollAngle, line_fn):
-    if leng > limit:
-        workplane = workplane.add(
-            line_fn(turtle.pos(), turtle.forward(leng).pos())
-        ) 
+    def _turtle_tree(workplane, turtle, leng, leng_scale1, leng_scale2, limit, turnAngle, rollAngle):
+        if leng > limit:
+            workplane = workplane.add(
+                line(turtle.pos(), turtle.forward(leng).pos())
+            ) 
 
-        workplane = turtle_tree(
-            workplane, 
-            turtle.copy().turn(turnAngle), 
-            leng * leng_scale1, 
-            leng_scale1, 
-            leng_scale2, 
-            limit, 
-            turnAngle, 
-            rollAngle,
-            line_fn
-        )
+            workplane = _turtle_tree(
+                workplane, 
+                turtle.copy().turn(turnAngle), 
+                leng * leng_scale1, 
+                leng_scale1, 
+                leng_scale2, 
+                limit, 
+                turnAngle, 
+                rollAngle
+            )
 
-        return turtle_tree(
-            workplane, 
-            turtle.copy().roll(rollAngle), 
-            leng * leng_scale2, 
-            leng_scale1, 
-            leng_scale2, 
-            limit, 
-            turnAngle, 
-            rollAngle,
-            line_fn
-        )
+            return _turtle_tree(
+                workplane, 
+                turtle.copy().roll(rollAngle), 
+                leng * leng_scale2, 
+                leng_scale1, 
+                leng_scale2, 
+                limit, 
+                turnAngle, 
+                rollAngle
+            )
 
-    return workplane
+        return workplane
+
+    return _turtle_tree(
+        Workplane(), 
+        Turtle(), 
+        leng, 
+        leng_scale1, 
+        leng_scale2, 
+        limit, 
+        turnAngle, 
+        rollAngle
+    ).combine()
 
 
-leng = 25
+leng = 20
 limit = 1
 leng_scale1 = 0.4
 leng_scale2 = 0.9
 turnAngle = 60
 rollAngle = 135
-diameter = 4
+line_diameter = 4
 
-_LINE_WORKPLANE = Workplane()
-_LINE_JOIN = _LINE_WORKPLANE.polyhedron(*tetrahedron(diameter / 2))
-def line(p1, p2):
-    return _LINE_WORKPLANE.polylineJoin([p1, p2], _LINE_JOIN)
 
 tree = turtle_tree(
-    Workplane(), 
-    Turtle(), 
     leng, 
     leng_scale1, 
     leng_scale2, 
     limit, 
     turnAngle, 
     rollAngle,
-    line
-).combine()
+    line_diameter
+)
