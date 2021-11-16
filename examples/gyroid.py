@@ -31,10 +31,11 @@ def gyroid(length, width, height, thickness, step):
     points, faces, _, __ = measure.marching_cubes( # type: ignore
         vectorized_gyroid(x, y, z, thickness, l_end, w_end, h_end), 
         0, 
+        spacing = (step, step, step),
         allow_degenerate = False
     )
 
-    return Workplane().polyhedron(points * 10, faces)
+    return Workplane().polyhedron(points, faces)
 
 length = 360
 width = 360
