@@ -1,6 +1,5 @@
 # scikit-image 0.18 or later is required.
 
-from cadquery.cq import T
 from gyroid import gyroid
 from cqmore import Workplane
 from cqmore.polyhedron import uvSphere
