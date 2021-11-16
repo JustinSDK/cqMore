@@ -5,7 +5,7 @@ from gyroid import gyroid
 from cqmore import Workplane
 from cqmore.polyhedron import uvSphere
 
-def gyroid_sphere(thickness, detail):
+def gyroid_sphere(thickness, period):
     length = 370
     width = 370
     height = 370
@@ -14,7 +14,7 @@ def gyroid_sphere(thickness, detail):
     g = gyroid(length, width, height, thickness, step)
 
     offset = 360 - step
-    rg = range(detail)
+    rg = range(period)
 
     row = Workplane()
     for i in rg:
@@ -28,13 +28,13 @@ def gyroid_sphere(thickness, detail):
     for i in rg:
         cube.add(rect.translate((0, 0, offset * i)))
 
-    r = 180 * detail
+    r = 180 * period
     return Workplane().polyhedron(*uvSphere(r, 48, 24)).translate((r, r, r)).intersect(cube)
 
 
 thickness = 0.4
-detail = 2
-g = gyroid_sphere(thickness, detail)
+period = 2
+g = gyroid_sphere(thickness, period)
 
 # from cadquery import exporters
 # exporters.export(g, 'gyroid_sphere.stl')
