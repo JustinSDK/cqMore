@@ -17,7 +17,7 @@ def gyroid(length, width, height, thickness, step):
         ry = radians(y)
         rz = radians(z)
         v = sin(rx) * cos(ry) + sin(ry) * cos(rz) + sin(rz) * cos(rx)
-        return 1 if -half_thickness < v < half_thickness else 0
+        return 1 if -half_thickness <= v <= half_thickness else 0
     vectorized_gyroid = np.frompyfunc(_gyroid, 7, 1)
 
     l_end = length - step
@@ -37,13 +37,14 @@ def gyroid(length, width, height, thickness, step):
 
     return Workplane().polyhedron(points, faces)
 
-length = 360
-width = 360
-height = 360
-thickness = 0.4
-step = 10
+if __name__ == '__main__':
+    length = 360
+    width = 360
+    height = 360
+    thickness = 0.4
+    step = 10
 
-g = gyroid(length, width, height, thickness, step)
+    g = gyroid(length, width, height, thickness, step)
 
-# from cadquery import exporters
-# exporters.export(g, 'gyroid.stl')
+    # from cadquery import exporters
+    # exporters.export(g, 'gyroid.stl')
