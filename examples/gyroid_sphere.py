@@ -5,12 +5,12 @@ from cqmore import Workplane
 from cqmore.polyhedron import uvSphere
 
 def gyroid_sphere(thickness, period):
-    length = 370
-    width = 370
-    height = 370
-    step = 10
+    step = thickness * 25
+    length = 360 + step
+    width = 360 + step
+    height = 360 + step
 
-    g = gyroid(length, width, height, thickness, step)
+    g = gyroid(length, width, height, thickness)
 
     offset = 360 - step
     rg = range(period)

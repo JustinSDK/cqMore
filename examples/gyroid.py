@@ -5,7 +5,7 @@ from skimage import measure
 from math import sin, cos, radians
 from cqmore import Workplane
 
-def gyroid(length, width, height, thickness, step):
+def gyroid(length, width, height, thickness):
     def _gyroid(x, y, z, thickness, l_end, w_end, h_end):
         # is boundary?
         if x == 0 or y == 0 or z == 0 or x == l_end or y == w_end or z == h_end:
@@ -20,6 +20,7 @@ def gyroid(length, width, height, thickness, step):
         return 1 if -half_thickness <= v <= half_thickness else 0
     vectorized_gyroid = np.frompyfunc(_gyroid, 7, 1)
 
+    step = thickness * 25
     l_end = length - step
     w_end = width - step
     h_end = height - step
@@ -42,9 +43,8 @@ if __name__ == '__main__':
     width = 360
     height = 360
     thickness = 0.4
-    step = 10
 
-    g = gyroid(length, width, height, thickness, step)
+    g = gyroid(length, width, height, thickness)
 
     # from cadquery import exporters
     # exporters.export(g, 'gyroid.stl')
