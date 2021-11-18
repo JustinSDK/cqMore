@@ -8,7 +8,8 @@ Provide parametric equations of curves.
 --|--
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
-[`archimed  eanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedeanSpiral spiral.  
+[`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedeanSpiral spiral.  
+[`superellipse(t,n[,a,b])`](curve.md#superellipse) | The parametric equation of a superellipse.  
 [`superformula(t,m,n1,n2,n3[,a,b])`](curve.md#superformula) | The parametric equation of a superformula.  
 
 ## 3D Functions
@@ -98,6 +99,8 @@ The parametric equation of a [superellipse](https://en.wikipedia.org/wiki/Supere
 
 - `t`: a parametric variable in the range 0 to 1.
 - `n`: the n parameter of the superellipse.
+- `a = 1`: the a parameter of the superellipse.
+- `b = 1`: the b parameter of the superellipse.
 
 ## Examples 
 

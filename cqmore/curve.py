@@ -190,7 +190,7 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
 
 
-def superellipse(t: float, n: float) -> Point2D:
+def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
     """
     The parametric equation of a [superellipse](https://en.wikipedia.org/wiki/Superellipse).
 
@@ -198,6 +198,8 @@ def superellipse(t: float, n: float) -> Point2D:
 
     - `t`: a parametric variable in the range 0 to 1.
     - `n`: the n parameter of the superellipse.
+    - `a`: the a parameter of the superellipse.
+    - `b`: the b parameter of the superellipse.
 
     ## Examples 
 
@@ -220,10 +222,7 @@ def superellipse(t: float, n: float) -> Point2D:
             return 0
         else:
             return 1
-    
 
-    a = 1
-    b = 1
 
     theta = tau * t
     cos_t = cos(theta)
@@ -235,7 +234,7 @@ def superellipse(t: float, n: float) -> Point2D:
         (abs(sin_t) ** two_n) * b * _sgn(sin_t),
     )
 
-    
+
 def superformula(t: float, m: float, n1: float, n2: float, n3: float, a: float = 1, b: float = 1) -> Point2D:
     '''
     The parametric equation of a [superformula](https://en.wikipedia.org/wiki/Superformula).
