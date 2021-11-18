@@ -190,6 +190,52 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
 
 
+def superellipse(t: float, n: float) -> Point2D:
+    """
+    The parametric equation of a [superellipse](https://en.wikipedia.org/wiki/Superellipse).
+
+    ## Parameters
+
+    - `t`: a parametric variable in the range 0 to 1.
+    - `n`: the n parameter of the superellipse.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import superellipse
+
+        r1 = Workplane()
+        for i in range(3, 10):
+            r1 = (r1.center(3, 0)
+                    .parametricCurve(lambda t: superellipse(t, i / 5), N = 20)
+                    .extrude(1)
+                )
+
+    """
+
+    def _sgn(x):
+        if x < 0:
+            return -1
+        elif x == 0:
+            return 0
+        else:
+            return 1
+    
+
+    a = 1
+    b = 1
+
+    theta = tau * t
+    cos_t = cos(theta)
+    sin_t = sin(theta)
+    two_n = 2 / n
+
+    return (
+        (abs(cos_t) ** two_n) * a * _sgn(cos_t),
+        (abs(sin_t) ** two_n) * b * _sgn(sin_t),
+    )
+
+    
 def superformula(t: float, m: float, n1: float, n2: float, n3: float, a: float = 1, b: float = 1) -> Point2D:
     '''
     The parametric equation of a [superformula](https://en.wikipedia.org/wiki/Superformula).
