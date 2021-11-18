@@ -112,7 +112,7 @@ The parametric equation of a [superellipse](https://en.wikipedia.org/wiki/Supere
         r1 = (r1.center(3, 0)
                 .parametricCurve(lambda t: superellipse(t, i / 5), N = 20)
                 .extrude(1)
-            )
+             )
 
 ![superellipse](images/curve_superellipse.JPG)
 

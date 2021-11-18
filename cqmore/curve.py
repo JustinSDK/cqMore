@@ -211,7 +211,7 @@ def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
             r1 = (r1.center(3, 0)
                     .parametricCurve(lambda t: superellipse(t, i / 5), N = 20)
                     .extrude(1)
-                )
+                 )
 
     """
 
