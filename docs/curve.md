@@ -8,7 +8,7 @@ Provide parametric equations of curves.
 --|--
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
-[`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedeanSpiral spiral.  
+[`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedean spiral.  
 [`superellipse(t,n[,a,b])`](curve.md#superellipse) | The parametric equation of a superellipse.  
 [`superformula(t,m,n1,n2,n3[,a,b])`](curve.md#superformula) | The parametric equation of a superformula.  
 
