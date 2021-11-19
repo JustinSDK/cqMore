@@ -37,9 +37,9 @@ def gyroid_sphere(thickness, period, step):
 
 
 thickness = 0.4
-period = 1
+period = 2
 step = 10
 g = gyroid_sphere(thickness, period, step)
 
-from cadquery import exporters
-exporters.export(g, 'gyroid_sphere.stl')
+# from cadquery import exporters
+# exporters.export(g, 'gyroid_sphere.stl')
