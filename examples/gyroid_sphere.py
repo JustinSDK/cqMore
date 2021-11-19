@@ -37,7 +37,7 @@ def gyroid_sphere(thickness, period, step):
 
 
 thickness = 0.4
-period = 4
+period = 1
 step = 10
 g = gyroid_sphere(thickness, period, step)
 
