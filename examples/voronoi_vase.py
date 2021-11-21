@@ -2,26 +2,29 @@
 # not stable, float-error problems? 
 # Keep on trying until you make it ... XD
 
-
 from random import random
+import numpy
 from scipy import spatial
 from cadquery import Vector
 from cqmore import Workplane
 from cqmore.matrix import translation, scaling
-import numpy
+from cqmore.polygon import regularPolygon
+from cqmore.polyhedron import sweep
 
 diameter = 90
+sides = 12
 height = 120
 thickness = 2
 step = 30
 
-def voronoi_vase(diameter, height, thickness, step):
+def voronoi_vase(diameter, sides, height, thickness, step):
+    half_height = height / 2
     random_scale = step / 2
     double_step = step * 2
     half_random_scale = random_scale / 2
     x_offset = -diameter / 2 - half_random_scale
     y_offset = -diameter / 2 - half_random_scale
-    z_offset = -height / 2 - half_random_scale
+    z_offset = -half_height - half_random_scale
 
     points = []
     for x in range(-double_step, diameter + double_step, step):
@@ -32,9 +35,10 @@ def voronoi_vase(diameter, height, thickness, step):
                     y_offset + y + random() * random_scale, 
                     z_offset + z + random() * random_scale]
                 )
+   
 
     voronoi = spatial.Voronoi(points)
-    vertices = numpy.around(voronoi.vertices, 6)
+    vertices = numpy.around(voronoi.vertices, 5)
 
     s = (step - thickness) / step
     m_scaling = scaling((s, s, s))
@@ -50,25 +54,21 @@ def voronoi_vase(diameter, height, thickness, step):
         convexs.add(convex.hull(transformed))
 
     r = diameter / 2
-    vasePath = [
-        (0, 0),
-        (height, 0),
-        (height, r * 0.5),
-        (height * 0.85, r * 0.8),
-        (height * 0.675, r),
-        (height * 0.5, r * 0.875),
-        (height * 0.34, r * 0.725),
-        (height * 0.215, r * 0.625),
-        (height * 0.1, r * 0.6),
-        (0, r * 0.75)
-    ]
 
-    return (Workplane()
-               .polyline(vasePath).close()
-               .revolve(360, (0, 0, 0), (1, 0, 0))
-               .rotate((0, 0, 0), (0, 1, 0), 90)
-               .translate((0, 0, height / 2))
-               .cut(convexs)
+    radii = [r * 0.5, r * 0.8, r, r * 0.875, r * 0.725, r * 0.625, r * 0.6, r * 0.75]
+    h_step = height / len(radii)
+    sections = []
+    for i in range(len(radii)):
+        polygon = regularPolygon(sides,  radii[i])
+        sections.append([(p[0], p[1], -half_height + h_step * i) for p in polygon])
+    
+    vase = Workplane().polyhedron(*sweep(sections))
+    outerShell = vase.faces('+Z').shell(thickness)
+    innerShell = vase.faces('+Z').shell(-thickness)
+    
+    return (outerShell
+               .intersect(convexs)
+               .union(innerShell)
            )
     
-vase = voronoi_vase(diameter, height, thickness, step)
+vase = voronoi_vase(diameter, sides, height, thickness, step)
