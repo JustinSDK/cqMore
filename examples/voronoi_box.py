@@ -7,22 +7,26 @@ from cqmore import Workplane
 from cqmore.matrix import translation, scaling
 
 def voronoi_box(n, length, width, height, thickness):
-    points = numpy.random.rand(n, 3) * max(length, width, height) * 2
-    voronoi = spatial.Voronoi(points)
-    # round for avoiding floating-point error
-    vertices = numpy.around(voronoi.vertices, decimals = 5)
+    def voronoiConvexs(n, length, width, height):
+        points = numpy.random.rand(n, 3) * max(length, width, height) * 2
+        voronoi = spatial.Voronoi(points)
+        # round for avoiding floating-point error
+        vertices = numpy.around(voronoi.vertices, decimals = 5)
 
-    m_scaling = scaling((0.9, 0.9, 0.9))
+        m_scaling = scaling((0.9, 0.9, 0.9))
 
-    convexs = Workplane()
-    convex = Workplane()
-    for region_i in voronoi.point_region:
-        region = voronoi.regions[region_i]
-        region_vts = [Vector(*vertices[i]) for i in region if i != -1]
-        geom_center = sum(region_vts, Vector()) / len(region_vts)
-        m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
-        transformed = m.transformAll(v.toTuple() for v in region_vts)
-        convexs.add(convex.hull(transformed))
+        convexs = Workplane()
+        convex = Workplane()
+        for region_i in voronoi.point_region:
+            region = voronoi.regions[region_i]
+            region_vts = [Vector(*vertices[i]) for i in region if i != -1]
+            geom_center = sum(region_vts, Vector()) / len(region_vts)
+            m = translation(geom_center.toTuple()) @ m_scaling @ translation((-geom_center).toTuple())
+            transformed = m.transformAll(v.toTuple() for v in region_vts)
+            convexs.add(convex.hull(transformed))
+        return convexs
+
+    convexs = voronoiConvexs(n, length, width, height)
 
     half_thickness = thickness / 2
     voronoi_frame = (
