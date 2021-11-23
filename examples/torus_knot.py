@@ -13,8 +13,7 @@ def torus_knot(p, q):
                .makePolygon([(p[0] * 0.5, p[1] * 0.5) for p in star()])
                .sweep(
                    Workplane().parametricCurve(
-                       parametricEquation(torusKnot, p = p, q = q),
-                       N = 96
+                       parametricEquation(torusKnot, p = p, q = q)
                    ), 
                    auxSpine = Workplane().rect(1, 1)
                )
