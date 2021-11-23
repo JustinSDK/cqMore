@@ -87,7 +87,7 @@ The parametric equation of a [archimedean spiral](https://en.wikipedia.org/wiki/
 
     spiral = (Workplane()
                 .polyline([archimedeanSpiral(t / 360, 1, 1) for t in range(360 * 5)])
-            )
+             )
 
 ![archimedeanSpiral](images/curve_archimedeanSpiral.JPG)
 

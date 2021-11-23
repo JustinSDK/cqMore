@@ -84,7 +84,7 @@ def archimedeanSpiral(t: float, a: float, b: float) -> Point2D:
 
         spiral = (Workplane()
                     .polyline([archimedeanSpiral(t / 360, 1, 1) for t in range(360 * 5)])
-                )
+                 )
 
     '''
 
