@@ -18,7 +18,7 @@ def torus_knot(p, q):
                    ), 
                    auxSpine = Workplane().rect(1, 1)
                )
-           )
+           ).clean()
 
 p = 3
 q = 2
