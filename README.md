@@ -1,4 +1,4 @@
-# cqMore 1.0 RC1
+# cqMore 1.0
 
 cqMore aims to add more fundamental API to CadQuery. It's based on CadQuery 2.1 and Python 3.9.
 
