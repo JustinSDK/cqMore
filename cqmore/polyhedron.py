@@ -12,7 +12,7 @@ to use them.
 
 """
 
-from math import cos, sin, pi, tau
+from math import cos, radians, sin, pi, tau
 
 from typing import Iterable, NamedTuple, Union, cast
 
@@ -872,3 +872,35 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
 
     points = tuple(p for section in profiles for p in toTuples(section))
     return Polyhedron(cast(Iterable[Point3D], points), faces)
+
+
+def polarZonohedra(n: int, theta: float = 35.5) -> Polyhedron:
+    def _vertex(i, j, n, theta):
+        if i > j:
+            return (0, 0, 0)
+        
+        x = 0
+        y = 0
+        z = 0
+        for k in range(i, j + 1):
+            rtheta = radians(theta)
+            cosa = cos(rtheta)
+            a_i_n = radians(360 * k / n)
+            x += cosa * cos(a_i_n)
+            y += cosa * sin(a_i_n)
+            z += sin(rtheta)
+        return (x, y, z)
+
+    def _rhombi(i, j, n, theta):
+        return [
+            _vertex(i, -1 + j, n, theta),
+            _vertex(i + 1, -1 + j, n, theta),
+            _vertex(i + 1, j, n, theta),
+            _vertex(i, j, n, theta)
+        ]
+
+    vt_faces = (_rhombi(i, j, n, theta) for i in range(n) for j in range(i + 1, n + i))
+    points = [vt for face_vts in vt_faces for vt in face_vts]
+    faces = [tuple(i * 4 + j for j in range(4)) for i in range(int(len(points) / 4))]
+    
+    return Polyhedron(points, faces)
