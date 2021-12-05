@@ -25,9 +25,10 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 [`octahedron(radius,[detail])`](polyhedron.md#octahedron) | Create a octahedron.
 [`dodecahedron(radius,[detail])`](polyhedron.md#dodecahedron) | Create a dodecahedron.
 [`icosahedron(radius,[detail])`](polyhedron.md#icosahedron) | Create a icosahedron.
-[`star([outerRadius, innerRadius, height, n])`](polyhedron.md#star) | Create a star.
+[`star([outerRadius,innerRadius,height,n])`](polyhedron.md#star) | Create a star.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`superellipsoid(e,n)`](polyhedron.md#superellipsoid) | Create a superellipsoid.
+[`polarZonohedra(n[,theta])`](polyhedron.md#polarZonohedra) | Create a polar zonohedra.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 [`sweep(profiles)`](polyhedron.md#sweep) | Create a swept polyhedron.
 
@@ -282,6 +283,24 @@ Create a [superellipsoid](https://en.wikipedia.org/wiki/Superellipsoid).
     r = Workplane().polyhedron(*superellipsoid(2.5, .25, widthSegments = 24, heightSegments = 12))
 
 ![superellipsoid](images/polyhedron_superellipsoid.JPG)
+
+# `polarZonohedra`
+
+Create a [polar zonohedra](https://mathworld.wolfram.com/PolarZonohedron.html).
+
+## Parameters
+
+- `n`: n equal rhombs surrounding one vertex. (rotational symmetry).
+- `theta `: the pitch angle of the edges.
+
+## Examples 
+
+    from cqmore.polyhedron import polarZonohedra
+    from cqmore import Workplane
+
+    pz = Workplane().polyhedron(*polarZonohedra(8, 45))
+
+![polarZonohedra](images/polyhedron_polarZonohedra.JPG)
 
 # `hull`
 

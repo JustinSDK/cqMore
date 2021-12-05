@@ -626,7 +626,7 @@ def hull(points: Iterable[VectorLike]) -> Polyhedron:
 
         convex_hull = Workplane().polyhedron(*hull(points))
 
-        """
+    """
 
     def _tv1(vectors, vtIndices):
         v0 = vtIndices[0]
@@ -795,6 +795,54 @@ def superellipsoid(e: float, n: float, widthSegments: int = 3, heightSegments: i
     return sweep(sections)
 
 
+def polarZonohedra(n: int, theta: float = 35.5) -> Polyhedron:
+    """
+    Create a polar zonohedra.
+
+    ## Parameters
+
+    - `n`: n equal rhombs surrounding one vertex. (rotational symmetry).
+    - `theta `: the pitch angle of the edges.
+
+    ## Examples 
+
+        from cqmore.polyhedron import polarZonohedra
+        from cqmore import Workplane
+
+        pz = Workplane().polyhedron(*polarZonohedra(8, 45))
+
+    """    
+    def _vertex(i, j, n, theta):
+        if i > j:
+            return (0, 0, 0)
+        
+        x = 0
+        y = 0
+        z = 0
+        for k in range(i, j + 1):
+            rtheta = radians(theta)
+            cosa = cos(rtheta)
+            a_i_n = radians(360 * k / n)
+            x += cosa * cos(a_i_n)
+            y += cosa * sin(a_i_n)
+            z += sin(rtheta)
+        return (x, y, z)
+
+    def _rhombi(i, j, n, theta):
+        return [
+            _vertex(i, -1 + j, n, theta),
+            _vertex(i + 1, -1 + j, n, theta),
+            _vertex(i + 1, j, n, theta),
+            _vertex(i, j, n, theta)
+        ]
+
+    vt_faces = (_rhombi(i, j, n, theta) for i in range(n) for j in range(i + 1, n + i))
+    points = [vt for face_vts in vt_faces for vt in face_vts]
+    faces = [tuple(i * 4 + j for j in range(4)) for i in range(int(len(points) / 4))]
+    
+    return Polyhedron(points, faces)
+    
+
 def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: int = -1) -> Polyhedron:
     """
     Create a swept polyhedron.
@@ -836,7 +884,7 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
 
         r = Workplane().polyhedron(*sweep(profiles, closeIdx = 0))
 
-        """
+    """
 
     def _revolving_faces0(leng_per_section):
         faces = []
@@ -872,35 +920,3 @@ def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: in
 
     points = tuple(p for section in profiles for p in toTuples(section))
     return Polyhedron(cast(Iterable[Point3D], points), faces)
-
-
-def polarZonohedra(n: int, theta: float = 35.5) -> Polyhedron:
-    def _vertex(i, j, n, theta):
-        if i > j:
-            return (0, 0, 0)
-        
-        x = 0
-        y = 0
-        z = 0
-        for k in range(i, j + 1):
-            rtheta = radians(theta)
-            cosa = cos(rtheta)
-            a_i_n = radians(360 * k / n)
-            x += cosa * cos(a_i_n)
-            y += cosa * sin(a_i_n)
-            z += sin(rtheta)
-        return (x, y, z)
-
-    def _rhombi(i, j, n, theta):
-        return [
-            _vertex(i, -1 + j, n, theta),
-            _vertex(i + 1, -1 + j, n, theta),
-            _vertex(i + 1, j, n, theta),
-            _vertex(i, j, n, theta)
-        ]
-
-    vt_faces = (_rhombi(i, j, n, theta) for i in range(n) for j in range(i + 1, n + i))
-    points = [vt for face_vts in vt_faces for vt in face_vts]
-    faces = [tuple(i * 4 + j for j in range(4)) for i in range(int(len(points) / 4))]
-    
-    return Polyhedron(points, faces)
