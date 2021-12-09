@@ -93,6 +93,26 @@ def archimedeanSpiral(t: float, a: float, b: float) -> Point2D:
     return (r * cos(theta), r * sin(theta))
 
 
+def squircle(t: float, radius: float, s: float) -> Point2D:
+    def zeroIfNegative(v):
+        return v if v >= 0 else 0
+
+    theta = t * tau
+
+    if s == 0:
+        return (radius * cos(theta), radius * sin(theta))
+
+    rs = 0.5 * radius / s
+    sscos2t = s ** 2 * cos(2 * theta)
+    sq2cost = s * sqrt(2) * cos(theta)
+    sq2sint = s * sqrt(2) * sin(theta)
+
+    x = rs * (sqrt(zeroIfNegative(2 + 2 * sq2cost + sscos2t)) - sqrt(zeroIfNegative(2 - 2 * sq2cost + sscos2t)))
+    y = rs * (sqrt(zeroIfNegative(2 + 2 * sq2sint - sscos2t)) - sqrt(zeroIfNegative(2 - 2 * sq2sint - sscos2t)))
+
+    return (x, y)
+
+
 def helix(t: float, radius: float, slope: float) -> Point3D:
     '''
     The parametric equation of a helix.
