@@ -28,7 +28,7 @@ Provide the `Polyhedron` class and functions for creating `Polyhedron` instances
 [`star([outerRadius,innerRadius,height,n])`](polyhedron.md#star) | Create a star.
 [`gridSurface(points[,thickness])`](polyhedron.md#gridSurface) | Create a surface with a coordinate meshgrid.
 [`superellipsoid(e,n)`](polyhedron.md#superellipsoid) | Create a superellipsoid.
-[`polarZonohedra(n[,theta])`](polyhedron.md#polarZonohedra) | Create a polar zonohedra.
+[`polarZonohedra(n[,theta])`](polyhedron.md#polarZonohedra) | (Preview) Create a polar zonohedra.
 [`hull(points)`](polyhedron.md#hull) | Create a convex hull through the provided points. 
 [`sweep(profiles)`](polyhedron.md#sweep) | Create a swept polyhedron.
 
