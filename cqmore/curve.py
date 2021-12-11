@@ -94,6 +94,29 @@ def archimedeanSpiral(t: float, a: float, b: float) -> Point2D:
 
 
 def squircle(t: float, radius: float, s: float) -> Point2D:
+    '''
+    The parametric equation of a [squircle](https://en.wikipedia.org/wiki/Squircle). 
+
+    ## Parameters
+
+    - `t`: a parametric variable in the range 0 to 1.
+    - `s`: the squareness parameter in the range 0 to 1.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import squircle
+
+        r = 10
+        r1 = Workplane()
+        for i in range(0, 6):
+            r1 = (r1.center(r * 3, 0)
+                    .parametricCurve(lambda t: squircle(t, r, i / 5))
+                    .extrude(1)
+                )
+
+    '''
+
     def zeroIfNegative(v):
         return v if v >= 0 else 0
 

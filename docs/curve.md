@@ -9,6 +9,7 @@ Provide parametric equations of curves.
 [`circle(t,radius)`](curve.md#circle) | The parametric equation of a circle. 
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
 [`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedean spiral.  
+[`squircle(t,radius,s)`](curve.md#squircle) | The parametric equation of a squircle.  
 [`superellipse(t,n[,a,b])`](curve.md#superellipse) | The parametric equation of a superellipse.  
 [`superformula(t,m,n1,n2,n3[,a,b])`](curve.md#superformula) | The parametric equation of a superformula.  
 
@@ -90,6 +91,30 @@ The parametric equation of a [archimedean spiral](https://en.wikipedia.org/wiki/
              )
 
 ![archimedeanSpiral](images/curve_archimedeanSpiral.JPG)
+
+# `squircle`
+
+The parametric equation of a [squircle](https://en.wikipedia.org/wiki/Squircle). 
+
+## Parameters
+
+- `t`: a parametric variable in the range 0 to 1.
+- `s`: the squareness parameter in the range 0 to 1.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import squircle
+
+    r = 10
+    r1 = Workplane()
+    for i in range(0, 6):
+        r1 = (r1.center(r * 3, 0)
+                .parametricCurve(lambda t: squircle(t, r, i / 5))
+                .extrude(1)
+            )
+
+![squircle](images/curve_squircle.JPG)
 
 # `superellipse`
 
