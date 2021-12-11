@@ -93,7 +93,7 @@ class Matrix3D:
         '''
 
         vt = (point.x, point.y, point.z, 1) if isinstance(point, Vector) else point + (1,)
-        return cast(Point3D, tuple((self.wrapped @ vt)[:-1]))
+        return cast(Point3D, tuple((self.wrapped @ vt))[:-1])
 
 
     def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> tuple[Point3D]:
@@ -124,9 +124,9 @@ class Matrix3D:
 
         it = iter(points)
         if isinstance(next(it), Vector):
-            r = (tuple((self.wrapped @ (v.x, v.y, v.z, 1))[:-1]) for v in cast(Iterable[Vector], points))
+            r = (tuple((self.wrapped @ (v.x, v.y, v.z, 1)))[:-1] for v in cast(Iterable[Vector], points))
         else:
-            r = (tuple((self.wrapped @ (p + (1,)))[:-1]) for p in cast(Iterable[Point3D], points))
+            r = (tuple((self.wrapped @ (p + (1,))))[:-1] for p in cast(Iterable[Point3D], points))
         
         return cast(tuple[Point3D], tuple(r))
         
