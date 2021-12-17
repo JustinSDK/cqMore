@@ -233,6 +233,13 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
 
 
+def lemniscateGerono(t: float, a: float = 2, b: float = 1, c: float = 0) -> Point3D:
+    phi = t * tau
+    sinp = sin(phi)
+    cosp = cos(phi)
+    return (a * sinp, b * sinp * cosp , c * cosp)
+
+
 def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
     """
     The parametric equation of a [superellipse](https://en.wikipedia.org/wiki/Superellipse).
