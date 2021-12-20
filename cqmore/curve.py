@@ -233,7 +233,27 @@ def torusKnot(t: float, p: int, q: int) -> Point3D:
     return (r * cos(p_phi), r * sin(p_phi), -sin(q_phi))
 
 
-def lemniscateGerono(t: float, a: float = 2, b: float = 1, c: float = 0) -> Point3D:
+def lemniscateGerono(t: float, a: float = 1, b: float = 1, c: float = 0) -> Point3D:
+    """
+    The parametric equation (a * sin(φ), b * sin(φ) * cos(φ) , c * cos(φ)) of a [Lemniscate of Gerono](https://en.wikipedia.org/wiki/Lemniscate_of_Gerono).
+
+    ## Parameters
+
+    - `t`: a parametric variable in the range 0 to 1.
+    - `a`: the a parameter of the Lemniscate of Gerono.
+    - `b`: the b parameter of the Lemniscate of Gerono.
+    - `c`: the c parameter of the Lemniscate of Gerono.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import lemniscateGerono
+
+        r = (Workplane()
+            .parametricCurve(lambda t: lemniscateGerono(t)))
+
+    """
+
     phi = t * tau
     sinp = sin(phi)
     cosp = cos(phi)
