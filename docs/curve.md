@@ -20,6 +20,7 @@ Provide parametric equations of curves.
 [`helix(t,radius,slope)`](curve.md#helix) | The parametric equation of a helix.
 [`sphericalSpiral(t,radius[,c])`](curve.md#sphericalSpiral) | The parametric equation of a [spherical spiral](https://en.wikipedia.org/wiki/Spiral#Spherical_spirals).
 [`torusKnot(t,p,q)`](curve.md#torusKnot) | The parametric equation of a (p,q)-torus knot.
+[`lemniscateGerono(t[,a,b,c])`](curve.md#lemniscateGerono) | (Preview) The parametric equation of a [Lemniscate of Gerono](https://en.wikipedia.org/wiki/Lemniscate_of_Gerono).
 [`parametricEquation(func[,*args,**kwargs])`](curve.md#parametricEquation) | Convert `func` into a function f(t) used by `Workplane.parametricCurve`.
 
 ----
@@ -249,6 +250,27 @@ The parametric equation of a [torus knot](https://en.wikipedia.org/wiki/Torus_kn
         )
 
 ![torusKnot](images/curve_torusKnot.JPG)
+
+# `lemniscateGerono`
+
+The parametric equation (a * sin(φ), b * sin(φ) * cos(φ) , c * cos(φ)) of a [Lemniscate of Gerono](https://en.wikipedia.org/wiki/Lemniscate_of_Gerono).
+
+## Parameters
+
+- `t`: a parametric variable in the range 0 to 1.
+- `a`: the a parameter of the Lemniscate of Gerono.
+- `b`: the b parameter of the Lemniscate of Gerono.
+- `c`: the c parameter of the Lemniscate of Gerono.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import lemniscateGerono
+
+    r = (Workplane()
+        .parametricCurve(lambda t: lemniscateGerono(t)))
+
+![lemniscateGerono](images/curve_lemniscateGerono.JPG)
 
 # `parametricEquation`
 
