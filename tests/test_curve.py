@@ -1,5 +1,5 @@
 import unittest
-from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superellipse, superformula, torusKnot, logarithmicSpiral, squircle
+from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superellipse, superformula, torusKnot, logarithmicSpiral, squircle, lemniscateGerono
 
 class TestCurve(unittest.TestCase):
     def test_circle(self):
@@ -61,6 +61,13 @@ class TestCurve(unittest.TestCase):
         self.assertEqual(
             (1.0, -2.4492935982947064e-16, -3.6739403974420594e-16), 
             torusKnot(0.5, 2, 3)
+        )
+
+
+    def test_lemniscateGerono(self):
+        self.assertEqual(
+            (1.2246467991473532e-16, -1.2246467991473532e-16, -1.0), 
+            lemniscateGerono(0.5, 1, 1, 1)
         )
 
 
