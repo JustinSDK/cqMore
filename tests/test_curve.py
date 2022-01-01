@@ -32,8 +32,8 @@ class TestCurve(unittest.TestCase):
 
     def test_superellipse(self):
         self.assertEqual(
-            (-9.999999999999998, 2.220446049250313e-15), 
-            squircle(0.5, 10, 0.5)
+            (-1.0, 1.4997597826618576e-32), 
+            superellipse(0.5, 1)
         )
 
 
