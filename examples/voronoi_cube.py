@@ -1,3 +1,5 @@
+# Scipy 1.6 or later is required.
+
 from random import random
 import numpy
 from scipy import spatial
