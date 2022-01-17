@@ -40,10 +40,10 @@ feel, kill = 0.04, 0.06      # amorphous
 # feel, kill = 0.035, 0.065  # spots
 # feel, kill = 0.012, 0.05   # wandering bubbles
 # feel, kill = 0.025, 0.05   # waves
-generation = 1000
+generation = 2500
 density_threshold = .5
 layer_h = 2
-line_w = 1.5
+line_w = 2
 space_size = 200
 
 contours = measure.find_contours(
@@ -65,7 +65,9 @@ output = (Workplane().rect(space_size, space_size).extrude(layer_h)
                      .translate((space_size / 2, space_size / 2, -layer_h / 2))
                      .cut(all))
 
-exporters.export(
-    output, 
-    'reaction-diffusion.stl'
-)
+show_object(output) # type: ignore
+
+# exporters.export(
+#     output, 
+#     'reaction-diffusion.stl'
+# )
