@@ -8,13 +8,10 @@ from cadquery import exporters
 from cqmore.polyhedron import gridSurface
 
 
-def gray_scott(feel, kill, generation, space_size = 200, init_size = 20, init_u = 0.5, init_v = 0.25, dx = 0.01, dt = 1):
+def gray_scott(feel, kill, generation, space_size = 200, init_size = 20, init_u = 0.5, init_v = 0.25, Du = 2e-5, Dv = 1e-5, dx = 0.01, dt = 1):
     def laplacian(u):
         return (np.roll(u, 1, axis=0) + np.roll(u, -1, axis=0) +
                 np.roll(u, 1, axis=1) + np.roll(u, -1, axis=1) - 4 * u) / (dx * dx)
-
-    Du = 2e-5
-    Dv = 1e-5
 
     u = np.ones((space_size, space_size))
     v = np.zeros((space_size, space_size))
