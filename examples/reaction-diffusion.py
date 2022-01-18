@@ -28,11 +28,9 @@ def gray_scott(feel, kill, generation, space_size = 200, init_size = 20, init_u 
     v += np.random.rand(space_size, space_size) * 0.1
 
     for _ in range(generation):
-        laplacian_u = laplacian(u)
-        laplacian_v = laplacian(v)
-
-        dudt = Du * laplacian_u - u * v * v + feel * (1 - u)
-        dvdt = Dv * laplacian_v + u * v * v - (feel + kill) * v
+        reaction = u * v * v
+        dudt = Du * laplacian(u) - reaction + feel * (1 - u)
+        dvdt = Dv * laplacian(v) + reaction - (feel + kill) * v
         u += dt * dudt
         v += dt * dvdt
  
