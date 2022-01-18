@@ -1,11 +1,16 @@
 # scikit-image 0.18 or later is required.
 
+from logging.config import valid_ident
 import numpy as np
 from skimage import measure
 from cqmore import Workplane
 from cadquery import exporters
 
 def gray_scott(feel, kill, generation, space_size = 200, init_size = 20, dx = 0.01, dt = 1):
+    def laplacian(u):
+        return (np.roll(u, 1, axis=0) + np.roll(u, -1, axis=0) +
+                np.roll(u, 1, axis=1) + np.roll(u, -1, axis=1) - 4 * u) / (dx * dx)
+
     Du = 2e-5
     Dv = 1e-5
 
@@ -24,10 +29,8 @@ def gray_scott(feel, kill, generation, space_size = 200, init_size = 20, dx = 0.
     v += np.random.rand(space_size, space_size) * 0.1
 
     for _ in range(generation):
-        laplacian_u = (np.roll(u, 1, axis=0) + np.roll(u, -1, axis=0) +
-                        np.roll(u, 1, axis=1) + np.roll(u, -1, axis=1) - 4 * u) / (dx * dx)
-        laplacian_v = (np.roll(v, 1, axis=0) + np.roll(v, -1, axis=0) +
-                        np.roll(v, 1, axis=1) + np.roll(v, -1, axis=1) - 4 * v) / (dx * dx)
+        laplacian_u = laplacian(u)
+        laplacian_v = laplacian(v)
 
         dudt = Du * laplacian_u - u * v * v + feel * (1 - u)
         dvdt = Dv * laplacian_v + u * v * v - (feel + kill) * v
@@ -40,7 +43,7 @@ feel, kill = 0.04, 0.06      # amorphous
 # feel, kill = 0.035, 0.065  # spots
 # feel, kill = 0.012, 0.05   # wandering bubbles
 # feel, kill = 0.025, 0.05   # waves
-generation = 2500
+generation = 1000
 density_threshold = .5
 layer_h = 2
 line_w = 2
