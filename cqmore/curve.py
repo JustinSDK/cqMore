@@ -3,7 +3,7 @@ Provide parametric equations of curves.
 
 """
 
-from math import sin, cos, tau, pi, e, log, sqrt
+from math import sin, cos, tau, pi, e, sqrt
 from typing import Any, Callable, Union
 
 from ._typing import Point2D, Point3D
@@ -285,14 +285,9 @@ def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
 
     """
 
-    def _sgn(x):
-        if x < 0:
-            return -1
-        elif x == 0:
-            return 0
-        else:
-            return 1
-
+    # Signum function
+    def _sgn(n):
+        return  n and (1, -1)[n < 0]
 
     theta = tau * t
     cos_t = cos(theta)
@@ -343,11 +338,8 @@ def superformula(t: float, m: float, n1: float, n2: float, n3: float, a: float =
     '''
 
     phi = t * tau
-    r = pow(
-        pow(abs(cos(m * phi / 4) / a), n2) + 
-        pow(abs(sin(m * phi / 4) / b), n3),
-        - 1 / n1    
-    )
+    r = (abs(cos(m * phi / 4) / a) ** n2 + abs(sin(m * phi / 4) / b) ** n3) ** (-1 / n1)
+    
     return (r * cos(phi), r * sin(phi))
 
 
