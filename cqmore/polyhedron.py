@@ -759,7 +759,7 @@ def superellipsoid(e: float, n: float, widthSegments: int = 3, heightSegments: i
 
     # Signum function
     def _sgn(n):
-        return  n and (1, -1)[n < 0]
+        return n and (1, -1)[n < 0]
     
     def _c(w, m):
         cosw = cos(w)

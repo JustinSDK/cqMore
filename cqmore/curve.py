@@ -287,7 +287,7 @@ def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
 
     # Signum function
     def _sgn(n):
-        return  n and (1, -1)[n < 0]
+        return n and (1, -1)[n < 0]
 
     theta = tau * t
     cos_t = cos(theta)
