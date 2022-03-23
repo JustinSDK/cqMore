@@ -763,11 +763,11 @@ def superellipsoid(e: float, n: float, widthSegments: int = 3, heightSegments: i
     
     def _c(w, m):
         cosw = cos(w)
-        return _sgn(cosw) * pow(abs(cosw), m)
+        return _sgn(cosw) * pow(abs(cosw), m)  # type: ignore
 
     def _s(w, m):
         sinw = sin(w)
-        return _sgn(sinw) * pow(abs(sinw), m)
+        return _sgn(sinw) * pow(abs(sinw), m)  # type: ignore
 
     a = 1
     b = 1
