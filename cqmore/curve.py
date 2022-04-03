@@ -7,7 +7,7 @@ from math import sin, cos, tau, pi, e, sqrt
 from typing import Any, Callable, Union
 
 from ._typing import Point2D, Point3D
-
+from ._util import signum
 
 def circle(t: float, radius: float) -> Point2D:
     '''
@@ -285,18 +285,14 @@ def superellipse(t: float, n: float, a: float = 1, b: float = 1) -> Point2D:
 
     """
 
-    # Signum function
-    def _sgn(n):
-        return n and (1, -1)[n < 0]
-
     theta = tau * t
     cos_t = cos(theta)
     sin_t = sin(theta)
     two_n = 2 / n
 
     return (
-        (abs(cos_t) ** two_n) * a * _sgn(cos_t),
-        (abs(sin_t) ** two_n) * b * _sgn(sin_t),
+        (abs(cos_t) ** two_n) * a * signum(cos_t),
+        (abs(sin_t) ** two_n) * b * signum(sin_t),
     )
 
 

@@ -19,7 +19,7 @@ from typing import Iterable, NamedTuple, Union, cast
 from cadquery import Vector
 from cadquery.cq import T, VectorLike
 
-from ._util import toTuples
+from ._util import toTuples, signum
 from ._typing import MeshGrid, Point3D, FaceIndices
 
 import numpy
@@ -757,17 +757,13 @@ def superellipsoid(e: float, n: float, widthSegments: int = 3, heightSegments: i
 
     """
 
-    # Signum function
-    def _sgn(n):
-        return n and (1, -1)[n < 0]
-    
     def _c(w, m):
         cosw = cos(w)
-        return _sgn(cosw) * pow(abs(cosw), m)  # type: ignore
+        return signum(cosw) * pow(abs(cosw), m)  # type: ignore
 
     def _s(w, m):
         sinw = sin(w)
-        return _sgn(sinw) * pow(abs(sinw), m)  # type: ignore
+        return signum(sinw) * pow(abs(sinw), m)  # type: ignore
 
     a = 1
     b = 1
