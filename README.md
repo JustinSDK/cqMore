@@ -12,7 +12,7 @@ Please use `conda` to install CadQuery and its dependencies (see [Getting starte
 	
 To install cqMore directly from GitHub, run the following `pip` command:
 
-	pip install git+git://github.com/JustinSDK/cqMore.git
+	pip install git+https://github.com/JustinSDK/cqMore
 
 ## Dependencies
 
