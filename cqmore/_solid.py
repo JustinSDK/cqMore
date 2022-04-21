@@ -35,11 +35,11 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
     elif isinstance(join, Solid) or isinstance(join, Compound):
         joinSolidCompound = join
     else:
-        raise ValueError("Join type '{}' is not allowed".format(type(join)))
+        raise ValueError(f"Join type '{type(join)}' is not allowed")
     
     pts = toTuples(points)
     join_vts = [v.toTuple() for v in cast(Shape, joinSolidCompound).Vertices()]
-    joins = [[(p[0] + vt[0], p[1] + vt[1], p[2] + vt[2]) for vt in join_vts] for p in pts]
+    joins = [[tuple(numpy.add(p, vt)) for vt in join_vts] for p in pts] 
 
     workplanes = [
         Workplane(makePolyhedron(*hull(joins[i] + joins[i + 1])))

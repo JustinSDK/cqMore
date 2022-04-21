@@ -3,6 +3,8 @@ from typing import Iterable, Union, cast
 from cadquery import DirectionSelector, Wire, Workplane
 from cadquery.cq import T, VectorLike
 
+import numpy
+
 from ._util import toTuples, toVectors
 
 from .polygon import hull2D
@@ -22,7 +24,7 @@ def bool2D(workplane: T, toBool: Union[T, Wire], boolMethod: str) -> T:
                 .toPending()
         )
     else:
-        raise ValueError("Cannot {} type '{}'".format(boolMethod, type(toBool)))
+        raise ValueError(f"Cannot {boolMethod} type '{type(toBool)}'")
     
     booled = Workplane.__dict__[boolMethod](workplane.extrude(1), toExtruded.extrude(1))
     planeZdir = DirectionSelector(-workplane.plane.zDir)
@@ -39,11 +41,11 @@ def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forCons
     elif isinstance(join, Wire):
         join_wire = join
     else:
-        raise ValueError("Join type '{}' is not allowed".format(type(join)))
+        raise ValueError(f"Join type '{type(join)}' is not allowed")
     
     pts = toTuples(points)
     join_vts = [v.toTuple() for v in join_wire.Vertices()]
-    joins = [[(p[0] + vt[0], p[1] + vt[1]) for vt in join_vts] for p in pts]
+    joins = [[tuple(numpy.add(p, vt)) for (*vt, _) in join_vts] for p in pts]
     workplanes = [
         Workplane(makePolygon(hull2D(joins[i] + joins[i + 1]), forConstruction)).toPending()
         for i in range(len(pts) - 1)
