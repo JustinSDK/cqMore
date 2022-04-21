@@ -43,17 +43,21 @@ def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forCons
     else:
         raise ValueError(f"Join type '{type(join)}' is not allowed")
     
-    pts = toTuples(points)
-    join_vts = [v.toTuple() for v in join_wire.Vertices()]
-    joins = [[tuple(numpy.add(p, vt)) for (*vt, _) in join_vts] for p in pts]
-    workplanes = [
-        Workplane(makePolygon(hull2D(joins[i] + joins[i + 1]), forConstruction)).toPending()
-        for i in range(len(pts) - 1)
-    ]
+    join_vts = tuple(v.toTuple() for v in join_wire.Vertices())
+    joins = tuple(
+        tuple(
+            tuple(numpy.add(p, vt)) for (*vt, _) in join_vts
+        )
+        for p in toTuples(points)
+    )
 
-    wp = workplanes[0].extrude(1)
-    for i in range(1, len(workplanes)):
-        wp = wp.add(workplanes[i].extrude(1))
+    wp = Workplane()
+    for i in range(len(joins) - 1):
+        wp = wp.add(
+            Workplane(makePolygon(hull2D(joins[i] + joins[i + 1]), forConstruction))
+                .toPending()
+                .extrude(1)
+        )
 
     wire = cast(Wire, wp.combine().faces('<Z').wires().val())
     wire.forConstruction = forConstruction
