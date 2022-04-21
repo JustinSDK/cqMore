@@ -157,7 +157,7 @@ class Workplane(cadquery.Workplane):
 
         wires = self.ctx.popPendingWires()
         
-        p = makePolygon(hull2D(v.toTuple() for wire in wires for v in wire.Vertices()), forConstruction)
+        p = makePolygon(hull2D(v.toTuple()[:-1] for wire in wires for v in wire.Vertices()), forConstruction)
         moved = self.eachpoint(lambda loc: p.moved(loc), True)
         return self.newObject([o for o in moved.objects if not (o in wires)])
 
