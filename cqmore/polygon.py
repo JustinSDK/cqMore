@@ -155,26 +155,25 @@ def hull2D(points: Iterable[VectorLike]) -> Polygon:
 
     """
 
-    def _cross(o, a, b):
-        ovt = Vector(o)
-        return (Vector(a) - ovt).cross(Vector(b) - ovt).z
+    def _in_convex(convex_hull, p):
+        o = Vector(convex_hull[-2]) 
+        return (Vector(convex_hull[-1]) - o).cross(Vector(p) - o).z <= 0
 
     pts = sorted(toTuples(points))
 
-    leng = len(pts)
     convex_hull = pts[:2] 
     # lower bound
-    for i in range(2, leng):
-        while len(convex_hull) >= 2 and _cross(convex_hull[-2], convex_hull[-1], pts[i]) <= 0:
+    for p in pts[2:]:
+        while len(convex_hull) >= 2 and _in_convex(convex_hull, p):
             convex_hull.pop()
-        convex_hull.append(pts[i])
+        convex_hull.append(p)
     
     # upper bound
     upper_bound_start = len(convex_hull) + 1
-    for i in range(leng - 2, -1, -1):
-        while len(convex_hull) >= upper_bound_start and _cross(convex_hull[-2], convex_hull[-1], pts[i]) <= 0:
+    for p in pts[:-1][::-1]:
+        while len(convex_hull) >= upper_bound_start and _in_convex(convex_hull, p):
             convex_hull.pop()
-        convex_hull.append(pts[i])
+        convex_hull.append(p)
     convex_hull.pop()
 
     return cast(Polygon, convex_hull)
