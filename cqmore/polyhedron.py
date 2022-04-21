@@ -17,7 +17,7 @@ from math import cos, radians, sin, pi, tau
 from typing import Iterable, NamedTuple, Union, cast
 
 from cadquery import Vector
-from cadquery.cq import T, VectorLike
+from cadquery.cq import VectorLike
 
 from ._util import toTuples, signum
 from ._typing import MeshGrid, Point3D, FaceIndices
