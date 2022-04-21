@@ -5,9 +5,8 @@ Provide functions for creating simple polygons.
 
 from math import sin, cos, radians, tau
 from typing import Iterable, cast
+from cadquery import Vector
 from cadquery.cq import VectorLike
-
-import numpy
 
 from ._typing import Polygon
 from ._util import toTuples
@@ -157,13 +156,13 @@ def hull2D(points: Iterable[VectorLike]) -> Polygon:
     """
 
     def _cross(o, a, b):
-        return numpy.cross(numpy.subtract(a, o), numpy.subtract(b, o))
+        ovt = Vector(o)
+        return (Vector(a) - ovt).cross(Vector(b) - ovt).z
 
-    # only need x, y 
-    pts = tuple((p[0], p[1]) for p in sorted(toTuples(points)))
+    pts = sorted(toTuples(points))
+
     leng = len(pts)
-    convex_hull = [pts[0], pts[1]]
-
+    convex_hull = pts[:2] 
     # lower bound
     for i in range(2, leng):
         while len(convex_hull) >= 2 and _cross(convex_hull[-2], convex_hull[-1], pts[i]) <= 0:

@@ -1,9 +1,7 @@
 from typing import Iterable, Union, cast
 
-from cadquery import DirectionSelector, Wire, Workplane
+from cadquery import DirectionSelector, Wire, Workplane, Vector
 from cadquery.cq import T, VectorLike
-
-import numpy
 
 from ._util import toTuples, toVectors
 
@@ -46,7 +44,7 @@ def polylineJoinWire(points: Iterable[VectorLike], join: Union[T, Wire], forCons
     join_vts = tuple(v.toTuple() for v in join_wire.Vertices())
     joins = tuple(
         tuple(
-            tuple(numpy.add(p, vt)) for (*vt, _) in join_vts
+            Vector(p) + Vector(vt) for (*vt, _) in join_vts
         )
         for p in toTuples(points)
     )

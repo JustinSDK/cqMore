@@ -40,7 +40,7 @@ def polylineJoin(points: Iterable[VectorLike], join: Union[T, Solid, Compound]) 
     join_vts = tuple(v.toTuple() for v in cast(Shape, joinSolidCompound).Vertices())
     joins = tuple(
         tuple(
-            tuple(numpy.add(p, vt)) for vt in join_vts
+            Vector(p) + Vector(vt) for vt in join_vts
         ) 
         for p in toTuples(points)
     )
