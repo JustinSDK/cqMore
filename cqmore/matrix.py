@@ -23,7 +23,7 @@ multiplications from right to left.
 
 """
 
-from typing import Iterable, Union, cast
+from typing import Iterable, Union, cast, Tuple
 
 from cadquery import Vector
 
@@ -96,7 +96,7 @@ class Matrix3D:
         return cast(Point3D, tuple((self.wrapped @ vt))[:-1])
 
 
-    def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> tuple[Point3D]:
+    def transformAll(self, points: Union[Iterable[Point3D], Iterable[Vector]]) -> Tuple[Point3D]:
         '''
         Use the current matrix to transform a list of points.
 

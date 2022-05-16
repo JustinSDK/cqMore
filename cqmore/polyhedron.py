@@ -14,7 +14,7 @@ to use them.
 
 from math import cos, radians, sin, pi, tau
 
-from typing import Iterable, NamedTuple, Union, cast
+from typing import Iterable, NamedTuple, Union, cast, List
 
 from cadquery import Vector
 from cadquery.cq import VectorLike
@@ -835,7 +835,7 @@ def polarZonohedra(n: int, theta: float = 35.5) -> Polyhedron:
     return Polyhedron(points, faces)
     
 
-def sweep(profiles: Union[list[list[Point3D]], list[list[Vector]]], closeIdx: int = -1) -> Polyhedron:
+def sweep(profiles: Union[List[List[Point3D]], List[List[Vector]]], closeIdx: int = -1) -> Polyhedron:
     """
     Create a swept polyhedron.
 
