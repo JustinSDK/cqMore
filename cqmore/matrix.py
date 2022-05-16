@@ -128,7 +128,7 @@ class Matrix3D:
         else:
             r = (tuple((self.wrapped @ (p + (1,))))[:-1] for p in cast(Iterable[Point3D], points))
         
-        return cast(tuple[Point3D], tuple(r))
+        return cast(Tuple[Point3D], tuple(r))
         
 
 _identity = [

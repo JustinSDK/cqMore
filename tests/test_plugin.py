@@ -1,5 +1,5 @@
 import unittest
-from typing import cast
+from typing import cast, List
 from cadquery import Vector, Vertex, Wire
 from cqmore import Workplane
 
@@ -15,13 +15,13 @@ class TestWorkplane2D(unittest.TestCase):
             False
         )
 
-        expected = cast(list[Wire], 
+        expected = cast(List[Wire], 
                         Workplane().rect(5, 5, forConstruction = True)
                                    .vertices()
                                    .eachpoint(lambda loc: wire.moved(loc))
                                    .vals()
                    )
-        actual = cast(list[Wire], 
+        actual = cast(List[Wire], 
                       Workplane().rect(5, 5, forConstruction = True)
                                  .vertices()
                                  .makePolygon(points)
@@ -141,7 +141,7 @@ class TestWorkplane3D(unittest.TestCase):
         vertices = tetrahedron.vertices()
         self.assertEqual(4, vertices.size())
 
-        actual = cast(list[Vertex], vertices.vals())
+        actual = cast(List[Vertex], vertices.vals())
         self.assertListEqual(
             sorted(points), 
             sorted([v.toTuple() for v in actual])

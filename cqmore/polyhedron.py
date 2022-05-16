@@ -14,7 +14,7 @@ to use them.
 
 from math import cos, radians, sin, pi, tau
 
-from typing import Iterable, NamedTuple, Union, cast, List
+from typing import Iterable, NamedTuple, Tuple, Union, cast, List
 
 from cadquery import Vector
 from cadquery.cq import VectorLike
@@ -496,7 +496,7 @@ def gridSurface(points: MeshGrid, thickness: float = 0) -> Polyhedron:
             )
         )
     else:
-        vectors = cast(tuple[tuple[Vector]],
+        vectors = cast(Tuple[Tuple[Vector]],
             tuple(
                 tuple(Vector(*points[ci][ri]) for ci in range(len(points))) for ri in range(len(points[0]))
             )
