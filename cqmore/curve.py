@@ -135,6 +135,43 @@ def squircle(t: float, radius: float, s: float) -> Point2D:
 
     return (x, y)
 
+def egg(t: float, a: float, c: float = 2) -> Point2D:
+    '''
+    The parametric equation of a [Egg Shaped Curve III](https://nyjp07.com/index_egg_by_SuudokuJuku_E.html). 
+
+    ## Parameters
+
+    - `t`: a parametric variable in the range 0 to 1.
+    - `a`: roughly the radius at the big end.
+    - `c`: `a * c` is the length between ends.
+
+    ## Examples 
+
+        from cqmore import Workplane
+        from cqmore.curve import egg
+
+        radius = 1
+
+        c1 = (Workplane()
+                .parametricCurve(lambda t: egg(t, radius, c = 2))
+                .center(radius * 2.5, 0)
+                .parametricCurve(lambda t: egg(t, radius, c = 2.5))
+                .center(radius * 3, 0)
+                .parametricCurve(lambda t: egg(t, radius, c = 3))
+                .extrude(1)
+            )
+            
+    '''
+
+    theta = t * tau
+
+    cost = cos(theta)
+    sint = sin(theta)
+
+    x = a * ((c - 2) * cost + c + 2) * (cost + 1) / 4
+    y = a * sint
+
+    return (x, y)
 
 def helix(t: float, radius: float, slope: float) -> Point3D:
     '''

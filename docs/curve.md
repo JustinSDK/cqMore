@@ -10,6 +10,7 @@ Provide parametric equations of curves.
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
 [`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedean spiral.  
 [`squircle(t,radius,s)`](curve.md#squircle) | (Preview) The parametric equation of a squircle.  
+[`egg(t,a[,c])`](curve.md#egg) | (Preview) The parametric equation of a [Egg Shaped Curve III](https://nyjp07.com/index_egg_by_SuudokuJuku_E.html).  
 [`superellipse(t,n[,a,b])`](curve.md#superellipse) | The parametric equation of a superellipse.  
 [`superformula(t,m,n1,n2,n3[,a,b])`](curve.md#superformula) | The parametric equation of a superformula.  
 
@@ -116,6 +117,34 @@ The parametric equation of a [squircle](https://en.wikipedia.org/wiki/Squircle).
             )
 
 ![squircle](images/curve_squircle.JPG)
+
+# `egg`
+
+The parametric equation of a [Egg Shaped Curve III](https://nyjp07.com/index_egg_by_SuudokuJuku_E.html). 
+
+## Parameters
+
+- `t`: a parametric variable in the range 0 to 1.
+- `a`: roughly the radius at the big end.
+- `c = 2`: `a * c` is the length between ends.
+
+## Examples 
+
+    from cqmore import Workplane
+    from cqmore.curve import egg
+
+    radius = 1
+
+    c1 = (Workplane()
+            .parametricCurve(lambda t: egg(t, radius, c = 2))
+            .center(radius * 2.5, 0)
+            .parametricCurve(lambda t: egg(t, radius, c = 2.5))
+            .center(radius * 3, 0)
+            .parametricCurve(lambda t: egg(t, radius, c = 3))
+            .extrude(1)
+        )
+
+![egg](images/curve_egg.JPG)
 
 # `superellipse`
 

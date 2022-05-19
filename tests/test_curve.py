@@ -1,5 +1,5 @@
 import unittest
-from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superellipse, superformula, torusKnot, logarithmicSpiral, squircle, lemniscateGerono
+from cqmore.curve import archimedeanSpiral, circle, helix, parametricEquation, sphericalSpiral, superellipse, superformula, torusKnot, logarithmicSpiral, squircle, egg, lemniscateGerono
 
 class TestCurve(unittest.TestCase):
     def test_circle(self):
@@ -27,6 +27,13 @@ class TestCurve(unittest.TestCase):
         self.assertEqual(
             (-1.0, 2.220446049250313e-16), 
             squircle(0.5, 1, 1)
+        )
+
+
+    def test_egg(self):
+        self.assertEqual(
+            (0.0, 1.2246467991473532e-16), 
+            egg(0.5, 1, 2)
         )
 
 
