@@ -10,7 +10,7 @@ Provide parametric equations of curves.
 [`logarithmicSpiral(t[,a,k])`](curve.md#logarithmicSpiral) | The parametric equation of a logarithmic spiral.
 [`archimedeanSpiral(t,a,b)`](curve.md#archimedeanSpiral) | The parametric equation of a archimedean spiral.  
 [`squircle(t,radius,s)`](curve.md#squircle) | (Preview) The parametric equation of a squircle.  
-[`egg(t,a[,c])`](curve.md#egg) | (Preview) The parametric equation of a [Egg Shaped Curve III](https://nyjp07.com/index_egg_by_SuudokuJuku_E.html).  
+[`egg(t,a[,c])`](curve.md#egg) | (Preview) The parametric equation of a Egg Shaped Curve III.  
 [`superellipse(t,n[,a,b])`](curve.md#superellipse) | The parametric equation of a superellipse.  
 [`superformula(t,m,n1,n2,n3[,a,b])`](curve.md#superformula) | The parametric equation of a superformula.  
 
