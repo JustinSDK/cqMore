@@ -25,8 +25,8 @@ class TestCurve(unittest.TestCase):
 
     def test_squircle(self):
         self.assertEqual(
-            (-4.141592653589793, 5.071988186590933e-16), 
-            archimedeanSpiral(0.5, 1, 1)
+            (-1.0, 2.220446049250313e-16), 
+            squircle(0.5, 1, 1)
         )
 
 
